@@ -1,0 +1,175 @@
+Index: comm.c
+===================================================================
+RCS file: /sources/screen/screen/src/comm.c,v
+retrieving revision 1.24
+diff -u -r1.24 comm.c
+--- comm.c	6 Feb 2007 20:44:37 -0000	1.24
++++ comm.c	3 Feb 2008 21:35:56 -0000
+@@ -269,6 +269,7 @@
+ #ifdef COPY_PASTE
+   { "removebuf",	ARGS_0 },
+ #endif
++  { "renumber",		ARGS_0 },
+   { "reset",		NEED_FORE|ARGS_0 },
+   { "resize",		NEED_DISPLAY|ARGS_0|ARGS_ORMORE },
+   { "screen",		ARGS_0|ARGS_ORMORE },
+Index: comm.h.dist
+===================================================================
+RCS file: /sources/screen/screen/src/comm.h.dist,v
+retrieving revision 1.11
+diff -u -r1.11 comm.h.dist
+--- comm.h.dist	16 Dec 2005 18:44:47 -0000	1.11
++++ comm.h.dist	3 Feb 2008 21:35:56 -0000
+@@ -223,5 +223,6 @@
+ #define RC_XON 172
+ #define RC_ZMODEM 173
+ #define RC_ZOMBIE 174
++#define RC_RENUMBER 175
+ 
+-#define RC_LAST 174
++#define RC_LAST 175
+Index: extern.h
+===================================================================
+RCS file: /sources/screen/screen/src/extern.h,v
+retrieving revision 1.33
+diff -u -r1.33 extern.h
+--- extern.h	6 Feb 2007 20:44:37 -0000	1.33
++++ extern.h	3 Feb 2008 21:35:56 -0000
+@@ -213,6 +213,7 @@
+ extern void  ApplyAttrColor __P((int, struct mchar *));
+ extern void  SwitchWindow __P((int));
+ extern int   StuffKey __P((int));
++extern void  WinSwap __P((int, int));
+ 
+ /* termcap.c */
+ extern int   InitTermcap __P((int, int));
+Index: process.c
+===================================================================
+RCS file: /sources/screen/screen/src/process.c,v
+retrieving revision 1.26
+diff -u -r1.26 process.c
+--- process.c	7 Feb 2007 22:53:59 -0000	1.26
++++ process.c	3 Feb 2008 21:35:57 -0000
+@@ -485,6 +485,7 @@
+   ktab[' '].nr = ktab[Ctrl(' ')].nr =
+     ktab['n'].nr = ktab[Ctrl('n')].nr = RC_NEXT;
+   ktab['N'].nr = RC_NUMBER;
++  ktab['R'].nr = RC_RENUMBER;
+   ktab[Ctrl('h')].nr = ktab[0177].nr = ktab['p'].nr = ktab[Ctrl('p')].nr = RC_PREV;
+   ktab['k'].nr = ktab[Ctrl('k')].nr = RC_KILL;
+   ktab['l'].nr = ktab[Ctrl('l')].nr = RC_REDISPLAY;
+@@ -2801,42 +2802,29 @@
+         Msg(0, "This is window %d (%s).\n", fore->w_number, fore->w_title);
+       else
+         {
+-	  int old = fore->w_number;
+-
+ 	  if (ParseNum(act, &n) || n >= maxwin)
+ 	    break;
+-	  p = wtab[n];
+-	  wtab[n] = fore;
+-	  fore->w_number = n;
+-	  wtab[old] = p;
+-	  if (p)
+-	    p->w_number = old;
+-#ifdef MULTIUSER
+-	  /* exchange the acls for these windows. */
+-	  AclWinSwap(old, n);
+-#endif
+-#ifdef UTMPOK
+-	  /* exchange the utmp-slots for these windows */
+-	  if ((fore->w_slot != (slot_t) -1) && (fore->w_slot != (slot_t) 0))
+-	    {
+-	      RemoveUtmp(fore);
+-	      SetUtmp(fore);
+-	    }
+-	  if (p && (p->w_slot != (slot_t) -1) && (p->w_slot != (slot_t) 0))
+-	    {
+-	      /* XXX: first display wins? */
+-	      display = fore->w_layer.l_cvlist ? fore->w_layer.l_cvlist->c_display : 0;
+-	      RemoveUtmp(p);
+-	      SetUtmp(p);
+-	    }
+-#endif
+ 
+-	  WindowChanged(fore, 'n');
+-	  WindowChanged((struct win *)0, 'w');
+-	  WindowChanged((struct win *)0, 'W');
+-	  WindowChanged((struct win *)0, 0);
++	  WinSwap(fore->w_number, n);
+ 	}
+       break;
++	case RC_RENUMBER:
++	{
++	 n = -1; /* location of first empty window */
++	 for (i = 0; i < maxwin; ++i) 
++	 {
++	   p = wtab[i];
++	   if ( !p && n < 0 ) 
++	   {
++	     n = i;
++	   } 
++	   else if ( p && n >= 0 ) 
++	   {
++	     WinSwap(i, n++);
++	   }
++	 }
++	}
++	break;
+     case RC_SILENCE:
+       n = fore->w_silence != 0;
+       i = fore->w_silencewait;
+@@ -4946,6 +4934,53 @@
+   Redisplay(norefresh + all_norefresh);
+ }
+ 
++void 
++WinSwap(a, b)
++int a;
++int b;
++{
++  struct win *ap;
++  struct win *bp;
++  if ( a < maxwin && wtab[a] )
++    ap = wtab[a];
++  else
++    return;
++	
++  if ( b >= maxwin )
++    return;
++
++  bp = wtab[b];
++  wtab[a] = bp;
++  wtab[b] = ap;
++  ap->w_number = b;
++  if (bp)
++    bp->w_number = a;
++	
++#ifdef MULTIUSER
++  /* exchange the acls for these windows. */
++  AclWinSwap(a, b);
++#endif
++#ifdef UTMPOK
++  /* exchange the utmp-slots for these windows */
++  if (ap && (ap->w_slot != (slot_t) -1) && (ap->w_slot != (slot_t) 0))
++  {
++    RemoveUtmp(ap);
++    SetUtmp(ap);
++  }
++  if (bp && (bp->w_slot != (slot_t) -1) && (bp->w_slot != (slot_t) 0))
++  {
++    /* XXX: first display wins? */
++    display = bp->w_layer.l_cvlist ? bp->w_layer.l_cvlist->c_display : 0;
++    RemoveUtmp(bp);
++    SetUtmp(bp);
++  }
++#endif
++  WindowChanged(ap, 'n');
++  WindowChanged((struct win *)0, 'w');
++  WindowChanged((struct win *)0, 'W');
++  WindowChanged((struct win *)0, 0);
++
++}
+ 
+ static int
+ NextWindow()

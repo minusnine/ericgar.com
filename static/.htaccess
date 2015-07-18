@@ -1,0 +1,26 @@
+# Migrated from `date` to `pretty` permalink structure.
+RewriteEngine On
+
+# Directory index is never accessible.
+# 
+#   /index.html     -> /
+#   /foo/index.html -> /foo/
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteCond %{REQUEST_URI} ^\/.*index\.html$
+RewriteRule ^(.*)index.html$ /$1 [R=301,L]
+
+# Append trailing slash to directories.
+# Borrowed from http://gist.github.com/97822
+#
+#   /foo -> /foo/
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteCond %{REQUEST_FILENAME} !/$
+RewriteRule ^(.*)$ /$1/ [R=301,L]
+
+# Compress static assets
+SetOutputFilter DEFLATE
+AddOutputFilterByType DEFLATE text/html application/xml text/css text/javascript 
+
+# Pretty error page
+ErrorDocument 404 http://ericgar.com/error/404
+

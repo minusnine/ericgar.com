@@ -1,0 +1,31 @@
+---
+wordpress_id: "112"
+wordpress_url: "http://www.ericgar.com/2007/03/30/response-to-spec-opinion-fines-violate-students-rights/"
+title: "Response to Spec Opinion \"Fines Violate Students' Rights\""
+date: "2007-03-30"
+---
+Stephen Cox, a Columbia College sophomore, wrote an opinion piece for the Columbia Spectator entitled, "<a href="http://media.www.columbiaspectator.com/media/storage/paper865/news/2007/03/30/Opinion/Fines.Violate.Students.Rights-2813582-page2.shtml">Fines Violate Students' Rights</a>".
+
+It seems that students here at Columbia have a penchant for thinking that Columbia University is improperly acting on behalf of th RIAA in forwarding settlement notices to students who have been served with a DMCA copyright infringment takedown notice. While I dislike defending the practices of the RIAA, being of sound mind and in favor of a fair and equal judicial system, I believe that Columbia and its rival educational institutions are neither in violation of the law nor of any educational or moral standard. 
+
+Cox's argument hinges on the 20 U.S.C. § 1232g.b.2.b clause of the Family Educational Rights and Privacy Act (FERPA) which reads:
+
+<blockquote>No funds shall be made available under any applicable program to any educational agency or institution which has a policy or practice of releasing, or providing access to, any personally identifiable information in education records other than directory information, or as is permitted under paragraph (1) of this subsection, unless—... except as provided in paragraph (1)(J), such information is furnished in compliance with judicial order, or pursuant to any lawfully issued subpoena, upon condition that parents and the students are notified of all such orders or subpoenas in advance of the compliance therewith by the educational institution or agency.</blockquote>
+
+<ol>
+	<li> No information was actually transferred from Columbia to the RIAA (as far as I know, and I know more than most). Columbia simply forwarded the letter to the students indicated by IP address. Columbia will only hand over personally identifiable information in the event that they receive a proper subpoena under the DMCA.</li>
+	<li>From what I've read, even if they disclosed the directory information of the students in question to the RIAA, they would not be in violation of FERPA. An educational record is all information that a school holds about a student <em>except</em> for directory information. (They may be punishable by other legislation, however).</li>
+</ol>
+
+Admittedly, Columbia is doing a favor for the RIAA in forwarding these letters. The sum of money being demanded is large, and as Stephen Cox points out in his article, far larger than the damages actually incurred by the RIAA and its members (which are on the order of tens of cents). As <a href="http://www.fiveplusone.net">Six</a> pointed out to me, if I were a target of one of these letters, I'd want to receive it only in order to have the most information about the situation available to me.
+
+Cox writes, "The seriousness and scope of (Columbia's) obligations, in turn, are determined entirely by the RIAA, not by a court." This is incorrect. Even with this new tactic of sending pre-subpoena letters to students, students have the right to pass on the settlement offer and bring it to court. This is, admittedly, financially prohibitive and complicated, but it has been done successfully. 
+
+He continues, "Without subpoenas, the RIAA demanded that schools pass "settlement letters" on to individuals identified only by IP address." Demanded is a very strong word for this, especially when the first line of such a <a href="http://www.educause.edu/ir/library/pdf/CSD4832.pdf">settlement letter</a> is "We have asked your Internet Service Provider to forward this letter..." Both the university and the RIAA understand that there is no legal obligation to pass this on to the allegedly infringing student. Both entities are fully aware that the RIAA could simple serve Columbia with a proper subpoena, issued by a court officer, to obtain contact information and send the letter to the students themselves. RIAA prefers this approach because it means less legal fees for them.
+
+"In short, the RIAA has asked universities to help it blackmail students and their parents (who the RIAA neglects to mention are not generally culpable for the actions of their children) by forwarding letters with questionable legal claims in them and demanding large cash payments," he writes. There is a popular misconception that these settlement letters constitute <a href="http://www.law.cornell.edu/uscode/html/uscode18/usc_sup_01_18_10_I_20_41.html">blackmail or extortion</a>. I believe this is a result of the large sum demanded. However, it has never been illegal for the tortfeasor and the claimant to exchange written communication to attempt an out-of-court settlement before a formal claim is filed. For example, if you kill my dog, you had better expect a letter from me asking for compensatory damages.
+
+Cox writes, "The RIAA has decided that it has the right-normally reserved to government agencies-to fine students and the right-reserved to no entity-to do so without due process." Incorrect. The RIAA is not taking away the right to due process. That avenue is still available to each alleged IP address-masked caper. The RIAA is just presenting a way to make the case go away that is in their favor. Further, fining is not just reserved to government agencies. For example, the major sports leagues uses fines as a means of punishment in egregious cases of misconduct. This is contractual; if a player were not to comply, they could be sued for breach of contract. In the RIAA's case, the student could be sued if they felt the student does not agree or comply with their settlement terms.
+
+The rest of that paragraph is just disgusting and charged. To counter, I charge that Stephen Cox engaged in sensationalism if only because he accuses Columbia of breaking privacy law three times before backing it up <em>after</em> the fold. Statements like, "Students should be furious about this violation of their legal and privacy rights" will only embolden the unknowing reader into taking up Cox's anti-institution stance. Further, it's not even clear to me through his article that Cox read FERPA in its entirety.
+

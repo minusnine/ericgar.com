@@ -1,0 +1,24 @@
+---
+wordpress_id: "109"
+wordpress_url: "http://www.ericgar.com/2007/03/25/1337-h0rd3-h4x0r/"
+title: "1337 h0rd3 h4x0r"
+date: "2007-03-25"
+---
+Amazing when the kids of today (very probably, the Road Runner residential customer at cpe-66-67-116-12.rochester.res.rr.com) think creating a page on a publicly-modifiable wiki is "hacking."
+
+<blockquote><pre>
+Message: 2
+Date: Sat, 24 Mar 2007 18:03:23 -0700
+From: Wiki Guest (wikiguest@horde.org)
+Subject: (cvs) (Wiki) created: Hacked
+To: cvs@lists.horde.org
+Message-ID: (20070324180323.dwoylco4oow0o4w4@wiki.horde.org)
+Content-Type: text/plain;	charset=UTF-8
+
+guest (66.67.116.12)  Sat, 24 Mar 2007 18:03:23 -0700
+
+Created page: http://wiki.horde.org/Hacked
+
+HACKED BITCH!
+</pre></blockquote>
+
