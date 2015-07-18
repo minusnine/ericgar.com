@@ -1,7 +1,8 @@
---- 
-title: "Found Humor'
+---
+title: "Found Humor"
 date: "2007-06-27"
 ---
+
 Some humorous things I've seen around the web lately.
 
 Random statistic:
@@ -10,13 +11,13 @@ Random statistic:
 
 But what about the other 6% of young people? Spawns of the hellbeast, must be.
 
----
+----
 
 <a href='http://www.ericgar.com/uploads/2007/06/5.png' title='5.png'><img src='http://www.ericgar.com/uploads/2007/06/5.png' alt='5.png' /></a>
 
 You mean software vendors distribute patches to existing installs?
 
----
+----
 
 This is from the website of a new condo building being built in my neighborhood.
 
@@ -24,13 +25,13 @@ This is from the website of a new condo building being built in my neighborhood.
 
 "Where SoHo meets Tribeca" ? You must mean Canal St, but don't want to make people think of Chinatown or hellish traffic.
 
----
+----
 
 <a href='http://www.ericgar.com/uploads/2007/06/9.png' title='9.png'><img src='http://www.ericgar.com/uploads/2007/06/9.png' alt='9.png' /></a>
 
 Wow. Who ever would have thought?
 
----
+----
 
 For whatever reason, when I visited this website, my mind made an unconscious decision as to what kind of robot I was interested in...
 

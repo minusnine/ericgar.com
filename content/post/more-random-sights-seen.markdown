@@ -1,7 +1,8 @@
---- 
+---
 title: "More Random Sights Seen"
 date: "2007-10-21"
 ---
+
 I was trying to find out why the Daily News included a Perl variable in their headline:
 <a href='http://www.ericgar.com/uploads/2007/10/perl.png' title=''><img src='http://www.ericgar.com/uploads/2007/10/perl.png' alt='' /></a>
 
