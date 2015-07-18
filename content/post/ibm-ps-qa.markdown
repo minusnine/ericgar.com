@@ -1,7 +1,7 @@
 ---
 wordpress_id: "60"
 wordpress_url: "http://www.ericgar.com/2006/11/26/ibm-ps-qa/"
-title: "IBM P&amp;S Q&amp;A"
+title: "IBM P&S Q&A"
 date: "2006-11-26"
 ---
 Another note: one thing that bothered me about the IBM Privacy and Security day set up was that the chair of the day asked everyone to hold their questions to the end of the speaker's timeslot, when a few minutes have been explicitly allotted to Q&amp;A. 
