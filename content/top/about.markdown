@@ -4,6 +4,8 @@ title: About
 
 ## about me
 
+{{< figure src="/about/IMG_2194_lo.JPG" >}}
+
 ### contact
 
 * **Email**: <a href="mailto:eric@ericgar.com">eric@ericgar.com</a>
