@@ -21,7 +21,8 @@ div#site_title {
 }
 
 .post {
-    margin-bottom: 25px;
+    margin-bottom: 5em;
+    border-bottom: 1px dotted #CCCCCC;
 }
 
 .post_header {
@@ -191,4 +192,8 @@ span.date span.day {
 
 ul.archive a {
     text-transform: lowercase;
+}
+
+figure {
+  margin: 0;
 }
