@@ -3,11 +3,11 @@
 <div id="main">
   <div>
    <h1 id="title">{{ .Title }}</h1>
-        <ul id="list">
-          {{ range .Data.Pages.ByDate }}
+        <ul id="archive">
+          {{ range .Data.Pages.ByDate.Reverse }}
           <li>
             <a href="{{ .Permalink }}">{{ .Title }}</a>
-            <div class="meta">{{ .Date.Format "Mon, January 2, 2006" }}</div>
+            <time style="float: right">{{ .Date.Format "2 January 2006" }}</time>
           </li>
           {{ end }}
         </ul>

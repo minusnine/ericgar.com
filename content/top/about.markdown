@@ -7,7 +7,7 @@ title: About
 ### contact
 
 * **Email**: <a href="mailto:eric@ericgar.com">eric@ericgar.com</a>
-* **Phone**: <a href="tel:+1-646-8231323">646.823.1323</a>
+* **Phone**: <a href="tel:+1-601-884-0354">601-884-0354</a>
 * **Web**: <a href="http://ericgar.com">http://ericgar.com</a>
 * **Google+**: <a href="https://plus.google.com/112531583832022190935">Eric Garrido</a>
 * **XMPP**: <a href="xmpp:eric@ericgar.com">eric@ericgar.com</a>
@@ -85,18 +85,17 @@ time doing it.
 [^legos]: Maybe this results from being a huge user of legos as a kid...
 
 [^takeapart]: One recent example: a colleague and I were working
-on Oracle security integration into an existing, rich Kerberos
-infrastructure when we found an issue where the (non-`mitkrb5`)
-library Oracle uses for Kerberos operations rejected the valid service
-ticket presented by the client. The issue was that the ticket did
-not include one of the three available IP addresses available on
-the client; this being a virtual address that accepts traffic on
-either physical interface. The question then became: given a valid
-address-based Kerberos TGT, can one obtain address-*less* service
-tickets? We observed that forwarding a address-based TGT through
-SSH produced an address-less TGT on the target host. We subsequently
-navigated both the `openssh` and `mitkrb5` code base to investigate
-the issue. This was fun.
+    on Oracle security integration into an existing, rich Kerberos infrastructure
+    when we found an issue where the (non-`mitkrb5`) library Oracle uses for
+    Kerberos operations rejected the valid service ticket presented by the
+    client. The issue was that the ticket did not include one of the three
+    available IP addresses available on the client; this being a virtual address
+    that accepts traffic on either physical interface. The question then became:
+    given a valid address-based Kerberos TGT, can one obtain address-*less*
+    service tickets? We observed that forwarding a address-based TGT through SSH
+    produced an address-less TGT on the target host. We subsequently navigated
+    both the `openssh` and `mitkrb5` code base to investigate the issue. This was
+    fun.
 
 ### biographical
 
@@ -107,8 +106,8 @@ childhood coming back from school and watching two out of three *Star
 Wars* movies before starting my homework.[^homework]
 
 [^homework]: This is an example of why the US is falling behind in
-the global education race. But, the benefit of this particular example
-is that I probably can recite each script in its entirety.
+    the global education race. But, the benefit of this particular example
+    is that I probably can recite each script in its entirety.
 
 My father worked at IBM for over 30 years and consequently had copious
 amounts of computer hardware lying around the house. It was only a

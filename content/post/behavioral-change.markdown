@@ -19,7 +19,7 @@ change**. That's why high prices of oil are good for exactly
 one reason: it encourages positive behavioral change toward
 efficiency.[^1]
 
-[^1]: Granted, the fact that it may mean less food for some families
-suck. This is a consequence and a testimony to the power of economics
-and proper planning, at both the macro- and microeconomic scale.
+[^1]: Granted, the fact that it may mean less food for some families suck. This
+    is a consequence and a testimony to the power of economics and proper planning,
+    at both the macro- and microeconomic scale.
 

@@ -22,8 +22,8 @@ unintelligible. **"I will attract sexy women with a better picture
 using advanced settings!"**, I exclaimed! [^1]
 
 [^1]: Well, I didn't actually say or think that. In reality, I
-knew that watching old episodes of Battlestar Galactica alone might
-look better.
+    knew that watching old episodes of Battlestar Galactica alone might
+    look better.
 
 [tv]: http://reviews.cnet.com/flat-panel-tvs/samsung-ln-t3253h/4869-6482_7-32306314.html?messageSiteID=7&amp;messageID=2408576&amp;cval=2408576;2425005&amp;ctype=msgid;cmsgid&amp;commentMessageID=2425005
 
@@ -90,4 +90,4 @@ My advice? **Don't mess with the service menu unless you actually know
 what you're doing**, regardless of level of intellectual curiosity.[^that]
 
 [^that]: That said, you can get to it on Samsung TVs by pressing
-"Mute", 1, 8, 2, "Power", one after the other. Caveat emptor.
+    "Mute", 1, 8, 2, "Power", one after the other. Caveat emptor.

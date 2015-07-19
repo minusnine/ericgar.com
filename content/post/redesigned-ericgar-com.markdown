@@ -34,7 +34,7 @@ The source for this blog is [available on GitHub][repo]. Let me know
 if anything is broken.[^old] 
 
 [^old]: Admittedly, I haven't taken the time to make
-all posts prior to those on the front page XHTML Strict compliant as
-it would take too much time.
+    all posts prior to those on the front page XHTML Strict compliant as
+    it would take too much time.
 
 [repo]: http://github.com/minusnine/ericgar.com
