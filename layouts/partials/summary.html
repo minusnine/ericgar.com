@@ -1,0 +1,13 @@
+<div id="summary">
+  <ul class=summary">
+    {{ range first 10 .Data.Pages }}
+      <div class="summary">
+        <h4><a href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
+        {{ .Summary }}
+        {{ if .Truncated }}
+          <a class="read-more-link" href="{{ .RelPermalink }}">Read More…</a>
+        {{ end }}
+      </div>
+    {{ end }}
+  </ul>
+</div>

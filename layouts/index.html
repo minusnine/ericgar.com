@@ -1,18 +1,22 @@
 {{ partial "header.html" . }}
 
 <div id='posts'>
-  {{ range .Paginator.Pages }}
-    <div class="post">
-      <div class="post_header">
-          <h2><a href="{{ .Permalink }}" title="[Permalink] {{ .Title }}" >{{ .Title }}</a></h2>
-          <div class="post_date">{{ .Date.Format "Monday January 2, 2006" }}</div>
+  {{ if eq .Paginator.PageNumber 1 }}
+    {{ range first 1 .Data.Pages }}
+      <div class="post">
+        <div class="post_header">
+            <h2><a href="{{ .Permalink }}" title="[Permalink] {{ .Title }}" >{{ .Title }}</a></h2>
+            <div class="post_date">{{ .Date.Format "Monday January 2, 2006" }}</div>
+        </div>
+        <div class="post_content">
+        {{ .Content }}
+        </div>
       </div>
-      <div class="post_content">
-      {{ .Content }}
-      </div>
-    </div>
+    {{ end }}
   {{ end }}
 </div>
+
+{{ partial "summary.html" . }}
 
 <div class="paginator">
   {{ if .Paginator.HasNext }}
