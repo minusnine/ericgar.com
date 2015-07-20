@@ -19,11 +19,11 @@
   {{ if .Paginator.HasNext }}
   <a href="{{ .Paginator.Next.URL }}">&larr; Older Post</a>
   {{ end }}
-  {{ if .Paginator.HasPrev }}
+  {{ if .Paginator.HasNext }}
       &mdash;
   {{ end }}
   <a href="/post">All Posts</a>
-  {{ if .Paginator.HasNext }}
+  {{ if .Paginator.HasPrev }}
       &mdash;
   {{ end }}
   {{ if .Paginator.HasPrev }}
