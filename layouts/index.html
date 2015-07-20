@@ -14,15 +14,20 @@
   {{ end }}
 </div>
 
+
 <div class="paginator">
   {{ if .Paginator.HasNext }}
-  <a href="{{ .Paginator.Next.URL }}">&larr; Older Posts</a>
+  <a href="{{ .Paginator.Next.URL }}">&larr; Older Post</a>
   {{ end }}
-  {{ if and .Paginator.HasNext .Paginator.HasPrev }}
+  {{ if .Paginator.HasPrev }}
+      &mdash;
+  {{ end }}
+  <a href="/post">All Posts</a>
+  {{ if .Paginator.HasNext }}
       &mdash;
   {{ end }}
   {{ if .Paginator.HasPrev }}
-  <a href="{{ .Paginator.Prev.URL }}">Newer Posts &rarr;</a>
+  <a href="{{ .Paginator.Prev.URL }}">Newer Post &rarr;</a>
   {{ end }}
 </div>
 
