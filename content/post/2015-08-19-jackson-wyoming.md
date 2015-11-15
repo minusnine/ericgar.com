@@ -1,6 +1,5 @@
 +++
-date = "2015-08-19T13:14:20-04:00"
-draft = true
+date = "2015-11-14T13:14:20-04:00"
 title = "Trip Report: Jackson, WY"
 
 +++
