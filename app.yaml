@@ -6,11 +6,9 @@ api_version: go1
 default_expiration: "30d"
 
 handlers:
-- url: /(.*\.atom)
-  mime_type: application/atom+xml
-  static_files: public/\1
-  upload: public/(.*\.atom)
-  expiration: "1h"
+- url: /admin/(.*)
+  script: _go_app
+  login: admin
   secure: always
 
 - url: /(.*\.css)
