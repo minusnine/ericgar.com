@@ -1,14 +1,10 @@
 package ericgar
 
+/*
 import (
 	"crypto"
 	"crypto/ecdsa"
-	"fmt"
 	"net/http"
-
-	"google.golang.org/appengine"
-	"google.golang.org/appengine/urlfetch"
-	"google.golang.org/appengine/user"
 
 	"github.com/xenolf/lego/acme"
 )
@@ -30,6 +26,7 @@ func (au *acmeUser) GetEmail() string                            { return au.Ema
 func (au *acmeUser) GetRegistration() *acme.RegistrationResource { return au.Reg }
 func (au *acmeUser) GetPrivateKey() crypto.PrivateKey            { return au.key }
 
+/*
 func newCert(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	u := user.Current(ctx)
@@ -67,3 +64,4 @@ func newCert(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Cert:\n\n%v\n\n", certs.Certificate)
 	fmt.Fprintf(w, "Private Key:\n\n%v", certs.PrivateKey)
 }
+*/
