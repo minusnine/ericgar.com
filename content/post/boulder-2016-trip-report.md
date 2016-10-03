@@ -1,6 +1,5 @@
 +++
 date = "2016-09-08T00:26:52Z"
-draft = true
 title = "Boulder Trip Report"
 
 +++

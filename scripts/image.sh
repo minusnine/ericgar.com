@@ -19,5 +19,4 @@ dir=`dirname $DEST`
 base=`basename $DEST`
 suffix
 
-wget -O ${DEST?} $URL \
-	&& convert $DEST -resize 582 ${base}_small
+convert $DEST -resize 582 ${base}_small
