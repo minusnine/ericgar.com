@@ -10,6 +10,8 @@ year](https://ericgar.com/2015/07/19/denver-trip-report/), I wanted to
 show Yuko around Boulder a bit. Benny was going back to GopherCon, so the
 two couples scheduled an extended weekend for sightseeing.
 
+{{< figure src="/images/post/boulder-trip-report/rmnp.jpg" link="/images/post/boulder-trip-report/rmnp_original.jpg" caption="Emerald Lake, Rocky Mountain National Park.">}}
+
 ## Day 1
 
 Yuko and I were meeting some friends at the airport who took a later flight, so
@@ -66,6 +68,8 @@ right on the way to RMNP with some good sandwich selections and homemade bread.
 They have a $9 special for a sandwich, chips or apple, and a cookie, packed in
 a bag.
 
+{{< figure src="/images/post/boulder-trip-report/emerald_lake.jpg" link="/images/post/boulder-trip-report/emerald_lake_original.jpg" caption="Along the hike to Emerald Lake, Rocky Mountain National Park.">}}
+
 **[Emerald Lake
 Hike](http://www.rockymountainhikingtrails.com/emerald-lake.htm)**: We hiked to
 Emerald Lake, which passes two other small lakes and is connected to the every
@@ -96,7 +100,7 @@ stop at scenic overlooks.
 **[Avery Brewing](https://www.averybrewing.com/)**: This is my second visit in
 two trips to this brewery and I really like it. The beer is phenomenal, the
 food is good, and the outdoor patio is host to so many cute dogs. The Chai
-High, the Tweak, and the Dyanisian Series at the time were my favorite. Get
+High, the Tweak, and the Dionisian Series at the time were my favorite. Get
 anything aligned with your beer interest that is a “Tap Room Rarity” and stay
 for a while.
 
@@ -182,6 +186,8 @@ supply.
 The plan for the day was for me and Benny to get up early for a bike ride in
 the hills and to meet up with our wives after.
 
+{{< figure src="/images/post/boulder-trip-report/flagstaff.jpg" link="/images/post/boulder-trip-report/flagstaff_original.jpg" caption="Near the end of a hot ride at Sunrise Ampitheater, near the Flagstaff summit.">}}
+
 **[The Cup Espresso](http://www.thecupboulder.com/)**: Open early, we got a
 bagel breakfast sandwich and an espresso before heading out, just as I did last
 year.
@@ -234,3 +240,5 @@ departing for the airport. The service was good and the food was fine. For the
 same reason I don’t go to church, I’m suspect of any place that heavily
 advertises an ideology of $180 3-day juice cleanses being good for your health,
 though.
+
+{{< figure src="/images/post/boulder-trip-report/alpine.jpg" link="/images/post/boulder-trip-report/alpine_original.jpg" caption="A view from the summit near Alpine Visitor Center.">}}
