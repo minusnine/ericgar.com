@@ -2,7 +2,7 @@ baseurl = "http://ericgar.com/"
 languageCode = "en-us"
 builddrafts = false
 title = "Eric Garrido - ericgar.com"
-paginate = 2
+paginate = 1
 
 [permalinks]
   post = "/:year/:month/:day/:filename/"
