@@ -9,71 +9,71 @@ handlers:
 - url: /admin/(.*)
   script: _go_app
   login: admin
-  secure: always
+  # secure: always
 
 - url: /(.*\.css)
   mime_type: text/css
   static_files: public/\1
   upload: public/(.*\.css)
-  secure: always
+  # secure: always
 
 - url: /(.*\.html)
   static_files: public/\1
   upload: public/(.*\.html)
   expiration: "1h"
-  secure: always
+  # secure: always
 
 - url: /(.*\.ico)
   mime_type: image/x-icon
   static_files: public/\1
   upload: public/(.*\.ico)
   expiration: "7d"
-  secure: always
+  # secure: always
 
 - url: /(.*\.js)
   mime_type: text/javascript
   static_files: public/\1
   upload: public/(.*\.js)
-  secure: always
+  # secure: always
 
 - url: /(.*\.json)
   mime_type: application/json
   static_files: public/\1
   upload: public/(.*\.json)
   expiration: "1h"
-  secure: always
+  # secure: always
 
 - url: /(.*\.rss)
   mime_type: application/rss+xml
   static_files: public/\1
   upload: public/(.*\.rss)
   expiration: "1h"
-  secure: always
+  # secure: always
 
 - url: /(.*\.txt)
   mime_type: text/plain
   static_files: public/\1
   upload: public/(.*\.txt)
-  secure: always
+  # secure: always
 
 - url: /(.*\.webp)
   mime_type: image/webp
   static_files: public/\1
   upload: public/(.*\.webp)
-  secure: always
+  # secure: always
 
 - url: /(.*\.xml)
   mime_type: application/xml
   static_files: public/\1
   upload: public/(.*\.xml)
   expiration: "1h"
-  secure: always
+  # secure: always
 
 # image files
 - url: /(.*\.(bmp|gif|ico|jpeg|jpg|png|JPG))
   static_files: public/\1
   upload: public/(.*\.(bmp|gif|ico|jpeg|jpg|png|JPG))
-  secure: always
+  # secure: always
 
 # letsencrypt challenges
 - url: /\.well-known/acme-challenge/(.+)
@@ -88,17 +88,17 @@ handlers:
   static_files: public/\1/index.html
   upload: public/(.+)/index.html
   expiration: "15m"
-  secure: always
+  # secure: always
 
 - url: /(.+)
   static_files: public/\1/index.html
   upload: public/(.+)/index.html
   expiration: "15m"
-  secure: always
+  # secure: always
 
 # site root
 - url: /
   static_files: public/index.html
   upload: public/index.html
   expiration: "15m"
-  secure: always
+  # secure: always

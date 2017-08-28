@@ -1,22 +1,5 @@
 #!/bin/bash
 
-while getopt "u:d" opt; do
-  case $opt in
-    u)
-      URL=$OPTARG
-      ;;
-    d)
-      DEST=$OPTARG
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
-      ;;
-  esac
+for i in *.jpg; \
+  do convert $i -resize 582 $(basename $i .jpg)_small.jpg; \
 done
-
-dir=`dirname $DEST`
-base=`basename $DEST`
-suffix
-
-convert $DEST -resize 582 ${base}_small
