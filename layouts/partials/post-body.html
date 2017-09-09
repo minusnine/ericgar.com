@@ -1,0 +1,9 @@
+<article>
+  <div class="post-header">
+    <h1><a href="{{ .Permalink }}" title="[Permalink] {{ .Title }}" >{{ .Title }}</a></h1>
+    <time>{{ .Date.Format "2 January 2006" }}</time>
+  </div>
+  <div class="post-content">
+  {{ .Content }}
+  </div>
+</article>

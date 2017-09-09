@@ -1,17 +1,15 @@
 {{ partial "header.html" . }}
 
-<div id="main">
-  <div>
-   <h1 id="title">{{ .Title }}</h1>
-        <ul id="archive">
-          {{ range .Data.Pages.ByDate.Reverse }}
-          <li>
-            <a href="{{ .Permalink }}">{{ .Title }}</a>
-            <time style="float: right">{{ .Date.Format "2 January 2006" }}</time>
-          </li>
-          {{ end }}
-        </ul>
-  </div>
+<div id="content">
+  <h2 id="title">{{ .Title }}</h2>
+  <ul id="archive">
+    {{ range .Data.Pages.ByDate.Reverse }}
+      <li>
+        <a href="{{ .Permalink }}">{{ .Title }}</a>
+        <time>{{ .Date.Format "2 January 2006" }}</time>
+      </li>
+    {{ end }}
+  </ul>
 </div>
 
 {{ partial "footer.html" . }}

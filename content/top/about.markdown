@@ -1,8 +1,7 @@
 ---
 title: About
+date: 2010-10-01
 ---
-
-## about me
 
 {{< figure src="/about/IMG_2194_lo.JPG" >}}
 
@@ -11,24 +10,7 @@ title: About
 * **Email**: <a href="mailto:eric@ericgar.com">eric@ericgar.com</a>
 * **Phone**: <a href="tel:+1-601-884-0354">601-884-0354</a>
 * **Web**: <a href="http://ericgar.com">http://ericgar.com</a>
-* **Google+**: <a href="https://plus.google.com/112531583832022190935">Eric Garrido</a>
-* **XMPP**: <a href="xmpp:eric@ericgar.com">eric@ericgar.com</a>
-* **Twitter**: <a href="http://www.twitter.com/minusnine">minusnine</a>
 * **GitHub**: <a href="http://www.github.com/minusnine">minusnine</a>
-* **Instagram**: <a href="https://instagram.com/minusn1ne/">minusnine</a>
-
-
-#### gpg public key fingerprint
-
-<br />
-
-<pre>
-pub   4096R/EDF93F67 2010-07-01
-      Key fingerprint = <a href="/about/gpg.asc">7964 43A2 9880 1FE2 A008  824D DA84 8148 EDF9 3F67</a>
-uid                  Enrique Kresla Garrido (Eric) &lt;eric@ericgar.com&gt;
-sub   4096R/01462932 2010-07-01
-</pre>
-
 
 ### ethos
 
@@ -113,7 +95,7 @@ Wars* movies before starting my homework.[^homework]
 
 My father worked at IBM for over 30 years and consequently had copious
 amounts of computer hardware lying around the house. It was only a
-matter of time before I started hacking on a bunch of Model Ms.
+matter of time before I started pounding on a bunch of Model Ms.
 
 I had the benefit of spending most of my senior year of high school
 at Bard College, taking science and math classes at a hugely reduced

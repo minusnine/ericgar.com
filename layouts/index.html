@@ -1,34 +1,23 @@
 {{ partial "header.html" . }}
 
-<div id='posts'>
-  {{ range .Paginator.Pages }}
-    <div class="post">
-      <div class="post_header">
-          <h2><a href="{{ .Permalink }}" title="[Permalink] {{ .Title }}" >{{ .Title }}</a></h2>
-          <div class="post_date">{{ .Date.Format "Monday January 2, 2006" }}</div>
-      </div>
-      <div class="post_content">
-      {{ .Content }}
-      </div>
-    </div>
-  {{ end }}
+<div id="content">
+  <div id="posts">
+    {{ range .Paginator.Pages }}
+      {{ partial "post-body.html" . }}
+    {{ end }}
+  </div>
 </div>
 
-
-<div class="paginator">
+<nav id="paginator">
   {{ if .Paginator.HasNext }}
-  <a href="{{ .Paginator.Next.URL }}">&larr; Older Post</a>
+    <a href="{{ .Paginator.Next.URL }}">&larr; Older Post</a>
+    &mdash;
   {{ end }}
-  {{ if .Paginator.HasNext }}
-      &mdash;
-  {{ end }}
-  <a href="/post">All Posts</a>
+  <a href="/post">Post List</a>
   {{ if .Paginator.HasPrev }}
-      &mdash;
+    &mdash;
+    <a href="{{ .Paginator.Prev.URL }}">Newer Post &rarr;</a>
   {{ end }}
-  {{ if .Paginator.HasPrev }}
-  <a href="{{ .Paginator.Prev.URL }}">Newer Post &rarr;</a>
-  {{ end }}
-</div>
+</nav>
 
 {{ partial "footer.html" . }}

@@ -1,199 +1,146 @@
-
 body {
-    margin: 0;
-    font-family: Verdana,Arial,Helvetica,sans-serif;
-    font-size: 0.85em;
-    padding-top: 30px;
+  font-family: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
 }
 
-a { color: black; }
-    a:visited { color: black; }
-    a:hover   { color: black; } 
-
-div#site_title {
-    color: white;
-    text-decoration: none;
+#container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
 }
 
-#sidebar {
-    border-left: 1px dotted #CCCCCC;
-    padding: 0 0 10px 20px;
+#container a { 
+  color: black;
 }
 
-.post {
-    margin-bottom: 5em;
-    border-bottom: 1px dotted #CCCCCC;
+#header {
+  flex-grow: 1;
+  width: 20%;
 }
 
-.post_header {
-    margin-bottom: 8px;
+#header > h1 {
+  margin-bottom: 0;
 }
 
-.post_header h2 {
-    margin-bottom: 0;
+.site-title a {
+  text-decoration: none;
 }
 
-.post_header a {
-    color: black;
-    text-decoration: none;
-    text-transform: lowercase; 
-    font-size: 95%;
+#header nav > a {
+  /* Make the links in the header be vertically stacked. */
+  display: block;
+  text-decoration: none;
+  margin-left: 2em;
 }
 
-.post_date {
-    font-size: 0.85em; 
-    color: #808080;
+#content {
+  flex-grow: 1;
+  width: 80%;
 }
 
-.post_content a, .archive a, div#about a {
-    border-bottom: 1px dotted #888888;
-    text-decoration: none;
-}
-
-.post_content a:hover, .archive a:hover, div#about a:hover {
-    border-bottom: 1px dashed #888888;
-    text-decoration: none;
-    
-}
-
-.post_content h3 {
-    text-transform: lowercase;
-}
-
-.post_content .img_link {
-    margin-left: 50px;
-}
-
-.post_content .img_link, .post_content .img_link:hover  {
-    border-bottom: none;
-}
-
-blockquote {
-    border-left: 5px solid #CCCCCC;
-    margin-left: 1.5em;
-    padding-left: 5px;
-}
-
-.post_image {
-    border: 1px solid black;
-    margin: 1em;
-}
-
-.footnotes hr {
-    border-bottom: 1px solid #CCCCCC;
-    border-top: 1px dashed #CCCCCC;
-    height: 4px;
-    border-right: none;
-    border-left: none;
-}
-
-.footnotes p {
+/* Responsive layout - when the screen is less than 600px wide, make the three
+ * columns stack on top of each other instead of next to each other
+ */
+@media (max-width: 600px) {
+  #header {
+    width: 100%;
+  }
+  #content {
+    width: 100%;
+  }
+  #header nav > a {
+    /* Make the links in the header be horizontally stacked. */
     display: inline;
+    margin-left: 0;
+    margin-right: 0.2em;
+  }
 }
 
-.post_permalink {
-    text-align: right;
-}
-
-div#sidebar {
-    padding-top: 1em;
-}
-
-div#sidebar ul {
-    margin: 0;
-    padding: 0;
-}
-
-div#sidebar li {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-div#sitenav li {
-    font-size: 95%;
-    padding-left: 3px;
-    margin: 0;
-}
-
-div#sitenav a {
-    color: #000000;
-    text-decoration: none;
-}
-
-div#blogroll h4 {
-    font-size: 95%;
-    margin: 15px 0 2px;
-    color: #CCCCCC;
-}
-
-div#blogroll a { 
-    color: #000000;
-    text-decoration: none;
-}
-
-div#blogroll li {
-    font-size: 95%;
-    padding-left: 3px;
-    margin: 0;
+#paginator {
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
 #footer {
-    clear: both;
+  width: 100%;
+  text-align: center;
 }
 
-.credit {
-    color: #666666;
-    font-size: 0.8em;
-    padding: 50px 0 0;
-    clear: both;
+#posts {
+  justify-content: center;
 }
 
-#mepic {
-    float: right;
-    border: 1px solid black;
-    margin-right: 10em;
+article { 
+  width: 582px;
+
+  font-size: 16px;
+  font-family: medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif;
 }
 
-div.gsc-control-cse {
-    padding: 0 !important; 
+article a {
+  color: black;
+}
+article a:visited { 
+  color: black;
+}
+article a:hover { 
+  color: black;
+} 
+
+article p {
+  line-height: 1.4;*/
 }
 
-input.gsc-input {
-    width: 97% !important;
-}
-
-ul.archive {
-    margin: 0;
-    padding: 0;
-}
-
-ul.archive li {
-    list-style-type: none;
-}
-
-ul.archive span.date {
-}
-
-span.date span.year {
-    width: 3em; 
-    float: left;
-}
-
-span.date span.month {
-    width: 2.5em; 
-    float: left;
-}
-
-span.date span.day {
-    width: 2.5em; 
-    float: left;
-}
-
-ul.archive a {
-    text-transform: lowercase;
-}
-
-figure {
+article figure {
+  /* Align left edge of image to left edge of text. */
   margin: 0;
+}
+
+.post-header {
+  margin-bottom: 1em;
+}
+
+.post-header time {
+  color: #666666;
+}
+
+.post-header a {
+  color: black;
+  text-decoration: none;
+  font-family: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
+}
+
+.post-header h1 {
+  /* Squish date to just below the post title. */
+  margin-bottom: 0;
+}
+
+.post-content h2 {
+  margin: 0;
+}
+
+.post-content p {
+  margin-top: 0;
+}
+
+#archive {
+  width: 582px;
+  margin-top: 0;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#archive > li {
+  list-style-type: none;
+}
+
+#archive > li > time {
+  float: right;
+}
+
+#credit {
+  /* Make the copyright and license notice smaller and lighter. */
+  color: #666666;
+  font-size: 0.8em;
+  margin-top: 2em;
 }

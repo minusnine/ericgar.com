@@ -1,4 +1,4 @@
-baseurl = "http://ericgar.com/"
+baseurl = "https://ericgar.com/"
 languageCode = "en-us"
 builddrafts = false
 title = "Eric Garrido - ericgar.com"
