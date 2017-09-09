@@ -1,27 +1,27 @@
 {{ partial "header.html" . }}
 
-<div class="post">
-    <div class="post_header">
+<div id="content">
+  <div class="post">
+    <div class="post-header">
       <h2><a href="{{ .Permalink }}" title="[Permalink] {{ .Title }}" >{{ .Title }}</a></h2>
-        <div class="post_date">{{ .Date.Format "Monday January 2, 2006" }}</div>
+      <div class="post-date">{{ .Date.Format "2 January 2006" }}</div>
     </div>
-    <div class="post_content">
+    <div class="post-content">
     {{ .Content }}
     </div>
+  </div>
 </div>
 
-<div class="paginator">
-    {{ if .Prev }}
+<div id="paginator">
+  {{ if .Prev }}
     <a href="{{ .Prev.Permalink }}" title="{{ .Prev.Title }}">&larr; Previous Post</a>
-    {{ end }}
-    {{ if .Prev }}
-      &mdash;
-    {{ end }}
-    {{ if .Next }}
-      <a href="{{ .Next.Permalink }}" title="{{ .Next.Title }}">Next Post &rarr;</a>
-    {{ end }}
+    &mdash;
+  {{ end }}
+  <a href="/post">Post List</a>
+  {{ if .Next }}
+    &mdash;
+    <a href="{{ .Next.Permalink }}" title="{{ .Next.Title }}">Next Post &rarr;</a>
+  {{ end }}
 </div>
-
-<div class="clear_both"></div>
 
 {{ partial "footer.html" . }}
