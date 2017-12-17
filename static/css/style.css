@@ -22,6 +22,7 @@ body {
 }
 
 .site-title a {
+  font-size: 0.6em;
   text-decoration: none;
 }
 
@@ -29,7 +30,7 @@ body {
   /* Make the links in the header be vertically stacked. */
   display: block;
   text-decoration: none;
-  margin-left: 2em;
+  margin-left: 0.5em;
 }
 
 #content {
