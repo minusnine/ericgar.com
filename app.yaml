@@ -59,6 +59,12 @@ handlers:
   static_files: public/\1
   upload: public/(.*\.webp)
   # secure: always
+  #
+- url: /(.*\.webm)
+  mime_type: video/webm
+  static_files: public/\1
+  upload: public/(.*\.webm)
+  # secure: always
 
 - url: /(.*\.xml)
   mime_type: application/xml
