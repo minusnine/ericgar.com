@@ -4,10 +4,11 @@
     <title>{{ .Title }}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href='/images/layout/favicon.ico' rel='shortcut icon' type='image/ico' />
-    <link type="text/css" href="/css/style.css" rel="stylesheet" />
     <link rel="alternate" type="application/atom+xml" title="ericgar.com - Atom" href="/feed/atom/" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Spectral+SC">
+
+    {{ with resources.Get "css/style.css" | minify }}
+    <style>{{ .Content | safeCSS }}</style>
+    {{ end }}
 
     <meta name="viewport" content="width=device-width" />
   </head>
