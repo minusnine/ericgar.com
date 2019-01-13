@@ -1,5 +1,5 @@
 ---
-title: "Tel Aviv, Israel"
+title: "Trip Report: Tel Aviv, Israel"
 date: 2019-01-12
 
 resources:
