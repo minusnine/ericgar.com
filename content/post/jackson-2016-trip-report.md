@@ -1,6 +1,6 @@
 +++
 date = "2016-09-27T00:26:52Z"
-title = "Grand Teton Trip Report"
+title = "Trip Report: Grand Teton National Park"
 +++
 
 {{< figure src="/images/post/jackson-hole-2016/IMG_20160920_161644_small.jpg" link="/images/post/jackson-hole-2016/IMG_20160920_161644.jpg">}}

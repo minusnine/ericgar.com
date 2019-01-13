@@ -1,6 +1,6 @@
 +++
 date = "2016-09-08T00:26:52Z"
-title = "Boulder Trip Report"
+title = "Trip Report: Boulder, Colorado"
 
 +++
 

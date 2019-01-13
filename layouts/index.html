@@ -6,18 +6,18 @@
       {{ partial "post-body.html" . }}
     {{ end }}
   </div>
-</div>
 
-<nav id="paginator">
-  {{ if .Paginator.HasNext }}
-    <a href="{{ .Paginator.Next.URL }}">&larr; Older Post</a>
-    &mdash;
-  {{ end }}
-  <a href="/post">Post List</a>
-  {{ if .Paginator.HasPrev }}
-    &mdash;
-    <a href="{{ .Paginator.Prev.URL }}">Newer Post &rarr;</a>
-  {{ end }}
-</nav>
+  <nav id="paginator">
+    {{ if .Paginator.HasNext }}
+      <a href="{{ .Paginator.Next.URL }}">&larr; Older Posts</a>
+      &mdash;
+    {{ end }}
+    <a href="/post">Post List</a>
+    {{ if .Paginator.HasPrev }}
+      &mdash;
+      <a href="{{ .Paginator.Prev.URL }}">Newer Posts &rarr;</a>
+    {{ end }}
+  </nav>
+</div>
 
 {{ partial "footer.html" . }}
