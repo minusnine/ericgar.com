@@ -3,6 +3,14 @@ api_version: go1
 
 default_expiration: "30d"
 
+skip_files:
+- content/
+- drafts/
+- layouts/
+- resources/
+- scripts/
+- static/
+
 handlers:
 - url: /admin/(.*)
   script: _go_app
