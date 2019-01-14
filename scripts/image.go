@@ -29,10 +29,10 @@ var (
 
 func main() {
 	flag.Parse()
-	if len(flag.Args()) != 2 {
+	if len(flag.Args()) != 1 {
 		log.Exit("Requires directory argument")
 	}
-	photoDir := flag.Arg(1)
+	photoDir := flag.Arg(0)
 
 	httpClient, err := oauthHTTPClient(context.Background(), *clientSecretPath)
 	if err != nil {
