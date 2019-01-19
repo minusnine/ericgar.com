@@ -9,7 +9,7 @@
 
   <nav id="paginator">
     {{ if .Paginator.HasNext }}
-      <a href="{{ .Paginator.Next.URL }}">&larr; Older Posts</a>
+      <a class="pagination__next" href="{{ .Paginator.Next.URL }}">&larr; Older Posts</a>
       &mdash;
     {{ end }}
     <a href="/post">Post List</a>

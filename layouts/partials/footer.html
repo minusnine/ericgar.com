@@ -8,5 +8,15 @@
         </div>
       </div> 
     </div> 
+
+    <script defer>
+      window.addEventListener('DOMContentLoaded', function() {
+        var infScroll = new InfiniteScroll( '#posts', {
+          path: '.pagination__next',
+          append: 'article',
+          history: true,
+        })
+      })
+    </script>
   </body>
 </html>
