@@ -1,6 +1,8 @@
 ---
 title: "Trip Report: Sonoma Valley, California"
 date: 2019-01-13
+taxonomies:
+  tag: travel
 
 resources:
 - name: ":counter.jpg"

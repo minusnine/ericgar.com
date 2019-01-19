@@ -1,6 +1,8 @@
 ---
 title: "Trip Report: Boulder, Colorado (2018)"
 date: 2019-01-13
+taxonomies:
+  tag: travel
 
 resources:
 - name: ":counter.jpg"

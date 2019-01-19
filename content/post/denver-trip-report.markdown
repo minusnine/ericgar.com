@@ -1,7 +1,8 @@
-+++
-date = "2015-07-19"
-title = "Trip Report: Denver and Boulder, Colorado"
-+++
+---
+date: "2015-07-19"
+title: "Trip Report: Denver and Boulder, Colorado"
+tag: travel
+---
 
 I had the fine fortune of attending [Gophercon
 2015](http://www.gophercon.com/), a conference to celebrate my current favorite

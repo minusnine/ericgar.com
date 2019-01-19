@@ -1,8 +1,9 @@
-+++
-date = "2015-11-14T13:14:20-04:00"
-title = "Trip Report: Jackson, WY"
-
-+++
+---
+date: "2015-11-14T13:14:20-04:00"
+title: "Trip Report: Jackson, WY"
+taxonomies:
+  tag: travel
+---
 
 Yuko and I took a trip to Jackson, WY after falling in love with the Four
 Seasons there (where we ultimately didn't stay). We used a voucher from Delta,

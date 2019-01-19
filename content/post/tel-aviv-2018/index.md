@@ -1,6 +1,8 @@
 ---
 title: "Trip Report: Tel Aviv, Israel"
 date: 2019-01-12
+taxonomies:
+  tag: travel
 
 resources:
 - name: ":counter.jpg"

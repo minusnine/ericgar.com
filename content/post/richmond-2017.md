@@ -1,6 +1,8 @@
 ---
 title: "Trip Report: Richmond, Virgina"
 date: 2017-09-09T01:26:27Z
+taxonomies:
+  tag: travel
 ---
 
 Yuko and I travelled to Richmond, Virginia, aka RVA, to meet up with some

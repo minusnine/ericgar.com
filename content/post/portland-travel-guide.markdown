@@ -3,6 +3,7 @@ wordpress_id: "725"
 wordpress_url: "http://ericgar.com/?p=725"
 title: "Portland Travel Guide"
 date: "2010-07-25"
+tag: travel
 ---
 I had a wonderful opportunity to spend the last few days in Portland,
 Oregon in advance of attending OSCON. I can honestly say that of all

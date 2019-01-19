@@ -1,8 +1,9 @@
-+++
-date = "2016-09-08T00:26:52Z"
-title = "Trip Report: Boulder, Colorado"
-
-+++
+---
+date:  "2016-09-08T00:26:52Z"
+title: "Trip Report: Boulder, Colorado"
+taxonomies:
+  tag: travel
+---
 
 After [my great experience after GopherCon last
 year](https://ericgar.com/2015/07/19/denver-trip-report/), I wanted to

@@ -1,6 +1,8 @@
 ---
 title: "Trip Report: Copenhagen and Sweden 2018"
 date: 2018-08-19T01:26:27Z
+taxonomies:
+  tag: travel
 ---
 
 {{<figure src="/images/post/sweden-2018/IMG_20180606_130022_small.jpg" link="/images/post/sweden-2018/IMG_20180606_130022.jpg">}}

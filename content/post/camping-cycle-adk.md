@@ -1,8 +1,9 @@
-+++
-date = "2016-09-04T14:07:17Z"
-title = "Camping During Cycle Adirondacks"
-
-+++
+---
+date: "2016-09-04T14:07:17Z"
+title: "Camping During Cycle Adirondacks"
+taxonomies:
+  tag: travel
+---
 
 Camping at [Cycle Adirondacks](http://www.cycleadirondacks.com/) was the first
 time in my adult life that I slept outside with a tent and a sleeping bag. When
