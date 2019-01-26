@@ -11,9 +11,8 @@ resources:
 
 {{< img "3.jpg" "James Canyon" >}}
 
-The original plan for me and my friend was [to skip the
-wedding](https://ericgar.com/2019/01/13/sonoma-2018/) and go on a guy's trip.
-The wives overruled that plan. But, since I was out west and had a bunch of
+Since I was out West already to [to attend a friend's
+wedding](https://ericgar.com/2019/01/13/sonoma-2018/) and had a bunch of
 vacation days to spare, I had really wanted to tack on a camping trip. Then I
 procrastinated on getting permits and finding an appropriate solo route. So I
 fell back to my old haunt of cycling in Boulder, Colorado.
