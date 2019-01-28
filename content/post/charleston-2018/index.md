@@ -1,5 +1,5 @@
 ---
-title: "Trip Report: Charleston, South Carolina(2018)"
+title: "Trip Report: Charleston, South Carolina (2018)"
 date: 2019-01-28
 taxonomies:
   tag: travel
