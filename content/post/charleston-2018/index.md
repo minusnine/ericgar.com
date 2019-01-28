@@ -191,10 +191,10 @@ what it must have been like to be a soldier stationed there during a siege.
 
 {{< img "6.jpg" "Peace Pie" >}}
 
-**[Peace Pie](https://peacepieworld.com/): "The ice cream sandwich with a layer
-of pie filling." Sold. We stopped by this place on the way back to our hotel to
-pick up out bags to go to the airport. The ice cream sandwiches were tasty and
-are a great concept, though they weren't my favorite.
+**[Peace Pie](https://peacepieworld.com/)**: "The ice cream sandwich with a
+layer of pie filling." Sold. We stopped by this place on the way back to our
+hotel to pick up out bags to go to the airport. The ice cream sandwiches were
+tasty and are a great concept, though they weren't my favorite.
 
 **[Holy City Brewing](https://holycitybrewing.com/)**: We still had time to
 kill, so we picked up our bags and got
