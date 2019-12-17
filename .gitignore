@@ -1,3 +1,5 @@
 _site/
 scripts/scripts
 resources/
+.firebase
+.firebase/.*cache
