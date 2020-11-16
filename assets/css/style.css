@@ -1,20 +1,51 @@
 body {
+  /* Get the content to be flush with the left hand side of the screen.
+   * Sub-divs will handle the margin. */
+  margin: 0px;
   font-family: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
 }
 
 #container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns:
+    1fr
+    min(600px, 100%)
+    1fr;
+}
+
+#container > * {
+  /* Place the content in the middle column. */
+  grid-column: 2;
+}
+
+.full-bleed {
+  /* Make the fullbleed content span across the entire 
+   * width of the page. 
+   *
+   * This class only works in direct descendants of #container. :-(
+   * */
+  width: 100%;
+  grid-column: 1 / -1;
 }
 
 #container a { 
+  /* Make links less distracting from the text body. */
   color: black;
 }
 
 #header {
-  flex-grow: 1;
-  width: 20%;
+  /* Place the header in the left-hand column. */
+  grid-column: 1;
+  
+  /* Float the header. */
+  position: fixed;
+  top: 0;
+}
+
+#header > * {
+  /* Restore the margin that we took away from the body, above. This
+   * allows the header line to be flush with the page edge. */
+  margin-left: 8px;
 }
 
 #header > h1 {
@@ -34,35 +65,57 @@ body {
 }
 
 #content {
-  flex-grow: 1;
-  width: 80%;
+  /* Restore the margin that we took away from the body, above. This
+   * allows the header line to be flush with the page edge. */
+  margin-left: 8px;
+  margin-right: 8px;
 }
 
 /* Responsive layout - when the screen is less than 730px wide, make the
  * columns stack on top of each other instead of next to each other
+ *
+ * I could probably do a better job of figuring out when exactly do do this with better CSS, but I'm a noob, so here we are.
+ * 710px: width of div#content plus some padding
+ * 113px: width of the .site-title plus some padding
  */
-@media (max-width: 730px) {
+@media (max-width: calc(710px + 113px) ) {
+  #container {
+    /* Use a single grid column. */
+    grid-template-columns: 1fr;
+  }
+
   #header {
+    /* Make it fixed at the top of the screen. */
+    background-color: white;
     width: 100%;
+
+    /* Distinguish the header from the body text. */
+    border-bottom: 3px solid black;
+
+    /* Add some shadow at the bottom. */
+    box-shadow: 0 0 transparent, 0 0 transparent, 1px 3px 6px #00000026;
   }
-  #content {
-    width: 100%;
+
+  #header > h1 {
+    /* Move the header closer to the top. */
+    margin-top: 0px;
   }
+
   #header nav > a {
     /* Make the links in the header be horizontally stacked. */
     display: inline;
     margin-left: 0;
     margin-right: 0.2em;
   }
+
+  #content {
+    margin-top: 40px;
+  }
 }
 
 #paginator {
   width: 582px;
   text-align: center;
-  /*
-  display: block;
-  width: 100%;
-  */
 }
 
 #footer {
@@ -70,14 +123,8 @@ body {
   text-align: center;
 }
 
-#posts {
-  justify-content: center;
-}
-
 article { 
-  width: 582px;
-
-  font-size: 16px;
+  font-size: 1.125rem;
   font-family: medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif;
 }
 
@@ -90,9 +137,8 @@ article a:visited {
 article a:hover { 
   color: black;
 } 
-
 article p {
-  line-height: 1.4;*/
+  line-height: 1.4;
 }
 
 article figure {
@@ -128,7 +174,9 @@ article figure {
 }
 
 .post-content img {
-  margin-right: 8px;
+  /* Span from the left margin to the right margin. */
+  width: 100%;
+  grid-column: 1 / -1;
 }
 
 #archive {
