@@ -99,13 +99,21 @@ body {
   #header > h1 {
     /* Move the header closer to the top. */
     margin-top: 0px;
+    /* Place the title to the left of the nav bar. */
+    float: left;
+  }
+
+  #header > nav {
+    /* Position the links to be inline with the title. */
+    padding: 0.8em 0 0 0.5em;
+    margin-left: 9em;
   }
 
   #header nav > a {
     /* Make the links in the header be horizontally stacked. */
     display: inline;
     margin-left: 0;
-    margin-right: 0.2em;
+    margin-right: 2em;
   }
 
   #content {
@@ -146,23 +154,35 @@ article figure {
   margin: 0;
 }
 
-.post-header {
+article blockquote {
+  /* Add a border on the left and move the text away from it a bit. */
+  border-left: 5px solid lightgray;
+  padding-left: 5px;
+}
+
+article header {
   margin-bottom: 1em;
 }
 
-.post-header time {
+article header time {
   color: #666666;
 }
 
-.post-header a {
+article header a {
   color: black;
   text-decoration: none;
   font-family: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
 }
 
-.post-header h1 {
+article header h1 {
   /* Squish date to just below the post title. */
   margin-bottom: 0;
+}
+
+article ol {
+  /* Add some margin equivalent to article p to separate paragraphs from the
+   * list. */
+  margin-bottom: 1em;
 }
 
 .post-content h2 {
@@ -173,10 +193,16 @@ article figure {
   margin-top: 0;
 }
 
-.post-content img {
-  /* Span from the left margin to the right margin. */
+article img {
   width: 100%;
-  grid-column: 1 / -1;
+  margin-top: 5px;
+}
+
+article figcaption {
+  /* 18px is the same as p.margin-bottom. */
+  margin: 0px 0px 18px 0px;
+  font-style: italic;
+  text-align: center;
 }
 
 #archive {

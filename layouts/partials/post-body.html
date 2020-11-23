@@ -1,8 +1,8 @@
 <article>
-  <div class="post-header">
+  <header>
     <h1><a href="{{ .Permalink }}" title="[Permalink] {{ .Title }}" >{{ .Title }}</a></h1>
     <time>{{ .Date.Format "2 January 2006" }}</time>
-  </div>
+  </header>
   {{ if .Params.toc }}
     <div class="post-toc">
       {{ .TableOfContents }}
@@ -11,4 +11,12 @@
   <div class="post-content">
   {{ .Content }}
   </div>
+  {{ if and (gt .WordCount 400 ) (.Params.toc) }}
+  <aside>
+      <header>
+      <h2>{{.Title}}</h2>
+      </header>
+      {{.TableOfContents}}
+  </aside>
+  {{ end }}
 </article>
