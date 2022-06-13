@@ -8,7 +8,7 @@ resources:
    src: car-shop.jpg
 ---
 
-{{< img "car.jpg" "My Tesla Model Y" "Visting the <a href=\"https://lasdonpark.org/whats-new/\">Lasdon Park Dinosaur Garden</a>.">}}
+{{< img "car.jpg" "My Tesla Model Y" "Visiting the <a href=\"https://lasdonpark.org/whats-new/\">Lasdon Park Dinosaur Garden</a>.">}}
 
 If you know anything about me, you know how much I hate cars. They [pollute
 like
