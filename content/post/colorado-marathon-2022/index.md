@@ -14,8 +14,6 @@ resources:
     src: triple_bypass.jpg
 ---
 
-# Colorado Marathon
-
 I [ran](https://www.strava.com/activities/7071655743) the [Colorado Marathon](https://comarathon.com/) in Fort Collins, CO on May 1, 2022. These are my notes on race preparation and execution (as usual, mostly written to remind myself about the experience in decades to come).
 
 ## TL;DR
