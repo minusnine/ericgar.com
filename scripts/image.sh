@@ -2,7 +2,7 @@
 
 src_dir="/images/post/$(basename $(pwd))"
 
-for i in *.jpg; do 
+for i in *.jpg *.png; do 
   if [[ ${i} = *"_small.jpg" ]]; then
     continue;
   fi
