@@ -2,28 +2,13 @@
 title: "Boston Marathon 2023"
 date: 2023-05-27
 draft: true
-resources:
-  - name: image.jpg
-    src: image.jpg
-  - name: newspaper.jpg
-    src: newspaper.jpg
-  - name: spaniards.jpg
-    src: spaniards.jpg
-  - name: start.jpg
-    src: start.jpg
-  - name: streaker-leaderboard.png
-    src: streaker-leaderboard.png
-  - name: stryd-graph.png
-    src: stryd-graph.png
 ---
-
-{{<figure src="/images/post/nyc-marathon-2022/start_small.jpg" link="/images/post/nyc-marathon-2022/start.jpg">}}
-
-# Boston Marathon 2023
 
 I ran the Boston Marathon on April 17, 2023. These are my notes on race
 preparation and execution (as usual, mostly written to remind myself about the
 experience in decades to come).
+
+{{<figure src="/images/post/boston-marathon-2023/finishline_small.jpg" link="/images/post/boston-marathon-2023/finishline.jpg">}}
 
 ## Result
 
@@ -42,7 +27,7 @@ experience in decades to come).
 I took over a month off after NYC due to COVID and moving house. I decided to
 go back to McMillan’s plans after Pfitz 18/70 only because [Greg has a Boston
 Marathon-specific race
-plan](https://site.finalsurge.com/TrainingPlans/McMillanPlanDetails?product=408434&distance=&timesec=&goaldistance=&goaltimesec=).
+plan](https:/post/site.finalsurge.com/TrainingPlans/McMillanPlanDetails?product=408434&distance=&timesec=&goaldistance=&goaltimesec=).
 I figured specificity couldn’t hurt, especially with the famed hills of Newton
 strategically placed right around the bonk mile. Frankly, I also liked being
 able to see at a glance from my phone and watch what the workout of the day
@@ -93,7 +78,7 @@ started to take driving lessons (being uncomfortable with my exacting standards
 for driving proficiency) and practiced the route to daycare by herself. It
 didn’t help that our Tesla is a little less standard to drive than other cars.
 
-After [my 2:59:59](https://ericgar.com/2022/06/11/colorado-marathon-2022/), I
+After [my 2:59:59](https:/post/ericgar.com/2022/06/11/colorado-marathon-2022/), I
 knew I wanted to target another sub-3 hour time to prove to myself that I’m
 capable of running to that standard on a course that isn’t _ridiculously_
 downhill. Up through the race, my Stryd analytics complained that I didn’t have
@@ -104,11 +89,11 @@ my sleeve.
 
 After having foot pain in NYC the prior fall, I decided to get new shoes a
 half-size larger than I typically wear. Soon before I walked into [In Motion
-Running](https://inmotionrunning.com/) during a coffee break, Saucony released
+Running](https:/post/inmotionrunning.com/) during a coffee break, Saucony released
 their newest carbon fiber-plated shoe, [the Endorphin
-Elite](https://www.saucony.com/en/endorphin-elite/), which comes with [“a super
+Elite](https:/post/www.saucony.com/en/endorphin-elite/), which comes with [“a super
 aggressive toe-spring and a propulsive
-ride”](https://www.runningshoesguru.com/reviews/road/saucony-endorphin-elite-review/).
+ride”](https:/post/www.runningshoesguru.com/reviews/road/saucony-endorphin-elite-review/).
 I’d like to be sprung and propelled forward toward the finish line, and I have
 $275 to drop on something as frivolous for an amateur runner as running shoes,
 so that sounded great.
@@ -141,33 +126,34 @@ getting good.
 that all was well).
 
 I got to Boston in the late evening and grabbed some [Halal Guys chicken and
-rice](https://thehalalguys.com/) from across the street to my hotel, the W. I
+rice](https:/post/thehalalguys.com/) from across the street to my hotel, the W. I
 entered the hotel, but was confused because it seemed like a club: lots of
 people drinking and a DJ spinning. But that was the lobby. I checked in and had
-[trouble falling asleep](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2925054).
-By booking through [Whatahotel](https://www.whatahotel.com/), I scored a
+[trouble falling asleep](https:/post/www.ncbi.nlm.nih.gov/pmc/articles/PMC2925054).
+By booking through [Whatahotel](https:/post/www.whatahotel.com/), I scored a
 $100/day breakfast stipend (among other perks), which was more than sufficient
 for carb loading. They also provided a somewhat strange assortment of items in
   a goodie bag for runners, which at least was a nice gesture of hospitality.
 
-I went to the [Tracksmith](https://www.tracksmith.com/pages/trackhouse)
+I went to the [Tracksmith](https:/post/www.tracksmith.com/pages/trackhouse)
 shakeout run and made some great acquaintances. I got some valuable insider
 race information, like how the Newton Hills are not that bad, but the underpass
 on Commonwealth Avenue going under Massachusetts Avenue at mile 25.8 is the
 most brutal hill on the course.
 
 Picked up my bib, contributed to the [Marathon Industrial
-Complex](https://www.trailrunnermag.com/people/culture-people/the-boston-marathon-industrial-complex/)
+Complex](https:/post/www.trailrunnermag.com/people/culture-people/the-boston-marathon-industrial-complex/)
 by purchasing an overpriced crappy jacket that I’ll seldom wear, and headed
 back to my hotel room to get off my feet. I have some Massachusetts-based
 family and they took me out for lunch at [La Famiglia
-Giorgio's](https://www.lafamigliagiorgios.com/) in the North End, followed by
-[Modern Pastry](https://modernpastry.com/). That meal ended, and an hour later,
+Giorgio's](https:/post/www.lafamigliagiorgios.com/) in the North End, followed by
+[Modern Pastry](https:/post/modernpastry.com/). That meal ended, and an hour later,
 the Boulder Track Club’s organized pre-race meal at
-[Bencotto](https://www.bencottoboston.com/) started. Two pasta meals in four
+[Bencotto](https:/post/www.bencottoboston.com/) started. Two pasta meals in four
 hours? Sure, why not.
 
-(Photo: family)
+{{<figure src="/images/post/boston-marathon-2023/family_small.jpg" link="/images/post/boston-marathon-2023/family.jpg">}}
+{{<figure src="/images/post/boston-marathon-2023/modernpastry_small.jpg" link="/images/post/boston-marathon-2023/modernpastry.jpg">}}
 
 Can you believe that the 7-11 across the street from my hotel had bread, but
 ran out of fancy strawberry preserves while I was gone for the afternoon? I was
@@ -179,10 +165,12 @@ night of restless “sleep”.
 
 ## Pre-race
 
-I set my alarm for 5:45 to be able to meet my team and get to the busses in
+I set my alarm for 5:45 to be able to meet my team and get to the buses in
 Boston Commons to Hopkinton. While I would have been perfectly content with my
 PB&Js until the race start at 10am, the hotel graciously provided an early
 continental breakfast for runners.
+
+{{<figure src="/images/post/boston-marathon-2023/nothomeless_small.jpg" link="/images/post/boston-marathon-2023/nothomeless.jpg">}}
 
 The bus was fine. Point-to-point courses are amusing to me because it is made
 clear how ridiculous it is that we’ve chosen to _run_ the 26.2 miles that we’re
@@ -197,7 +185,7 @@ treatment than even the professional runners in their tent across the street.
 The house’s owners even made banana bread for us!
 
 I was happy with my decision to keep my [3 mil contractor
-bag](https://www.homedepot.com/p/HUSKY-42-Gal-Contractor-Bags-50-Count-HK42WC050B/202973825)
+bag](https:/post/www.homedepot.com/p/HUSKY-42-Gal-Contractor-Bags-50-Count-HK42WC050B/202973825)
 on until the last two minutes when it started to drizzle. Not cutting holes for
 arms made it significantly warmer, but made me look slightly more ridiculous.
 
@@ -231,7 +219,7 @@ previously was that the course was often crowded enough that running tangents
 was not feasible; I’m sure I could have taken better lines to cut some distance
 out.
 
-The crowds were phenomenal, especially at Wellsley’s Scream Tunnel. What an
+The crowds were phenomenal, especially at Wellesley’s Scream Tunnel. What an
 experience. My ears were ringing by the time I passed though the campus.
 
 The Newton Hills were a non-issue for me. I was unimpressed when I got to
@@ -267,13 +255,15 @@ second in 1:30:53.
 I ultimately ran at an average of 301 watts, more than necessary to go sub-3.
 Eat that Stryd algorithm!
 
-Plus, I beat [Daniel Humm](https://en.wikipedia.org/wiki/Daniel_Humm),
+{{<figure src="/images/post/boston-marathon-2023/power.png_small.jpg" link="/images/post/boston-marathon-2023/power.png">}}
+
+Plus, I beat [Daniel Humm](https:/post/en.wikipedia.org/wiki/Daniel_Humm),
 chef/owner of three-Michelin-Star [Eleven Madison
-Park](https://www.elevenmadisonpark.com/), by a [handful of
-seconds](https://results.baa.org/2023/?content=detail&fpid=search&pid=search&idp=9TGHS6FF181D3C&lang=EN_CAP&event=R&event_main_group=runner&pidp=start&search%5Bname%5D=Humm&search%5Bfirstname%5D=Daniel&search_event=R).
+Park](https:/post/www.elevenmadisonpark.com/), by a [handful of
+seconds](https:/post/results.baa.org/2023/?content=detail&fpid=search&pid=search&idp=9TGHS6FF181D3C&lang=EN_CAP&event=R&event_main_group=runner&pidp=start&search%5Bname%5D=Humm&search%5Bfirstname%5D=Daniel&search_event=R).
 
 And unlike him, who was on the [Today Show’s cooking segment the next
-morning](https://www.today.com/video/try-this-spring-vegetable-baked-rice-for-a-filling-meatless-meal-170575429536),
+morning](https:/post/www.today.com/video/try-this-spring-vegetable-baked-rice-for-a-filling-meatless-meal-170575429536),
 I didn’t have to work the next day.
 
 ## Post-Race
@@ -288,8 +278,8 @@ personalized with our name and finishing time. I stripped out of my sopping wet
 clothes and took a long warm shower.
 
 My team had made reservations at [Trillium Brewing at Fort
-Point](https://trilliumbrewing.com/pages/fort-point) and at [Row
-34](https://www.row34.com/), a beer-centric restaurant. Both were phenomenal
+Point](https:/post/trilliumbrewing.com/pages/fort-point) and at [Row
+34](https:/post/www.row34.com/), a beer-centric restaurant. Both were phenomenal
 choices; we even ended up going back to Trillium after dinner. Copious amounts
 of beer were had.
 
