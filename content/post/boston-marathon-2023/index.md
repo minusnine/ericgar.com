@@ -1,7 +1,6 @@
 ---
 title: "Boston Marathon 2023"
-date: 2023-05-27
-draft: true
+date: 2023-05-29
 ---
 
 I ran the Boston Marathon on April 17, 2023. These are my notes on race
