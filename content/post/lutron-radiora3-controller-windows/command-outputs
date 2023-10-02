@@ -1,0 +1,17 @@
+
+$ avahi-browse -a -r
+=   eno1 IPv4 Lutron Status                                 _lutron._tcp         local
+   hostname = [Lutron-04e58900.local]
+   address = [10.0.6.61]
+   port = [22]
+   txt = ["SERNUM=04E58900" "CLAIM_STATUS=Claimed" "SYSTYPE=RadioRa3Processor" "ST_STATUS=good" "MACADDR=38:ab:41:13:26:c1"]
+...
+=   eno1 IPv4 Lutron Processor                              _hap._tcp            local
+   hostname = [Lutron-04e58900.local]
+   address = [10.0.6.61]
+   port = [4548]
+   txt = ["sh=K220Zg==" "pv=1.1" "ci=2" "s#=1" "sf=1" "c#=2" "md=Lutron Processor" "id=4b:e3:1f:c5:8d:b3" "ff=1"]
+
+$ avahi-publish -H radiora3.house.morigarrido.com -s "Lutron Status" _lutron._tcp 22 "SERNUM=04E58900" "CLAIM_STATUS=Claimed" "SYSTYPE=RadioRa3Processor" "ST_STATUS=good" "MACADDR=38:ab:41:13:26:c1"
+
+$ avahi-publish -H radiora3.house.morigarrido.com -s "Lutron Processor" _hap._tcp 4548 "sh=K220Zg==" "pv=1.1" "ci=2" "s#=1" "sf=1" "c#=2" "md=Lutron Processor" "id=4b:e3:1f:c5:8d:b3" "ff=1"
