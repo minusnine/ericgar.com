@@ -5,8 +5,7 @@ taxonomies:
   tag: travel
 
 resources:
-- name: ":counter.jpg"
-  src: "**.jpg"
+    - src: "**.jpg"
 ---
 
 I had the occasion to visit Tel Aviv, Israel recently for work. I was
@@ -16,14 +15,14 @@ beach-oriented, laid-back lifestyle was nice to experience. The city definitely
 has a car problem, but it is trying to ameliorate that by installing light rail
 and new bike lanes.
 
-{{< img "3.jpg" "Tel Aviv beach" >}}
+{{< img "2.jpg" "Tel Aviv beach" >}}
 
 Unfortunately, I came down with a case of food poisoning shortly after I
 arrived, and then my second weekend was filled with continuous rain (at times
 torrential; rain at all is pretty rare in Tel Aviv), both of which hindered my
 capacity for exploration.
 
-{{< img "2.jpg" "North Abraxass kitchen" >}}
+{{< img "1.jpg" "North Abraxass kitchen" >}}
 
 **[North Abraxass](https://telaveat.com/restaurant/abraxas-north/)**: If you
 are in Tel Aviv, you must go to this restaurant. While the plating concept is
@@ -46,7 +45,7 @@ and the plating was engaging. Service was terrible, but I'm pretty sure it was
 only because this one waiter was inattentive and, as a walk-in, I had the worst
 seat in the house at the end of the bar. Make reservations. Have dessert.
 
-{{< img "4.jpg" "A delicious drink at Spicehaus" >}}
+{{< img "3.jpg" "A delicious drink at Spicehaus" >}}
 
 **[Spicehaus](https://www.facebook.com/SSpicehaus.tv/)**: If you are in Tel
 Aviv, you must come here. The cocktails were inspired and lively: I had
@@ -103,7 +102,7 @@ Jerusalem was impressive: it has so much history and still feels like Jesus and
 Brian could be walking through the streets. Visiting really gave a better
 context for the history of the region.
 
-{{< img "5.jpg" "A nice spot for a quick coffee" >}}
+{{< img "4.jpg" "A nice spot for a quick coffee" >}}
 
 **[Vista](https://www.secrettelaviv.com/best/best-restaurants/vista-coffee)**:
 Serves up espresso and pastries with a gorgeous view of the sea and the city.
@@ -130,4 +129,4 @@ rain in Tel Aviv is not recommended: the streets quickly flood, resulting in
 tsunamis from passing cars, and sidewalk surfaces were obviously not chosen for
 traction.
 
-{{< img "1.jpg" "There are so many gorgeous, stray cats in Tel Aviv and Israel!" >}}
+{{< img "0.jpg" "There are so many gorgeous, stray cats in Tel Aviv and Israel!" >}}

@@ -5,14 +5,13 @@ taxonomies:
   tag: travel
 
 resources:
-- name: ":counter.jpg"
-  src: "**.jpg"
+- src: "**.jpg"
 ---
 
 Yuko and I were invited to a friend's wedding in Sonoma, California. We spent a
 long weekend in the area, eating and drinking our way though as usual.
 
-{{< img "2.jpg" "SingleThread Farms" >}}
+{{< img "1.jpg" "SingleThread Farms" >}}
 
 ## Friday
 
@@ -35,7 +34,7 @@ where we drove, but it sure was squiggly.
 to a wedding room block. Terrible bathroom, uninspired room, noisy with lots of
 bros attending other weddings.
 
-{{< img "1.jpg" "SingleThread Farms rooftop beer" >}}
+{{< img "0.jpg" "SingleThread Farms rooftop beer" >}}
 
 **[SingleThread Farm](https://www.singlethreadfarms.com/)**: With no tables
 available for the night we actually intended to stay in Healdsburg and despite
@@ -108,7 +107,7 @@ only downsides were the noise from the nearby highway, the music playing
 outside (At the pool? From the deck of a neighboring room? Not sure), and the
 body hair scattered along the walls and in the bathroom from the last guest.
 
-{{< img "3.jpg" "Oat milk cappuccino at Flying Goat Coffee" >}}
+{{< img "2.jpg" "Oat milk cappuccino at Flying Goat Coffee" >}}
 
 **[Flying Goat Coffee](http://flyinggoatcoffee.com/)**: Yuko got a delicious
 nitro cold brew and I got a delicious oat milk cappuccino, and we sat outside.
@@ -128,7 +127,7 @@ shop looked amazing with very unique flavors. We had a mixed reaction: the pie
 was fine and the ice cream was good, but neither were as amazing as their
 Instagram pictures.
 
-{{< img "4.jpg" "Spoke Folk Cyclery's cat" >}}
+{{< img "3.jpg" "Spoke Folk Cyclery's cat" >}}
 
 **[Spoke Folk Cyclery](http://www.spokefolk.com/)**: This is a well-appointed
 bike shop and worth a visit. While we were there the mechanic was changing a

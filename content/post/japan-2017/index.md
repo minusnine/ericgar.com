@@ -5,21 +5,20 @@ taxonomies:
   tag: travel
 
 resources:
-- name: ":counter.jpg"
-  src: "**.jpg"
+    - src: "**.jpg"
 
 # TODO(ekg): fix layouts/partials/post-body.html to support this.
 toc: false
 ---
 
-{{< img "16.jpg" "Nara" >}}
+{{< img "15.jpg" "Nara" >}}
 
 These are some notes about places we really liked in Japan, mainly Tokyo,
 between two trips in a couple of years.
 
 ## Beer & Cocktails
 
-{{< img "10.jpg" "Codename Mixology" >}}
+{{< img "9.jpg" "Codename Mixology" >}}
 
 **[Codename
 Mixology](https://www.cntraveler.com/bars/tokyo/code-name-mixology-akasaka)**:
@@ -30,7 +29,7 @@ shit. It's not the cheapest but it wasn't too far off from cocktail bars here
 in NYC. The food here is supposed to be good, but we went to Matsuya Ginza's
 basement for take-home dinner.
 
-{{< img "17.jpg" "Craftheads" >}}
+{{< img "16.jpg" "Craftheads" >}}
 
 **[Craftheads](http://craftheads.jp/)**: This place has a great tap list
 comprised of some interesting Japanese brews and some hard to find foreign
@@ -39,7 +38,7 @@ a popular destination for Americans. They have a wide selection of craft beers.
 I wouldn't go here for food so I would suggest eating somewhere else before or
 after. The owner speaks fluent English.
 
-{{< img "20.jpg" "Mikkeller Beer" >}}
+{{< img "19.jpg" "Mikkeller Beer" >}}
 
 **[Mikkeller Tokyo](http://mikkeller.dk/location/mikkeller-tokyo/)**: Mikkeller
 is Danish brand that has exploded worldwide. They have a bar in every
@@ -49,7 +48,7 @@ Mikkeller's beers are some of the technical best in the industry (maybe only
 [rivaled by the owner's brother's
 label](https://www.nytimes.com/2018/03/21/nyregion/evil-twin-mikeller-breweries.html)).
 
-{{< img "7.jpg" "Far Yeast Brewing Company" >}}
+{{< img "8.jpg" "Far Yeast Brewing Company" >}}
 
 **[Far Yeast Brewing](http://faryeast.com/en/far-yeast/)**: Coedo is one of my
 favorite Japanese breweries that I can get stateside and Far Yeast is by the
@@ -115,7 +114,7 @@ and you can find many ramen shops here. It's also next to Character Street
 where each store is dedicated to a popular character like Totoro, Snoopy, Hello
 Kitty, etc.
 
-{{< img "11.jpg" "Department store bento box" >}}
+{{< img "10.jpg" "Department store bento box" >}}
 
 **Department Store Basements**: The major department stores in Tokyo are
 Isetan, Mistukoshi, and Matsuya. I hardly ever go clothes shopping but you MUST
@@ -144,7 +143,7 @@ selling differently focused boxes full of deliciousness. Some of the stalls are
 better reviewed  or even particularly well known  than others, but we've
 never ordered incorrectly without advanced knowledge.
 
-{{< img "3.jpg" "Skytree" >}}
+{{< img "2.jpg" "Skytree" >}}
 
 **[Sky Restaurant 634
 (musashi)](https://restaurant.tokyo-skytree.jp/english/)**: The tallest tower
@@ -159,14 +158,14 @@ the restaurant to which I wasn't invited. Yuko liked it, though.
 
 ## Sweets
 
-{{< img "6.jpg" "Nanaya Gelato" >}}
+{{< img "5.jpg" "Nanaya Gelato" >}}
 
 **[Nanaya Gelato](https://www.moshimoshi-nippon.jp/58538)**: This place is well
 known for their **seven** levels of matcha gelato. Get the strongest one, #7,
 and anything else, especially if "anything else" is hojicha. They really know
 how to do ice cream well.
 
-{{< img "18.jpg" "Rainbow Pancake" >}}
+{{< img "17.jpg" "Rainbow Pancake" >}}
 
 **[Rainbow
 Pancake](https://www.tripadvisor.com/Restaurant_Review-g1066456-d5109399-Reviews-Rainbow_Pancake-Shibuya_Tokyo_Tokyo_Prefecture_Kanto.html)**:
@@ -187,7 +186,7 @@ cakes, after which you can opt to buy some to take home.
 
 ## Coffee & Tea
 
-{{< img "1.jpg" "Aoyama Tea House" >}}
+{{< img "0.jpg" "Aoyama Tea House" >}}
 
 **[Aoyama Flower Market Tea House](http://www.afm-teahouse.com/)**: You are
 surrounded by hanging plants and roses and it feels like you're sitting in a
@@ -195,7 +194,7 @@ garden. Even the food they serve incorporates flowers (i.e. Eric's waffle was
 topped with edible flowers). Definitely go here! Eric had a great time. We
 recommend getting there early on a weekday.
 
-{{< img "9.jpg" "Glitch Coffee Roaster" >}}
+{{< img "8.jpg" "Glitch Coffee Roaster" >}}
 
 **[Glitch Coffee Roaster](http://glitchcoffee.com/)**: This is one of the most
 unique coffee roasters in existence. Despite my love for dark, bitter coffee.
@@ -206,14 +205,14 @@ They roast within their tiny shop, making a warm, aromatic environment. We took
 a bunch of small bags of different roasts home and were sad when they were
 depleted. 
 
-{{< img "4.jpg" "Face coffee" >}}
+{{< img "3.jpg" "Face coffee" >}}
 
 **[Nissan Crossing](https://www3.nissan.co.jp/crossing/en.html)**: This is the
 café where they take a picture of you and use a fancy machine to draw your
 faces on latte foam. It's inside a Nissan showroom which was interesting to
 see. Definitely an Instagram-worthy spot.
 
-{{< img "19.jpg" "Fuglen" >}}
+{{< img "18.jpg" "Fuglen" >}}
 
 **[Fuglen](https://www.fuglen.no/)**: This is the second outpost of an
 Oslo-originated cafe. The interior design is mod 50's and 60's, but the winning
@@ -242,7 +241,7 @@ try **[Coffea Exlibris](https://coffeaexlibris.shop-pro.jp/)** instead.
 **[Streamer Coffee Company](http://streamer.coffee/)**: A Japanese chain of
 perfectly good third-wave coffee shops.
 
-{{< img "22.jpg" "Maruyama" >}}
+{{< img "21.jpg" "Maruyama" >}}
 
 **[Maruyama Coffee](http://www.maruyamacoffee.com/)**: I noticed this was in
 between the Todoroki Ravine and our lunch spot and we decided to stop in. Here
@@ -277,7 +276,7 @@ to this but I heard it's pretty good.
 
 ## Weird
 
-{{< img "5.jpg" "Parasite Museum" >}}
+{{< img "6.jpg" "Parasite Museum" >}}
 
 **[Meguro Parasitological Museum](https://www.kiseichu.org/e-top)**: I love
 places off-the-beaten-path and this fits the bill. This museum is a collection
@@ -299,7 +298,7 @@ These places are outside of Tokyo. Highly recommend going on the Shinkansen
 (bullet train) at least once. It's really quite the experience Don't forget to
 get a bento box and beer for the ride!
 
-{{< img "12.jpg" "Volcanic lake" >}}
+{{< img "11.jpg" "Volcanic lake" >}}
 
 **[Mt. Kusatsu-Shirane](https://en.wikipedia.org/wiki/Mount_Kusatsu-Shirane)**
 **(Gunma)**: If you want to see some cool turquoise-colored acidic lake, go
@@ -310,9 +309,9 @@ This is another volcanic Park in Gunma. This place was very cool and wish we
 had more time to explore and walk around. There's a food hall here but don't go
 there. It's terrible.
 
-{{< img "14.jpg" "Kamikochi">}}
+{{< img "13.jpg" "Kamikochi">}}
 
-{{< img "15.jpg" "Kamikochi hike" >}}
+{{< img "14.jpg" "Kamikochi hike" >}}
 
 **[Kamikochi National Park](http://www.kamikochi.org/)**: This national park is
 in a valley along the crystal clear, glacier blue Asakusa River; it sort of
@@ -328,14 +327,14 @@ guide](https://asocialnomad.com/japan/kamikochi/) had good tips about how to
 get to Kamikochi. We stayed at the Kamikochi Lemeiesta hotel which we wouldn't
 necessarily recommend.
 
-{{< img "13.jpg" "Nara" >}}
+{{< img "12.jpg" "Nara" >}}
 
 **[Nara Park](https://www.japan-guide.com/e/e4103.html)**: Big deer park! In
 true Japanese form, the deer at this park bow to you before receiving deer
 biscuits. Although, some of them might get a little impatient and nudge/gently
 bite your jacket/chase you.
 
-{{< img "2.jpg" "Cherry Blossom engagement" >}}
+{{< img "1.jpg" "Cherry Blossom engagement" >}}
 
 **[Kyoto Imperial Palace](https://www.japan-guide.com/e/e3917.html)** and
 **[Nijo Castle](https://www.japan-guide.com/e/e3918.html)** during cherry

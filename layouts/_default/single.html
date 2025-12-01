@@ -4,14 +4,14 @@
   {{ partial "post-body.html" . }}
 
   <nav id="paginator">
-    {{ if .PrevPage }}
-      <a href="{{ .PrevPage.Permalink }}" title="{{ .PrevPage.Title }}">&larr; Previous Post</a>
+    {{ if .Prev }}
+      <a href="{{ .Prev.Permalink }}" title="{{ .Prev.Title }}">&larr; Previous Post</a>
       &mdash;
     {{ end }}
     <a href="/post">Post List</a>
-    {{ if .NextPage }}
+    {{ if .Next }}
       &mdash;
-      <a href="{{ .NextPage.Permalink }}" title="{{ .NextPage.Title }}">Next Post &rarr;</a>
+      <a href="{{ .Next.Permalink }}" title="{{ .Next.Title }}">Next Post &rarr;</a>
     {{ end }}
   </nav>
 </div>

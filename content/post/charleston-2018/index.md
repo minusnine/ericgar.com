@@ -5,8 +5,7 @@ taxonomies:
   tag: travel
 
 resources:
-- name: ":counter.jpg"
-  src: "**.jpg"
+    - src: "**.jpg"
 ---
 
 Yuko and I realized that we had a free domestic airfare certificate that would
@@ -60,7 +59,7 @@ would, however, strongly recommend coming straight to the farmer's market.
 There was a bunch of tasty-looking things here: as can be expected, there was a
 section dedicated to produce and another to prepared foods. 
 
-{{< img "1.jpg" "Rodney Scott BBQ" >}}
+{{< img "0.jpg" "Rodney Scott BBQ" >}}
 
 **[Rodney Scott BBQ](https://rodneyscottsbbq.com/)**: Rodney Scott won the
 James Beard Award for Southeast earlier in the year, so of course we had to pay
@@ -70,7 +69,7 @@ for sweet tea, but make it ¼ sweet tea and ¾ unsweetened for a delightful but
   not overpowering beverage. I got the sandwich + one side combo, but the right
   order is for a plate and two sides.
 
-{{< img "2.jpg" "Revelry Brewing" >}}
+{{< img "1.jpg" "Revelry Brewing" >}}
 
 **[Revelry Brewing](https://www.revelrybrewingco.com/)**: I really liked this
 place and would come back any time. I was drawn to Revelry because they have an
@@ -107,7 +106,7 @@ outdoor courtyard that I could just stay in and drink espresso all day. Then,
 once the evening hit, they often turn it into a live music venue, so I could
 hang out and drink beer there. I might never leave.
 
-{{< img "3.jpg" "Butcher and Bee" >}}
+{{< img "2.jpg" "Butcher and Bee" >}}
 
 **[Butcher and Bee](https://butcherandbee.com/)**: We had passed by here on our
 way to Edmund's Oast the prior day and decided to drop in for brunch. They
@@ -116,7 +115,7 @@ thought through and the space is really inviting. I would come back. The
 breakfast sandwich I ordered was delicious, aside from the fact that bagels
 outside of New York and Montreal are terrible.
 
-{{< img "4.jpg" "Edmund's Oast Exchange" >}}
+{{< img "3.jpg" "Edmund's Oast Exchange" >}}
 
 **[Edmund's Oast Exchange](http://edmundsoast.com/exchange/)**: This is the
 retail beer and wine shop attached to Edmund's Oast (the restaurant, not the
@@ -145,7 +144,7 @@ and allow pedestrians and street vendors to take over. It was nice to stroll
 back to our hotel along this route, stopping in stores and seeing people enjoy
 life without the threat of traffic around them. We also hit up...
 
-{{< img "5.jpg" "King of Pops" >}}
+{{< img "4.jpg" "King of Pops" >}}
 
 **[King of Pops](https://kingofpops.com/)**: ...this popsicle cart along the
 way. Like any popsicle cart these days, they had a lot of innovative flavors. I
@@ -189,7 +188,7 @@ Ranger interpretation and then is self-guided, until the boat leaves again
 about an hour later. I really enjoyed sitting in the fort trying to imagine
 what it must have been like to be a soldier stationed there during a siege. 
 
-{{< img "6.jpg" "Peace Pie" >}}
+{{< img "5.jpg" "Peace Pie" >}}
 
 **[Peace Pie](https://peacepieworld.com/)**: "The ice cream sandwich with a
 layer of pie filling." Sold. We stopped by this place on the way back to our

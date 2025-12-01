@@ -1,4 +1,6 @@
-{{ $src := $.Page.Resources.GetMatch (.Get 0)}}
+{{/* Args: [resource name] [alt text] [caption] */}}
+
+{{ $src := $.Page.Resources.Get (.Get 0)}}
 
 {{/* set image sizes, these are hardcoded for now, x dictates that images are resized to this width */}}
 

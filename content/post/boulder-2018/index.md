@@ -5,11 +5,18 @@ taxonomies:
   tag: travel
 
 resources:
-- name: ":counter.jpg"
-  src: "**.jpg"
+-  src: "0.jpg"
+-  src: "1.jpg"
+-  src: "2.jpg"
+-  src: "3.jpg"
+-  src: "4.jpg"
+-  src: "5.jpg"
+-  src: "6.jpg"
+-  src: "7.jpg"
+-  src: "8.jpg"
 ---
 
-{{< img "3.jpg" "James Canyon" >}}
+{{< img "2.jpg" "James Canyon" >}}
 
 Since I was out West already to [to attend a friend's
 wedding](https://ericgar.com/2019/01/13/sonoma-2018/) and had a bunch of
@@ -50,7 +57,7 @@ even give you some free detergent.
 Next time I might just try one of the big chain hotels at the end of Pearl
 Street, like the Hyatt Place.
 
-{{< img "1.jpg" "Hawaiian pizza with jalepenos, along with a Melvin 2x4 DIPA" >}}
+{{< img "0.jpg" "Hawaiian pizza with jalepenos, along with a Melvin 2x4 DIPA" >}}
 
 **[Backcountry Pizza](https://backcountrypizzaandtaphouse.info/)**: I arrived
 at Basecamp kind of late on a Monday, so food and beer options were limited.
@@ -69,7 +76,7 @@ recommended if you're in the area; the tap list is really good.
 
 ## Tuesday
 
-{{< img "2.jpg" "Delicious breakfast at The Buff" >}}
+{{< img "1.jpg" "Delicious breakfast at The Buff" >}}
 
 **[The Buff](https://www.buffrestaurant.com/)**: This is a huge claim: this may
 have been the best breakfast I've ever had. For starters, the menu was huge and
@@ -118,7 +125,7 @@ the bar is that they have a Nintendo 64, a TV, and a bunch of games available.
 organic ice cream shop next door to BRU to pick up an ice cream sandwich to
 bring to the next brewery. I got a chocolate chip cajeta and it was delicious.
 
-{{< img "4.jpg" "Mmm beer and ice cream sandwich" >}}
+{{< img "3.jpg" "Mmm beer and ice cream sandwich" >}}
 
 **[Wild Woods](http://www.wildwoodsbrewery.com/)**: This is a really great
 brewery. I highly recommend bringing some food or getting delivery to the bar
@@ -127,7 +134,7 @@ nose, and the Ponderosa Porter, which was deep and complex.
 
 ## Wednesday
 
-{{< img "5.jpg" "This is almost always a good sign." >}}
+{{< img "4.jpg" "This is almost always a good sign." >}}
 
 **[Ride: "Connie's Ride" + part of
 NCAR](https://www.strava.com/activities/1852789594)**: Having not ridden much
@@ -140,7 +147,7 @@ with Boulder even more. I then decided to check out the National Center for
 Atmospheric Research, which is on top of a mesa, with a low-traffic, gentle
 climb right in town.
 
-{{< img "6.jpg" "The Post Brewing." >}}
+{{< img "5.jpg" "The Post Brewing." >}}
 
 **[The Post Brewing](https://www.postbrewing.com/)**: This brewery is right
 Pearl Street and has the slogan "Hot Chicken Loves Cold Beer", and I love all
@@ -168,7 +175,7 @@ go-to early morning breakfast place in Boulder: it opens early and is centrally
 located downtown. While the bagel sandwiches just aren't as good as in New
 York, the cappuccino certainly is.
 
-{{< img "7.jpg" "More James Canyon" >}}
+{{< img "6.jpg" "More James Canyon" >}}
 
 **[Ride: Old Stage -> James ->
 Lefthand](https://www.strava.com/activities/1855057136)**: This was a repeat of
@@ -193,7 +200,7 @@ I made the requisite stops at:
     Market](https://www.facebook.com/pages/Utica-Street-Market/516205298528093)**:
     Get an espresso and sit outside in the sun.
 
-{{< img "8.jpg" "At the top of Bald Mountain" >}}
+{{< img "7.jpg" "At the top of Bald Mountain" >}}
 
 This is definitely my favorite ride so far. The climb is interesting and varied
 and the descent is fast. It avoids any bad roads whatsoever (e.g. Boulder
@@ -212,7 +219,7 @@ a gantry above their production floor. The meatloaf was excellent.
 
 ## Friday
 
-{{< img "9.jpg" "Eldorado Canyon" >}}
+{{< img "8.jpg" "Eldorado Canyon" >}}
 
 **[Ride: Eldorado Canyon](https://www.strava.com/activities/1856408765)**: I
 didn't have a ton of time before having to leave for my flight, but I wanted to

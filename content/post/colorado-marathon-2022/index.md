@@ -2,16 +2,11 @@
 title: "Colorado Marathon 2022"
 date: 2022-06-11
 resources:
-  - name: breakfast.jpg
-    src: breakfast.jpg
-  - name: co_marathon_run.jpg
-    src: co_marathon_run.jpg
-  - name: half_marathon.jpg
-    src: half_marathon.jpg
-  - name: result.jpg
-    src: result.jpg
-  - name: triple_bypass.jpg
-    src: triple_bypass.jpg
+  - src: breakfast.jpg
+  - src: co_marathon_run.jpg
+  - src: half_marathon.jpg
+  - src: result.jpg
+  - src: triple_bypass.jpg
 ---
 
 I [ran](https://www.strava.com/activities/7071655743) the [Colorado Marathon](https://comarathon.com/) in Fort Collins, CO on May 1, 2022. These are my notes on race preparation and execution (as usual, mostly written to remind myself about the experience in decades to come).
