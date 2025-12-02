@@ -3,10 +3,6 @@ title: "NYC Marathon 2025"
 date: 2025-12-01
 draft: true
 # TODO: Fix the table styling
-# TODO: pictures
-# TODO: pictures link
-# TODO: fix bullet in goals
-# TODO: lego video?
 
 params:
   math: true
@@ -44,14 +40,16 @@ to remind myself about the experience in decades to come).
 - ✅ 0) Complete the training block with high adherence.
 - ✅ A) Beat my 2:56 from last year.
 - ✅ B) Sub-3
-- ✅ C) Sub 3:05, the guaranteed entry qualification cut-off for my AG.
+- ✅ C) Sub 3:05, the guaranteed entry cut-off time for my AG.
 - ✅ D) Finish without walking.
+{style="list-style-type: none"}
 
 ## Training
 
-My daughter was scheduled to be born about a month after the 2024 New York City
-Marathon and I knew life would be constrained thereafter. I decided to cross
-one last-minute item off of my bucket list: running Boulder’s iconic [Skyline
+My daughter was scheduled to be born about a month after the [2024 New York City
+Marathon](https://www.strava.com/activities/12815303054) and I knew life would
+be constrained thereafter. I decided to cross one last-minute item off of my
+bucket list: running Boulder’s iconic [Skyline
 Traverse](https://fastestknowntime.com/route/boulder-skyline-traverse-co), a
 17.3mi, 5,846ft gain route that summits three local peaks. I was led by three
 of my favorite running partners, all of whom have way more trail running
@@ -62,10 +60,13 @@ injury I ended up having to nurse throughout training in 2025.
 
 After Reina was born in early December 2024, I intentionally took through
 mid-March mostly off from running and entirely off from training. I had some
-ambition to train a bit for the BOLDERBoulder 10k on Memorial Day, a local
-staple, but my training ended up being haphazard and unfocused, and mostly just
-endurance paces. BOLDERBoulder didn’t go super well; it became obvious that I
-lost a lot of fitness during my time off.
+ambition to train a bit for the [BOLDERBoulder
+10k](https://www.bolderboulder.com/) on Memorial Day, a local staple, but my
+training ended up being haphazard and unfocused, and mostly just endurance
+paces. BOLDERBoulder didn’t go super well; it became obvious that I lost a lot
+of fitness during my time off.
+
+{{< img peanut.jpg "I was happy to have found the NUTMobile during a run!" >}}
 
 My poor result inspired me to get back to serious training. I started the
 [McMillan hill training
@@ -116,6 +117,11 @@ the process, reassuring myself that race specificity is likely the best
 training and that I still had endurance stamina to build after taking several
 months off earlier in the year.
 
+I ran the Boulderthon Half Marathon at the end of September as my tune-up race
+and as only my second race of the year.  
+
+{{< img flatirons.jpg "A common view at the start of runs during this build. This will never get old." >}}
+
 With a month to go before the race, I felt great and I was routinely running at
 the front of the pack of my club’s weekly long run, which consists of many very
 fast marathoners. I decided to postpone the first taper week that Pfitz has in
@@ -150,7 +156,7 @@ banana pudding dessert to properly kick off my carb load.
   5k](https://events.nyrr.org/abbott-dash-to-the-finish-line-5k) starts and
   while the street is closed to cars. We watched the pros and elites go by. 
 
-{{< img "abbot-5k.jpg" "The pro women's race flies up an empty Sixth Avenue" >}}
+{{< img "abbot-5k.jpg" "The pro women's race flies up an empty Sixth Avenue." >}}
 
 * I visited [my favorite neighborhood bagel
   joint](https://www.zuckersbagels.com/) for breakfast and for provisions for
@@ -187,7 +193,7 @@ Wadsworth, followed by 25 minutes in the corral before the race started. The
 wait in the small penned-in area prior to walking to the start is unfortunate
 because there is really nowhere to warm up.
 
-{{< img coffee.jpg "A much appreciated inspirational message from the barista" >}}
+{{< img coffee.jpg "A much appreciated inspirational message from the barista." >}}
 
 I figured I could leave a little later and save some time. I got coffee at
 Starbucks (yuck! but it’s the only coffee place open that early!) at 5:30p and
@@ -214,6 +220,8 @@ Looking at the map now, I must have taken a wrong turn and then followed signs
 for an inefficient route. I did solve my complaint about lack of warm up: I was
 definitely running faster than marathon pace for a few minutes before arriving
 at the blue section.
+
+{{< img startvillage.png "I got a decent impromptu warmup through the start village." >}}
 
 As I arrived, I saw the blue-bibbed runners walk out of our designated
 fenced-in area toward the start line. Between me and them were crowd-control
@@ -315,7 +323,7 @@ gracious about the positive effort and the successful training cycle.
 
 And then I looked over to my left to see three dudes puking next to each other.
 
-{{< img floberg.jpg "I also bumped into Eric Floberg after the finish." >}}
+{{< img floberg.jpg "I also bumped into Eric Floberg after the finish. He published [a touching video about this race](https://www.youtube.com/watch?v=Bamn10UTOKk)." >}}
 
 --
 

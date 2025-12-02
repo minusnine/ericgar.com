@@ -1,0 +1,26 @@
+baseurl: "https://ericgar.com/"
+languageCode: "en-us"
+title: "Eric Garrido - ericgar.com"
+
+pagination:
+  pagerSize: 2
+
+permalinks:
+  post: "/:year/:month/:day/:contentbasename/"
+  top: "/:contentbasename/"
+
+markup:
+  goldmark:
+    parser:
+      attribute:
+        block: true
+    renderer:
+      unsafe: true
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block: [['\[', '\]'], ['$$', '$$']]
+          # inline = [['\(', '\)']]
+params:
+  math: false

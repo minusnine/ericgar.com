@@ -27,6 +27,7 @@
 {{/* set the sizes attribute to (min-width: 35em) 1200px, 100vw unless overridden in shortcode */}}
 
 <figure>
+  <a href="{{ $src.RelPermalink }}">
 <img 
   {{ with .Get "sizes" }}sizes='{{.}}'{{ else }}sizes="(min-width: 35em) 600px, 100vw"{{ end }}
   srcset='
@@ -47,6 +48,7 @@
   {{ else }}
     src="{{ $src.RelPermalink }}" 
   {{ end }}
-  {{ with .Get 1 }}alt="{{.}}"{{ else }}alt=""{{ end }}>
-  {{ with .Get 1 }}<figcaption>{{. | safeHTML }}</figcaption>{{ end }}
+  {{ with .Get 1 }}alt="{{. | markdownify | plainify }}"{{ else }}alt=""{{ end }}>
+</a>
+  {{ with .Get 1 }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
 </figure>
