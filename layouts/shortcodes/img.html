@@ -1,4 +1,4 @@
-{{/* Args: [resource name] [alt text] [caption] */}}
+{{/* Args: [resource name] [caption] */}}
 
 {{ $src := $.Page.Resources.Get (.Get 0)}}
 
@@ -48,5 +48,5 @@
     src="{{ $src.RelPermalink }}" 
   {{ end }}
   {{ with .Get 1 }}alt="{{.}}"{{ else }}alt=""{{ end }}>
-  {{ with .Get 2 }}<figcaption>{{. | safeHTML }}</figcaption>{{ end }}
+  {{ with .Get 1 }}<figcaption>{{. | safeHTML }}</figcaption>{{ end }}
 </figure>

@@ -1,6 +1,5 @@
 baseurl = "https://ericgar.com/"
 languageCode = "en-us"
-builddrafts = false
 title = "Eric Garrido - ericgar.com"
 
 [pagination]
@@ -9,3 +8,16 @@ title = "Eric Garrido - ericgar.com"
 [permalinks]
   post = "/:year/:month/:day/:contentbasename/"
   top  = "/:contentbasename/"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          # inline = [['\(', '\)']]
+[params]
+  math = false

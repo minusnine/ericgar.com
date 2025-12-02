@@ -12,6 +12,12 @@
 
     <script defer src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.min.js"></script>
     <meta name="viewport" content="width=device-width" />
+  
+    {{ if eq .Type "page"  }}
+      {{ partialCached "math.html" . }}
+    {{ else if .Param "math" }}
+      {{ partialCached "math.html" . }}
+    {{ end }}
   </head>
 
   <body>
