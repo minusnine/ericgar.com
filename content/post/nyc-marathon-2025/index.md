@@ -11,17 +11,21 @@ params:
 
 I received an unexpected email in March from the [New York Road
 Runners](http://nyrr.org) with the subject “Claim Your Entry to Run on
-November 2!” and got very confused. I had already used all of my 9+1 guaranteed
-entry slots left over from when I lived in New York (2019, 2022, 2024). I
-thought it must have been an error and they’d send a correction email shortly
+November 2!” I was confused. I had already used all of my 9+1 guaranteed
+entry slots from my time living in New York City (2019, 2022, 2024). I thought
+it must have been an error and they’d send a correction email shortly
 thereafter.
 
-No such email arrived. I texted my friend, who pointed out, unbeknownst to me,
-that the guaranteed entry time for males 40-44 is 2h58m and I qualified with
-two minutes to spare from my 2024 NYC Marathon time! Sweet! Despite continual
-ranting about the logistical overhead of getting to the NYC Marathon start line
-and swearing off ever running the race again, I decided to defer my Chicago
-entry to next year and run New York instead.
+No such email arrived. I texted my friend, who pointed out that [the guaranteed
+entry
+time](https://www.nyrr.org/tcsnycmarathon/runners/marathon-time-qualifiers) for
+my new age group is 2h58m and I qualified with two minutes to spare from my
+2024 NYC Marathon time! Sweet!
+
+Despite continual ranting about the logistical overhead of getting to the NYC
+Marathon start line and swearing off ever running the race again, I couldn't
+resist. I decided to defer my Chicago entry to next year and run New York
+instead.
 
 These are my notes on race preparation and execution (as usual, mostly written
 to remind myself about the experience in decades to come).
@@ -30,26 +34,26 @@ to remind myself about the experience in decades to come).
 
 ## Result
 
-* 2:52:33 (6:35/mi, 4:05/km)
-* 1,339 / 59,125 overall
-* 1,262 / 31,863 males
-* 222 of 4,253 AG males 40 to 44
+* **Time**: 2:52:33 (6:35/mi, 4:05/km)
+* **Overall place**: 1,339 / 59,125
+* **Gender place**: 1,262 / 31,863
+* **AG place**: 222 / 4,253 
 
 ## Goals
 
-- ✅ 0) Complete the training block with high adherence.
-- ✅ A) Beat my 2:56 from last year.
-- ✅ B) Sub-3
-- ✅ C) Sub 3:05, the guaranteed entry cut-off time for my AG.
-- ✅ D) Finish without walking.
+- ✅ **0)** Complete the training block with high adherence.
+- ✅ **A)** Beat my 2:56 from last year.
+- ✅ **B)** Sub 2:58, the guaranteed entry cut-off time for my AG.
+- ✅ **C)** Sub-3
+- ✅ **D)** Finish without walking.
 {style="list-style-type: none"}
 
 ## Training
 
-My daughter was scheduled to be born about a month after the [2024 New York City
-Marathon](https://www.strava.com/activities/12815303054) and I knew life would
-be constrained thereafter. I decided to cross one last-minute item off of my
-bucket list: running Boulder’s iconic [Skyline
+With my second daughter due about a month after the [2024 New York City
+Marathon](https://www.strava.com/activities/12815303054),
+I knew my free time was running out. I decided to cross one last-minute item
+off of my bucket list: running Boulder’s iconic [Skyline
 Traverse](https://fastestknowntime.com/route/boulder-skyline-traverse-co), a
 17.3mi, 5,846ft gain route that summits three local peaks. I was led by three
 of my favorite running partners, all of whom have way more trail running
@@ -63,19 +67,19 @@ mid-March mostly off from running and entirely off from training. I had some
 ambition to train a bit for the [BOLDERBoulder
 10k](https://www.bolderboulder.com/) on Memorial Day, a local staple, but my
 training ended up being haphazard and unfocused, and mostly just endurance
-paces. BOLDERBoulder didn’t go super well; it became obvious that I lost a lot
-of fitness during my time off.
+paces. BOLDERBoulder was a wake-up call. The race made it painfully obvious how
+much fitness I had lost during my hiatus.
 
 {{< img peanut.jpg "I was happy to have found the NUTMobile during a run!" >}}
 
-My poor result inspired me to get back to serious training. I started the
+My poor result inspired a return to serious training. I started the
 [McMillan hill training
-plan](https://www.mcmillanrunning.com/plans-details/hill-module-level-5/) at
-the beginning of June and could feel fitness returning week by week. This
-coincided with starting three months of baby-bonding leave. I was hoping to run
-a lot more during this break from work, but it ended up that childrearing and
-house projects kept my mileage between 60-70mi/week, albeit with good
-consistency in hill repeats and long runs.
+plan](https://www.mcmillanrunning.com/plans-details/hill-module-level-5/) 
+the beginning of June, coinciding with the start of three months of
+baby-bonding leave. While I hoped to run high volume during this break,
+childrearing and house projects kept me between 60-70 miles/week, albeit with
+good consistency with hill repeats and long runs.
+
 
 The results speak for themselves. Toward the end of the hill training plan in
 mid-July, I [ran a standard
@@ -87,17 +91,15 @@ Proper marathon training started around mid-August. As the newest edition of
 [Pete Pfitzgerald’s *Advanced
 Marathoning*](https://us.humankinetics.com/products/advanced-marathoning-4th-edition?srsltid=AfmBOopW26zz3K7IPrEBzqqpWvoIPOY15MierNGlP-00qDIBOhK4UOT6)
 had just came out with slightly updated plans, I ended up using a hybrid of the
-Pfitz 12/55-70 and 12/70-85 training plans; the former didn’t have quite enough
-mileage in most weeks for my taste, so I filled it in with some specs from the
-latter plan. My primary goal in training while on leave from work was to be
-flexible, but consistent: I wanted to be present for my family and continue to
-get house projects done, but I also wanted to adhere to the plan as much as
-possible.
+Pfitz 12/55-70 and 12/70-85 training plans to meet my mileage goals. My primary
+goal in training while on leave from work was to be consistent, but flexible: I
+wanted to be present for my family and continue to get house projects done, but
+I also wanted to adhere to the plan as much as possible.
 
-I ended up not getting all of the mileage I wanted: only five weeks out of the
-twelve were 70 miles or more, but, on the positive side, I hit 80 miles for the
-first time ever in one of those weeks, and did so comfortably. All of the other
-weeks were in the 60-70mi/week range.
+I didn't quite hit my desired volume: only five weeks out of the
+twelve topped 70 miles, But I did hit 80 miles for the first time ever in one
+of those weeks, and did so comfortably. All of the other weeks were in the
+60-70mi/week range.
 
 One intentional change I made this cycle that partially accounted for lower
 volume was to make my recovery runs *very* easy. Where my target marathon pace
@@ -107,18 +109,19 @@ treadmill. I think this was a positive change that caused me to feel fresher
 for workouts and long runs. Plus, I was able to watch a bunch more of the Tour
 de France in July. 
 
-I also largely didn’t do any doubles, instead choosing to focus on finishing
-some house improvements.
+I also largely didn’t do any doubles. I instead focused on starting and even
+finishing some house improvements.
 
-As the weeks wore on, despite knowing that the key part of the Pfitz plans is
-the mid-week “medium” long run of mostly 14-15 miles, I grew concerned that the
-Pfitz plans had very little speed work. Still, I stuck to the plan and trusted
-the process, reassuring myself that race specificity is likely the best
+As the weeks wore on, I grew concerned that the Pfitz plans had very little
+speed work, despite knowing that the key part of the Pfitz plans is the
+mid-week “medium” long run of mostly 14-15 miles, I stuck to the plan and
+trusted the process, reassuring myself that race specificity is the best
 training and that I still had endurance stamina to build after taking several
 months off earlier in the year.
 
 I ran the Boulderthon Half Marathon at the end of September as my tune-up race
-and as only my second race of the year.  
+and as only my second race of the year. It went decently, finishing in 1:25:36,
+37 seconds off of a PR (both races at altitude). This was a decent sign.
 
 {{< img flatirons.jpg "A common view at the start of runs during this build. This will never get old." >}}
 
@@ -188,62 +191,68 @@ and poor planning.
 
 Last year, I arrived exactly at 5:30am at Bryant Park and was able to very
 quickly get on a bus to get spirited away for a very fine sunrise on Staten
-Island. I had hours to wait sitting on the cold, hard pavement of Fort
-Wadsworth, followed by 25 minutes in the corral before the race started. The
-wait in the small penned-in area prior to walking to the start is unfortunate
-because there is really nowhere to warm up.
+Island. I had hours to sit on the cold, hard pavement of Fort Wadsworth,
+followed by 25 minutes in the corral before the race started. The wait in the
+small penned-in area prior to walking to the start prevents any sort of warm up
+before the major climb of the race.
 
 {{< img coffee.jpg "A much appreciated inspirational message from the barista." >}}
 
 I figured I could leave a little later and save some time. I got coffee at
 Starbucks (yuck! but it’s the only coffee place open that early!) at 5:30p and
 walked the two blocks over to the library. I found that there was already a
-line that snaked completely around the block of the library and immediately
-joined it. I don’t know the exact timeline, but this line took forever before
-dumping me into what appeared to be the official entrance for the buses, which
-was relatively empty. Then, there was a disorderly horde of people getting onto
-buses, which had no real organization. Finally on the bus, I fell asleep only
-to find that we were stuck on the Verazzano Bridge just before the drop-off
-area for an unusually long time. By the time I got off of the bus, the lines at
-the metal detectors were the longest I’ve seen them, and as I entered the
-queue, workers barricaded the entrance off behind me, signifying that mine was
-one of the last buses to arrive.
+line that snaked completely around the block and immediately joined it. I don’t
+know the exact timeline, but this line took forever before dumping me into what
+appeared to be the official entrance for the buses, which was relatively empty. 
+
+Past this free-flowing line, though, a disorderly horde swarmed the buses. Once
+onboard, I dozed off, only to wake up to a standstill on the Verrazano Bridge.
+We sat there for an eternity. By the time I disembarked, the security lines
+were the longest I’d ever seen. As I joined the queue, workers barricaded the
+entrance behind me. I was on one of the last buses to arrive.
 
 The security line basically didn’t move. Some volunteers suggested that Wave 1
-runners still in the security line should move up. There were a surprising
+runners still in the line should move up. There were a surprising
 number of us and we were still many rows away by the time we consolidated
 toward the front of the line. I knew the corrals would close at exactly 8:45am
-and the closure is very strict. I put my phone in my bag prior to getting
+and the closure is very strict. I put my phone in my bag before getting
 through the metal detector and I took off sprinting toward the blue corrals.
 
-Looking at the map now, I must have taken a wrong turn and then followed signs
-for an inefficient route. I did solve my complaint about lack of warm up: I was
+On the positive side, I did solve my complaint about lack of warm up: I was
 definitely running faster than marathon pace for a few minutes before arriving
-at the blue section.
+at the blue section. Looking at the map now, I must have taken a wrong turn and
+then followed signs for an inefficient, longer route. 
 
-{{< img startvillage.png "I got a decent impromptu warmup through the start village." >}}
+{{< img startvillage.png "I got a decent impromptu warm-up through the start village." >}}
 
-As I arrived, I saw the blue-bibbed runners walk out of our designated
-fenced-in area toward the start line. Between me and them were crowd-control
-gates manned by volunteers and security guards.
+As I arrived, I saw the blue-bibbed runners walking out of our designated
+fenced-in area toward the start line. Between us were crowd-control gates
+manned by volunteers and security guards barricading the entrance.
 
 I ran up to the first corral opening I saw and before I could get any words
 out, a volunteer shouted, “The gates are closed! Wave 2 is a perfectly good
-wave!” I’m sure it is, but it would definitely impact the first several miles
-of my race, turning it into a fun run. That would have been fine, but
-disappointing, after having worked for months to try to hit a time goal.
+wave!”
 
-I ran to the next set of gates. I got out a “My bus was late! Can I…” before a
-hired Allied security guard said, “The corrals closed ten minutes ago! But come
-on, come through here!” and moved aside a gate. “You can’t bring your pre-race
-bag through, though.” I tossed my bag at the others surrounding a trash can and
-took a step toward the opening. 
+I sprinted to the next gate. "My bus was late! Can I—"
 
-But then I realized that my phone was still in the bag! Fuck. I picked my bag
-back up and rummaged around and just couldn’t find it. “Come on, man! They’re
-leaving already!”, the security guard bellowed. I dumped some stuff out and
-finally located it. I ran through the gates, gripped the shoulder of the
-security guard, and gave him the most heartfelt thank you I could muster. 
+"The corrals closed ten minutes ago!" the hired security guard bellowed. He
+paused, looking at my panic. "But come on. Come through here."
+
+He slid the gate open. "You can’t bring the bag, though."
+
+I tossed my bag toward a trash can and stepped through.
+
+Then it hit me: my phone was still in the bag! 
+
+Fuck. 
+
+I picked my bag back up and rummaged around and just couldn’t find it. 
+
+“Come on, man! They’re leaving already!”, the security guard bellowed.
+
+I dumped some stuff out and finally located it. I ran through the gates,
+gripped the shoulder of the security guard, and gave him the most heartfelt
+thank you I could muster. 
 
 Adrenaline pumping, I hurriedly stripped off my clothing donation, made quick
 use of the nearest porta-potty, and moved up toward the start line. 
@@ -259,21 +268,16 @@ I owe my entire race to that security guard.
 
 Because of the [AbbottWMM MTT Age Group World
 Championships](https://www.worldmarathonmajors.com/rankings/world-championships)
-and because of the huge mass of people participating in the [worldwide running
+and of the huge mass of people participating in the [worldwide running
 boom](https://www.nbcnews.com/sports/track-field/marathon-interest-boom-races-abbott-majors-world-rcna233298),
-I started one coral further back than last year. And, because I wasn’t really
-able to move up that far during our walkout, it felt like I started
-*significantly* farther back from the start line than in 2024, but the data is
-mixed: last year, I was 1678th across the start line and it took me 1m48s to
-get there and this year, I was 1506th across the line and I took 2m46s to get
-there. 
+I started one corral farther back than last year. And, because I wasn’t really
+able to move up that far during our walkout, I started
+*significantly* farther back from the start line than in 2024. It took a full
+minute longer to get past the start line after the gun went off.
 
-I had given considerable thought in the preceding days about how fast to go out
-for the largely uphill first mile up the Verrazano Bridge. My concerns about
-how to pace that mile were entirely unnecessary: the bridge felt significantly
-more packed this year and my pace was dictated mostly by very slow runners who
-were somehow in front of me, seemingly moving backward in the pack, and also by
-people on their phones, either taking pictures or *even texting*. 
+I had worried about pacing the uphill first mile, but those worries were
+unfounded; the bridge was packed. My pace was dictated by slow runners and,
+unbelievably, people texting on their phones.
 
 Things loosened up on the backside of the bridge, and shortly thereafter I
 bumped into my colleague and friend Howon, who recognized me and called out my
@@ -287,39 +291,39 @@ I eventually made contact with and passed by the [2:55
 pacers](https://www.espn.com/olympics/story/_/id/46782088/nyc-marathon-secret-life-pacers),
 who started a bit in front of me, in Williamsburg at around mile 11. It turned
 out one of the pacers is a friend formerly of Boulder and a member of my track
-club. As I was climbing the Queensboro Bridge, I could hear Justin encouraging
-and advising his followers. I told myself, “I gotta get away from this guy!"
-and put in a little more effort to crest the bridge and start a fast descent
-into Manhattan.
+club. As I was climbing the Queensboro Bridge, I could hear him encouraging his
+pace group. I told myself, “I gotta get away from this guy!" and surged over
+the crest of the bridge to fly down into Manhattan.
 
 {{< img queensboro.jpg "Coming over the Queensboro Bridge with the 2:55 pacers behind me." >}}
 
 {{< img pacer.png "The time gap between me and the 2:55 pacers, who started a few minutes ahead of me." >}}
 
-As is now tradition, I passed [Casey
+On First Avenue, for the second year in a row, I passed [Casey
 Neistat](https://www.youtube.com/user/caseyneistat) (creator of two of my
 favorite videos about marathoning, [“i got beat up at the NYC Marathon
 2022](https://www.youtube.com/watch?v=7lGLhhoIsNc)” and [“Sisyphus and the
-Impossible Dream“](https://www.youtube.com/watch?v=9IiTdSnmS7E)) on 1st Avenue
-for the second year in a row. I didn’t even notice him on the other side of the
-road until seemingly everyone in the crowd in front of me started shouting
-“Casey! Casey!” I turned my head and sure enough, there he was.
+Impossible Dream“](https://www.youtube.com/watch?v=9IiTdSnmS7E)) 
+I wouldn't have noticed him if the crowd hadn't started screaming, “Casey!
+Casey!” I turned my head, and there he was.
 
 I had a few niggles during the race. My calves were tight from the line through
-about 10km, which is typical for me, and luckily this didn’t result in any loss
-of sensation in my feet as in previous marathons. At mile 18 up First Avenue, I
+10km, which is typical for me, and luckily this didn’t result in any loss of
+sensation in my feet as in previous marathons. At mile 18 up First Avenue, I
 had some novel, acute pain in my right hip joint, which I was worried would
 devolve into a race-ending injury, but I ran through it and it abated soon
 thereafter.
 
-I felt great passing by what seemed like hundreds of runners on the Fifth
-Avenue climb into the park. (The statistics don’t confirm this feeling: I only
-passed a net 168 runners over …). Entering into Central Park was a
+I felt strong on the dreaded climb up Fifth Avenue at mile 23. I could swear I
+passed by what seemed like hundreds of runners as they faded on this
+modest-but-late incline, but the statistics don’t confirm this feeling: I only
+passed a net 168 runners over the entire race. Entering into Central Park was a
 psychological relief, knowing I was starting the home stretch, but I was
-definitely conscious of every step and of trying to maintain good form.
+definitely conscious of every step while intentionally trying to maintain good
+form.
 
 I crossed the line after 2h52m33s of running. I instantly reflected on and was
-gracious about the positive effort and the successful training cycle.
+gracious about the result and the successful training cycle.
 
 And then I looked over to my left to see three dudes puking next to each other.
 
@@ -331,17 +335,18 @@ I was remarkably consistent across the course, especially considering that the
 first mile is uphill and 30km-40km contains most of the elevation of the
 course.
 
-| Distance | Split | 5k Time | Difference |
-| --- | --- | --- | --- |
-| 5 km | 0:20:43 | 20:43 | |
-| 10 km | 0:40:52 | 20:09 | -34s |
-| 15 km | 1:01:14 | 20:22 | +13s |
-| 20 km | 1:21:31 | 20:17 | -5s |
-| 25 km | 1:42:01 | 20:30 | +13s |
-| 30 km | 2:02:02 | 20:01 | -29s |
-| 35 km | 2:22:32 | 20:30 | +29s |
-| 40 km | 2:43:30 | 20:58 | +28s |
-| Finish| 2:52:33 |   | |
+| Distance | Split | 5k Time | Difference | Note |
+| --- | --- | --- | --- | --- |
+| 5 km | 0:20:43 | 20:43 | | Warm-up / Verrazano Climb |
+| 10 km | 0:40:52 | 20:09 | -34s | |
+| 15 km | 1:01:14 | 20:22 | +13s | |
+| 20 km | 1:21:31 | 20:17 | -5s | |
+| Half  | 1:26:01 | | | Faster half split than 2024 by 1m26s |
+| 25 km | 1:42:01 | 20:30 | +13s | |
+| 30 km | 2:02:02 | 20:01 | -29s | Fastest 5km |
+| 35 km | 2:22:32 | 20:30 | +29s | |
+| 40 km | 2:43:30 | 20:58 | +28s | Effortful Central Park hills |
+| Finish| 2:52:33 |   | | +32 seconds positive split |
 
 Nicholas Thompson in [his new book, The Running
 Ground](https://www.penguinrandomhouse.com/books/678434/the-running-ground-by-nicholas-thompson/),
@@ -349,7 +354,11 @@ pointed out that a marathon runner spends about half of the time in the air.
 Indeed, I spent 44.7% of the 26.2 mile course *flying*:
 
 \[
-\frac{\mbox{2h52m33s running time} - (\frac{\mbox{42.2km race distance}}{\mbox{1.37m stride distance}} * \mbox{193ms ground contact time})}{\mbox{2h52m33s running time}} = \mbox{44.7\% of time in air}
+\frac{\mbox{running time} - (\frac{\mbox{race distance}}{\mbox{stride distance}} * \mbox{ground contact time})}{\mbox{running time}} = \mbox{\% of time in air}
+\]
+
+\[
+\frac{\mbox{2h52m33s} - (\frac{\mbox{42.2km}}{\mbox{1.37m}} * \mbox{193ms})}{\mbox{2h52m33s}} = \mbox{44.7\%}
 \]
 
 ## Post-Race
@@ -365,13 +374,14 @@ the entire back room to ourselves for a private dining feeling.
 We parted ways, but I stopped at [Augurs Well
 Bar](https://www.augurswellbar.com/) next door, which has a great beer list,
 and hung out with a few groups in the small space that were all celebrating
-their own marathoner finishers. I eventually headed back to Central Park to the
-Final Finishers ceremony and cheered some of the last runners on toward the
-finish line. A stop at [Kati Roll](https://www.thekatirollcompany.com/) on the
-way back to my apartment capped off the night.
+their own marathoner finishers. I eventually headed back to Central Park to 
+cheer some of the last runners on toward the finish line. A stop at [Kati
+Roll](https://www.thekatirollcompany.com/) on the way back to my apartment
+capped off the night.
 
 The next morning, I collected a handful of [Los Tacos No.
-1](https://www.lostacos1.com/) breakfast burritos and a mocha latte from [Blue
+1](https://www.lostacos1.com/) breakfast burritos and a calorie-filled mocha
+latte from [Blue
 Bottle](https://bluebottlecoffee.com/us/eng?srsltid=AfmBOopBVkURaCKe1YkOpCm-Wgyq5lORBS08ECSGBC0KzMiTXRGJP1aT)
 before heading back to Boulder.
 
