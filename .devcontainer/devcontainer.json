@@ -32,5 +32,5 @@
 		1313
 	],
 
-	"postCreateCommand": "sudo /usr/local/cargo/bin/cargo binstall --disable-telemetry --no-confirm --strategies crate-meta-data jj-cli && gh repo clone minusnine/dotfiles /workspaces/dotfiles"
+	"postCreateCommand": "./.devcontainer/postCreateCommand.sh"
 }
