@@ -1,5 +1,5 @@
 {
-	"name": "Ubuntu",
+	"name": "ericgar.com development",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/base:jammy",
 	"features": {
@@ -8,11 +8,12 @@
 		},
 		"ghcr.io/devcontainers-contrib/features/actionlint:1": {},
 		"ghcr.io/devcontainers-contrib/features/gh-cli:1": {},
+		"ghcr.io/devcontainers/features/go:1": {},
 		"ghcr.io/devcontainers/features/git-lfs:1": {},
 		"ghcr.io/devcontainers/features/rust:1": {},
 		"ghcr.io/devcontainers-extra/features/firebase-cli:2": {},
 		"ghcr.io/devcontainers-extra/features/neovim-apt-get:1": {},
-		"ghcr.io/devcontainers-extra/features/tmux-apt-get:1": {},
+		"ghcr.io/duduribeiro/devcontainer-features/tmux:1": {},
 		"ghcr.io/lee-orr/rusty-dev-containers/cargo-binstall:0": {},
 		"ghcr.io/nils-geistmann/devcontainers-features/zsh:0": {}
 	},
@@ -31,5 +32,5 @@
 		1313
 	],
 
-	"postCreateCommand": "sudo /usr/local/cargo/bin/cargo binstall --disable-telemetry --no-confirm --strategies crate-meta-data jj-cli"
+	"postCreateCommand": "sudo /usr/local/cargo/bin/cargo binstall --disable-telemetry --no-confirm --strategies crate-meta-data jj-cli && gh repo clone minusnine/dotfiles /workspaces/dotfiles"
 }
