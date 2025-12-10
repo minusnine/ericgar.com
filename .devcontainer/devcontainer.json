@@ -7,22 +7,22 @@
 			"extended": true
 		},
 		"ghcr.io/devcontainers-contrib/features/actionlint:1": {},
-		"ghcr.io/devcontainers-contrib/features/gh-cli:1": {}
+		"ghcr.io/devcontainers-contrib/features/gh-cli:1": {},
+		"ghcr.io/devcontainers/features/git-lfs:1": {},
+		"ghcr.io/devcontainers/features/rust:1": {},
+		"ghcr.io/lee-orr/rusty-dev-containers/cargo-binstall:0": {}
 	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"eliostruyf.vscode-front-matter"
+				"eliostruyf.vscode-front-matter",
+				"ms-vscode.makefile-tools"
 			]
 		}
 	},
 
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [1313],
 
-	// You can use go mod instead
-	"postCreateCommand": "git submodule update --init",
+	"postCreateCommand": ""
 }

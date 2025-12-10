@@ -4,3 +4,5 @@ test:
 deploy:
 	hugo --gc && hugo && firebase deploy
 
+testcodespace:
+	hugo --gc && hugo server --buildDrafts --appendPort=false --baseURL https://${CODESPACE_NAME-1313?}.${GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN?}
