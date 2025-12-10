@@ -4,3 +4,4 @@ resources/
 .firebase
 .firebase/.*cache
 .hugo_build.lock
+public/

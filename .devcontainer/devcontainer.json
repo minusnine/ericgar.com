@@ -10,7 +10,9 @@
 		"ghcr.io/devcontainers-contrib/features/gh-cli:1": {},
 		"ghcr.io/devcontainers/features/git-lfs:1": {},
 		"ghcr.io/devcontainers/features/rust:1": {},
-		"ghcr.io/lee-orr/rusty-dev-containers/cargo-binstall:0": {}
+		"ghcr.io/devcontainers-extra/features/tmux-apt-get:1": {},
+		"ghcr.io/lee-orr/rusty-dev-containers/cargo-binstall:0": {},
+		"ghcr.io/devcontainers-extra/features/firebase-cli:2": {}
 	},
 	"customizations": {
 		"vscode": {
@@ -22,7 +24,9 @@
 	},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [1313],
+	"forwardPorts": [
+		1313
+	],
 
-	"postCreateCommand": ""
+	"postCreateCommand": "sudo /usr/local/cargo/bin/cargo binstall --disable-telemetry --no-confirm --strategies crate-meta-data jj-cli"
 }
