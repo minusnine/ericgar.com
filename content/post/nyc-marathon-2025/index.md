@@ -1,8 +1,6 @@
 ---
 title: "NYC Marathon 2025"
-date: 2025-12-01
-draft: true
-# TODO: Fix the table styling
+date: 2025-12-10
 
 params:
   math: true
@@ -329,7 +327,7 @@ And then I looked over to my left to see three dudes puking next to each other.
 
 {{< img floberg.jpg "I also bumped into Eric Floberg after the finish. He published [a touching video about this race](https://www.youtube.com/watch?v=Bamn10UTOKk)." >}}
 
---
+## Race Analysis
 
 I was remarkably consistent across the course, especially considering that the
 first mile is uphill and 30km-40km contains most of the elevation of the
