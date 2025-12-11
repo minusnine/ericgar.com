@@ -2,18 +2,15 @@ body {
   /* Get the content to be flush with the left hand side of the screen.
    * Sub-divs will handle the margin. */
   margin: 0px;
-  font-family: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
+  font-family: medium-content-sans-serif-font, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
 }
 
 #container {
   display: grid;
-  grid-template-columns:
-    1fr
-    min(600px, 100%)
-    1fr;
+  grid-template-columns: 1fr min(75ch, 100%) 1fr;
 }
 
-#container > * {
+#container>* {
   /* Place the content in the middle column. */
   grid-column: 2;
 }
@@ -28,7 +25,7 @@ body {
   grid-column: 1 / -1;
 }
 
-#container a { 
+#container a {
   /* Make links less distracting from the text body. */
   color: black;
 }
@@ -36,19 +33,19 @@ body {
 #header {
   /* Place the header in the left-hand column. */
   grid-column: 1;
-  
+
   /* Float the header. */
   position: fixed;
   top: 0;
 }
 
-#header > * {
+#header>* {
   /* Restore the margin that we took away from the body, above. This
    * allows the header line to be flush with the page edge. */
   margin-left: 8px;
 }
 
-#header > h1 {
+#header>h1 {
   margin-bottom: 0;
 }
 
@@ -57,7 +54,7 @@ body {
   text-decoration: none;
 }
 
-#header nav > a {
+#header nav>a {
   /* Make the links in the header be vertically stacked. */
   display: block;
   text-decoration: none;
@@ -78,7 +75,7 @@ body {
  * 710px: width of div#content plus some padding
  * 113px: width of the .site-title plus some padding
  */
-@media (max-width: calc(710px + 113px) ) {
+@media (max-width: calc(710px + 113px)) {
   #container {
     /* Use a single grid column. */
     grid-template-columns: 1fr;
@@ -96,20 +93,20 @@ body {
     box-shadow: 0 0 transparent, 0 0 transparent, 1px 3px 6px #00000026;
   }
 
-  #header > h1 {
+  #header>h1 {
     /* Move the header closer to the top. */
     margin-top: 0px;
     /* Place the title to the left of the nav bar. */
     float: left;
   }
 
-  #header > nav {
+  #header>nav {
     /* Position the links to be inline with the title. */
     padding: 0.8em 0 0 0.5em;
     margin-left: 9em;
   }
 
-  #header nav > a {
+  #header nav>a {
     /* Make the links in the header be horizontally stacked. */
     display: inline;
     margin-left: 0;
@@ -131,20 +128,25 @@ body {
   text-align: center;
 }
 
-article { 
-  font-size: 1.125rem;
-  font-family: medium-content-serif-font,Georgia,Cambria,"Times New Roman",Times,serif;
+article {
+  font-size: 19px;
+  font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 article a {
   color: black;
 }
-article a:visited { 
+
+article a:visited {
   color: black;
 }
-article a:hover { 
+
+article a:hover {
   color: black;
-} 
+}
+
 article p {
   line-height: 1.4;
 }
@@ -171,7 +173,7 @@ article header time {
 article header a {
   color: black;
   text-decoration: none;
-  font-family: medium-content-sans-serif-font,"Lucida Grande","Lucida Sans Unicode","Lucida Sans",Geneva,Arial,sans-serif;
+  font-family: medium-content-sans-serif-font, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
 }
 
 article header h1 {
@@ -190,12 +192,17 @@ article ol {
 }
 
 .post-content p {
-  margin-top: 0;
+  /* Increased from default for better vertical rhythm */
+  line-height: 1.7;
 }
 
 article img {
   width: 100%;
   margin-top: 5px;
+  /* Softens the sharp corners */
+  border-radius: 4px;
+  /* Adds a subtle "pop" */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 article figcaption {
@@ -203,6 +210,11 @@ article figcaption {
   margin: 0px 0px 18px 0px;
   font-style: italic;
   text-align: center;
+  font-family: -apple-system, sans-serif;
+  font-size: 14px;
+  color: #666;
+  /* margin-top: 10px; */
+  font-style: italic;
 }
 
 article table {
@@ -217,6 +229,7 @@ article th {
   text-align: center;
   white-space: nowrap;
 }
+
 #archive {
   width: 582px;
   margin-top: 0;
@@ -224,11 +237,11 @@ article th {
   padding-left: 0;
 }
 
-#archive > li {
+#archive>li {
   list-style-type: none;
 }
 
-#archive > li > time {
+#archive>li>time {
   float: right;
 }
 
