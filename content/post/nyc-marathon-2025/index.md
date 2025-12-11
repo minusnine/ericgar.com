@@ -73,7 +73,7 @@ much fitness I had lost during my hiatus.
 My poor result inspired a return to serious training. I started the
 [McMillan hill training
 plan](https://www.mcmillanrunning.com/plans-details/hill-module-level-5/) 
-the beginning of June, coinciding with the start of three months of
+at the beginning of June, coinciding with the start of three months of
 baby-bonding leave. While I hoped to run high volume during this break,
 childrearing and house projects kept me between 60-70 miles/week, albeit with
 good consistency with hill repeats and long runs.
@@ -88,14 +88,14 @@ a bunch of uphill segment PRs and not stopping once. Fitness was happening!
 Proper marathon training started around mid-August. As the newest edition of
 [Pete Pfitzgerald’s *Advanced
 Marathoning*](https://us.humankinetics.com/products/advanced-marathoning-4th-edition?srsltid=AfmBOopW26zz3K7IPrEBzqqpWvoIPOY15MierNGlP-00qDIBOhK4UOT6)
-had just came out with slightly updated plans, I ended up using a hybrid of the
+had just come out with slightly updated plans, I ended up using a hybrid of the
 Pfitz 12/55-70 and 12/70-85 training plans to meet my mileage goals. My primary
 goal in training while on leave from work was to be consistent, but flexible: I
 wanted to be present for my family and continue to get house projects done, but
 I also wanted to adhere to the plan as much as possible.
 
 I didn't quite hit my desired volume: only five weeks out of the
-twelve topped 70 miles, But I did hit 80 miles for the first time ever in one
+twelve topped 70 miles. But I did hit 80 miles for the first time ever in one
 of those weeks, and did so comfortably. All of the other weeks were in the
 60-70mi/week range.
 
@@ -112,7 +112,7 @@ finishing some house improvements.
 
 As the weeks wore on, I grew concerned that the Pfitz plans had very little
 speed work, despite knowing that the key part of the Pfitz plans is the
-mid-week “medium” long run of mostly 14-15 miles, I stuck to the plan and
+mid-week “medium” long run of mostly 14-15 miles. I stuck to the plan and
 trusted the process, reassuring myself that race specificity is the best
 training and that I still had endurance stamina to build after taking several
 months off earlier in the year.
@@ -183,7 +183,7 @@ banana pudding dessert to properly kick off my carb load.
 
 ## Race Morning
 
-I’m continually in awe of the planning and logistics that goes into moving
+I’m continually in awe of the planning and logistics that go into moving
 60,000+ people onto Staten Island. That said, I got bit by my own assumptions
 and poor planning.
 
@@ -197,7 +197,7 @@ before the major climb of the race.
 {{< img coffee.jpg "A much appreciated inspirational message from the barista." >}}
 
 I figured I could leave a little later and save some time. I got coffee at
-Starbucks (yuck! but it’s the only coffee place open that early!) at 5:30p and
+Starbucks (yuck! but it’s the only coffee place open that early!) at 5:30am and
 walked the two blocks over to the library. I found that there was already a
 line that snaked completely around the block and immediately joined it. I don’t
 know the exact timeline, but this line took forever before dumping me into what
@@ -301,7 +301,7 @@ On First Avenue, for the second year in a row, I passed [Casey
 Neistat](https://www.youtube.com/user/caseyneistat) (creator of two of my
 favorite videos about marathoning, [“i got beat up at the NYC Marathon
 2022](https://www.youtube.com/watch?v=7lGLhhoIsNc)” and [“Sisyphus and the
-Impossible Dream“](https://www.youtube.com/watch?v=9IiTdSnmS7E)) 
+Impossible Dream“](https://www.youtube.com/watch?v=9IiTdSnmS7E)).
 I wouldn't have noticed him if the crowd hadn't started screaming, “Casey!
 Casey!” I turned my head, and there he was.
 
@@ -372,7 +372,7 @@ the entire back room to ourselves for a private dining feeling.
 We parted ways, but I stopped at [Augurs Well
 Bar](https://www.augurswellbar.com/) next door, which has a great beer list,
 and hung out with a few groups in the small space that were all celebrating
-their own marathoner finishers. I eventually headed back to Central Park to 
+their own marathon finishers. I eventually headed back to Central Park to 
 cheer some of the last runners on toward the finish line. A stop at [Kati
 Roll](https://www.thekatirollcompany.com/) on the way back to my apartment
 capped off the night.
