@@ -26,7 +26,7 @@ experience in decades to come).
 I took over a month off after NYC due to COVID and moving house. I decided to
 go back to McMillan’s plans after Pfitz 18/70 only because [Greg has a Boston
 Marathon-specific race
-plan](https:/post/site.finalsurge.com/TrainingPlans/McMillanPlanDetails?product=408434&distance=&timesec=&goaldistance=&goaltimesec=).
+plan](https://site.finalsurge.com/TrainingPlans/McMillanPlanDetails?product=408434&distance=&timesec=&goaldistance=&goaltimesec=).
 I figured specificity couldn’t hurt, especially with the famed hills of Newton
 strategically placed right around the bonk mile. Frankly, I also liked being
 able to see at a glance from my phone and watch what the workout of the day
@@ -77,7 +77,7 @@ started to take driving lessons (being uncomfortable with my exacting standards
 for driving proficiency) and practiced the route to daycare by herself. It
 didn’t help that our Tesla is a little less standard to drive than other cars.
 
-After [my 2:59:59](https:/post/ericgar.com/2022/06/11/colorado-marathon-2022/), I
+After [my 2:59:59](https://ericgar.com/2022/06/11/colorado-marathon-2022/), I
 knew I wanted to target another sub-3 hour time to prove to myself that I’m
 capable of running to that standard on a course that isn’t _ridiculously_
 downhill. Up through the race, my Stryd analytics complained that I didn’t have
@@ -88,11 +88,11 @@ my sleeve.
 
 After having foot pain in NYC the prior fall, I decided to get new shoes a
 half-size larger than I typically wear. Soon before I walked into [In Motion
-Running](https:/post/inmotionrunning.com/) during a coffee break, Saucony released
+Running](https://inmotionrunning.com/) during a coffee break, Saucony released
 their newest carbon fiber-plated shoe, [the Endorphin
-Elite](https:/post/www.saucony.com/en/endorphin-elite/), which comes with [“a super
+Elite](https://www.saucony.com/en/endorphin-elite/), which comes with [“a super
 aggressive toe-spring and a propulsive
-ride”](https:/post/www.runningshoesguru.com/reviews/road/saucony-endorphin-elite-review/).
+ride”](https://www.runningshoesguru.com/reviews/road/saucony-endorphin-elite-review/).
 I’d like to be sprung and propelled forward toward the finish line, and I have
 $275 to drop on something as frivolous for an amateur runner as running shoes,
 so that sounded great.
@@ -125,30 +125,30 @@ getting good.
 that all was well).
 
 I got to Boston in the late evening and grabbed some [Halal Guys chicken and
-rice](https:/post/thehalalguys.com/) from across the street to my hotel, the W. I
+rice](https://thehalalguys.com/) from across the street to my hotel, the W. I
 entered the hotel, but was confused because it seemed like a club: lots of
 people drinking and a DJ spinning. But that was the lobby. I checked in and had
-[trouble falling asleep](https:/post/www.ncbi.nlm.nih.gov/pmc/articles/PMC2925054).
-By booking through [Whatahotel](https:/post/www.whatahotel.com/), I scored a
+[trouble falling asleep](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2925054).
+By booking through [Whatahotel](https://www.whatahotel.com/), I scored a
 $100/day breakfast stipend (among other perks), which was more than sufficient
 for carb loading. They also provided a somewhat strange assortment of items in
   a goodie bag for runners, which at least was a nice gesture of hospitality.
 
-I went to the [Tracksmith](https:/post/www.tracksmith.com/pages/trackhouse)
+I went to the [Tracksmith](https://www.tracksmith.com/pages/trackhouse)
 shakeout run and made some great acquaintances. I got some valuable insider
 race information, like how the Newton Hills are not that bad, but the underpass
 on Commonwealth Avenue going under Massachusetts Avenue at mile 25.8 is the
 most brutal hill on the course.
 
 Picked up my bib, contributed to the [Marathon Industrial
-Complex](https:/post/www.trailrunnermag.com/people/culture-people/the-boston-marathon-industrial-complex/)
+Complex](https://www.trailrunnermag.com/people/culture-people/the-boston-marathon-industrial-complex/)
 by purchasing an overpriced crappy jacket that I’ll seldom wear, and headed
 back to my hotel room to get off my feet. I have some Massachusetts-based
 family and they took me out for lunch at [La Famiglia
-Giorgio's](https:/post/www.lafamigliagiorgios.com/) in the North End, followed by
-[Modern Pastry](https:/post/modernpastry.com/). That meal ended, and an hour later,
+Giorgio's](https://www.lafamigliagiorgios.com/) in the North End, followed by
+[Modern Pastry](https://modernpastry.com/). That meal ended, and an hour later,
 the Boulder Track Club’s organized pre-race meal at
-[Bencotto](https:/post/www.bencottoboston.com/) started. Two pasta meals in four
+[Bencotto](https://www.bencottoboston.com/) started. Two pasta meals in four
 hours? Sure, why not.
 
 {{<figure src="/images/post/boston-marathon-2023/family_small.jpg" link="/images/post/boston-marathon-2023/family.jpg">}}
@@ -184,7 +184,7 @@ treatment than even the professional runners in their tent across the street.
 The house’s owners even made banana bread for us!
 
 I was happy with my decision to keep my [3 mil contractor
-bag](https:/post/www.homedepot.com/p/HUSKY-42-Gal-Contractor-Bags-50-Count-HK42WC050B/202973825)
+bag](https://www.homedepot.com/p/HUSKY-42-Gal-Contractor-Bags-50-Count-HK42WC050B/202973825)
 on until the last two minutes when it started to drizzle. Not cutting holes for
 arms made it significantly warmer, but made me look slightly more ridiculous.
 
@@ -256,13 +256,13 @@ Eat that Stryd algorithm!
 
 {{<figure src="/images/post/boston-marathon-2023/power.png_small.jpg" link="/images/post/boston-marathon-2023/power.png">}}
 
-Plus, I beat [Daniel Humm](https:/post/en.wikipedia.org/wiki/Daniel_Humm),
+Plus, I beat [Daniel Humm](https://en.wikipedia.org/wiki/Daniel_Humm),
 chef/owner of three-Michelin-Star [Eleven Madison
-Park](https:/post/www.elevenmadisonpark.com/), by a [handful of
-seconds](https:/post/results.baa.org/2023/?content=detail&fpid=search&pid=search&idp=9TGHS6FF181D3C&lang=EN_CAP&event=R&event_main_group=runner&pidp=start&search%5Bname%5D=Humm&search%5Bfirstname%5D=Daniel&search_event=R).
+Park](https://www.elevenmadisonpark.com/), by a [handful of
+seconds](https://results.baa.org/2023/?content=detail&fpid=search&pid=search&idp=9TGHS6FF181D3C&lang=EN_CAP&event=R&event_main_group=runner&pidp=start&search%5Bname%5D=Humm&search%5Bfirstname%5D=Daniel&search_event=R).
 
 And unlike him, who was on the [Today Show’s cooking segment the next
-morning](https:/post/www.today.com/video/try-this-spring-vegetable-baked-rice-for-a-filling-meatless-meal-170575429536),
+morning](https://www.today.com/video/try-this-spring-vegetable-baked-rice-for-a-filling-meatless-meal-170575429536),
 I didn’t have to work the next day.
 
 ## Post-Race
@@ -277,8 +277,8 @@ personalized with our name and finishing time. I stripped out of my sopping wet
 clothes and took a long warm shower.
 
 My team had made reservations at [Trillium Brewing at Fort
-Point](https:/post/trilliumbrewing.com/pages/fort-point) and at [Row
-34](https:/post/www.row34.com/), a beer-centric restaurant. Both were phenomenal
+Point](https://trilliumbrewing.com/pages/fort-point) and at [Row
+34](https://www.row34.com/), a beer-centric restaurant. Both were phenomenal
 choices; we even ended up going back to Trillium after dinner. Copious amounts
 of beer were had.
 
