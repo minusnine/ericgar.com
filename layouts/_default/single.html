@@ -5,13 +5,13 @@
 
   <nav id="paginator">
     {{ if .Prev }}
-      <a href="{{ .Prev.Permalink }}" title="{{ .Prev.Title }}">&larr; Previous Post</a>
+      <a href="{{ .Prev.RelPermalink }}" title="{{ .Prev.Title }}">&larr; Previous Post</a>
       &mdash;
     {{ end }}
     <a href="/post">Post List</a>
     {{ if .Next }}
       &mdash;
-      <a href="{{ .Next.Permalink }}" title="{{ .Next.Title }}">Next Post &rarr;</a>
+      <a href="{{ .Next.RelPermalink }}" title="{{ .Next.Title }}">Next Post &rarr;</a>
     {{ end }}
   </nav>
 </div>

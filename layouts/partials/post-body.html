@@ -1,6 +1,6 @@
 <article>
   <header>
-    <h1><a href="{{ .Permalink }}" title="[Permalink] {{ .Title }}" >{{ .Title }}</a></h1>
+    <h1><a href="{{ .RelPermalink }}" title="[Permalink] {{ .Title }}">{{ .Title }}</a></h1>
     <time>{{ .Date.Format "2 January 2006" }}</time>
   </header>
   {{ if .Params.toc }}
