@@ -68,15 +68,15 @@ what I tell them.
    pace will get faster over time; eventually, the prescribed training plan will
    give instructions on when and how to run at higher effort.
 
-   The saying is that at least 50% of runners get hurt every year. If you get
-   hurt (something is sore or sensitive) or injured (something is broken, torn,
-   or inoperative), you might be able to run through it. You might not. Even
-   professional runners have a hard time figuring this out. Take time off if you
-   need it, but it’s better to work around the injury however you can and still
-   use the allotted time for exercise: use the elliptical, do some strength
-   training, go swimming, get on a bike, etc. Do what you can with what you
-   have, but continue to be consistent in doing *something*. Start running again
-   when you can.
+5. **Be prepared to deal with setbacks.** The saying is that at least 50% of
+   runners get hurt every year. If you get hurt (something is sore or
+   sensitive) or injured (something is broken, torn, or inoperative), you might
+   be able to run through it. You might not. Even professional runners have a
+   hard time figuring this out. Take time off if you need it, but it’s better
+   to work around the injury however you can and still use the allotted time
+   for exercise: use the elliptical, do some strength training, go swimming,
+   get on a bike, etc. Do what you can with what you have, but continue to be
+   consistent in doing *something*. Start running again when you can.
 
 5. **Find a specialty running shoe store**. One way to stave off injury is
    having the right shoes. When I was in New York, I liked the [Fleet Feet
