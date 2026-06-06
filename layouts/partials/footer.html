@@ -9,14 +9,153 @@
       </div> 
     </main>
 
-    <script defer>
+    <script>
+      function initSidenotes(root) {
+        root = root || document;
+        var maxDepth = 5;
+        var processedAny;
+        
+        do {
+          processedAny = false;
+          // Find all unprocessed footnote links
+          var footnoteLinks = root.querySelectorAll('a[href^="#fn:"]:not([data-sidenote-processed])');
+          
+          if (footnoteLinks.length === 0) break;
+          
+          footnoteLinks.forEach(function(link) {
+            link.setAttribute('data-sidenote-processed', 'true');
+            
+            var sup = link.closest('sup') || link;
+            var targetId = link.getAttribute('href').substring(1);
+            var footnoteLi = document.getElementById(targetId);
+            if (!footnoteLi) return;
+            
+            var uniqueId = 'sn-' + Math.random().toString(36).substr(2, 9);
+            var clone = footnoteLi.cloneNode(true);
+            var backRefs = clone.querySelectorAll('.footnote-backref, [role="doc-backlink"]');
+            backRefs.forEach(function(el) { el.remove(); });
+            
+            var contentHtml = clone.innerHTML.trim();
+            if (contentHtml.startsWith('<p>') && contentHtml.endsWith('</p>') && (contentHtml.match(/<p>/g) || []).length === 1) {
+              contentHtml = contentHtml.substring(3, contentHtml.length - 4);
+            }
+            
+            var label = document.createElement('label');
+            label.setAttribute('for', uniqueId);
+            label.className = 'margin-toggle sidenote-number';
+            label.innerHTML = link.innerHTML;
+            
+            var checkbox = document.createElement('input');
+            checkbox.setAttribute('type', 'checkbox');
+            checkbox.setAttribute('id', uniqueId);
+            checkbox.className = 'margin-toggle';
+            
+            var sidenoteSpan = document.createElement('aside');
+            sidenoteSpan.className = 'sidenote';
+            sidenoteSpan.setAttribute('role', 'note');
+            sidenoteSpan.innerHTML = contentHtml;
+            
+            // Insert the toggle label, input, and sidenote inline consecutively
+            sup.parentNode.insertBefore(label, sup);
+            sup.parentNode.insertBefore(checkbox, sup);
+            sup.parentNode.insertBefore(sidenoteSpan, sup);
+            
+            // Remove the original footnote superscript reference
+            sup.remove();
+            processedAny = true;
+  
+            // Click & Hover behavior to keep highlighted until clicked again or another is hovered
+            label.addEventListener('click', function(e) {
+              if (window.innerWidth > 960) {
+                e.preventDefault();
+                e.stopPropagation();
+                var isActive = sidenoteSpan.classList.contains('active-highlight');
+                
+                // Clear active highlight and alignment from all other sidenotes and labels
+                document.querySelectorAll('.sidenote').forEach(function(el) {
+                  el.classList.remove('active-highlight');
+                  el.style.transform = '';
+                });
+                document.querySelectorAll('.sidenote-number').forEach(function(el) {
+                  el.classList.remove('active-label');
+                });
+                
+                if (!isActive) {
+                  sidenoteSpan.classList.add('active-highlight');
+                  label.classList.add('active-label');
+                  
+                  // Calculate vertical offset and slide sidenote to align with superscript
+                  sidenoteSpan.style.transform = 'none'; // reset to measure base position
+                  var labelTop = label.getBoundingClientRect().top;
+                  var sidenoteTop = sidenoteSpan.getBoundingClientRect().top;
+                  var diff = labelTop - sidenoteTop;
+                  sidenoteSpan.style.transform = 'translateY(' + diff + 'px)';
+                }
+              }
+            });
+  
+            label.addEventListener('mouseenter', function() {
+              if (window.innerWidth > 960) {
+                document.querySelectorAll('.sidenote').forEach(function(el) {
+                  el.classList.remove('active-highlight');
+                  el.style.transform = '';
+                });
+                document.querySelectorAll('.sidenote-number').forEach(function(el) {
+                  el.classList.remove('active-label');
+                });
+              }
+            });
+          });
+          
+          maxDepth--;
+        } while (processedAny && maxDepth > 0);
+        
+        // Hide the original footnotes bottom section
+        var footnotesSections = root.querySelectorAll('.footnotes');
+        footnotesSections.forEach(function(el) {
+          el.style.display = 'none';
+        });
+      }
+ 
       window.addEventListener('DOMContentLoaded', function() {
-        var infScroll = new InfiniteScroll( '#posts', {
-          path: '.pagination__next',
-          append: 'article',
-          history: true,
-        })
-      })
+        initSidenotes();
+        
+        var postsContainer = document.querySelector('#posts');
+        if (postsContainer) {
+          var infScroll = new InfiniteScroll( '#posts', {
+            path: '.pagination__next',
+            append: 'article',
+            history: true,
+          });
+   
+          infScroll.on('append', function(event, response, path, items) {
+            if (items) {
+              for (var i = 0; i < items.length; i++) {
+                initSidenotes(items[i]);
+              }
+            }
+          });
+        }
+
+        // Realign active sidenote on window resize
+        window.addEventListener('resize', function() {
+          if (window.innerWidth > 960) {
+            var activeLabel = document.querySelector('.sidenote-number.active-label');
+            var activeSidenote = document.querySelector('.sidenote.active-highlight');
+            if (activeLabel && activeSidenote) {
+              activeSidenote.style.transform = 'none';
+              var labelTop = activeLabel.getBoundingClientRect().top;
+              var sidenoteTop = activeSidenote.getBoundingClientRect().top;
+              var diff = labelTop - sidenoteTop;
+              activeSidenote.style.transform = 'translateY(' + diff + 'px)';
+            }
+          } else {
+            document.querySelectorAll('.sidenote').forEach(function(el) {
+              el.style.transform = '';
+            });
+          }
+        });
+      });
     </script>
   </body>
 </html>

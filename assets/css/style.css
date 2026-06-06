@@ -1,253 +1,480 @@
+/* Core Typography and Base Styling */
 body {
-  /* Get the content to be flush with the left hand side of the screen.
-   * Sub-divs will handle the margin. */
-  margin: 0px;
-  font-family: medium-content-sans-serif-font, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #fffff8; /* Classic Tufte paper-like background */
+  color: #111;
+  text-rendering: optimizeLegibility;
 }
 
 #container {
   display: grid;
-  grid-template-columns: 1fr min(75ch, 100%) 1fr;
+  grid-template-columns: 240px min(880px, calc(100% - 280px)) 1fr;
+  column-gap: 20px;
 }
 
-#container>* {
-  /* Place the content in the middle column. */
+#container > * {
   grid-column: 2;
 }
 
 .full-bleed {
-  /* Make the fullbleed content span across the entire 
-   * width of the page. 
-   *
-   * This class only works in direct descendants of #container. :-(
-   * */
-  width: 100%;
   grid-column: 1 / -1;
+  width: 100%;
 }
 
 #container a {
-  /* Make links less distracting from the text body. */
-  color: black;
+  color: #111;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 0, 0, 0.3);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.2s ease;
 }
 
-#header {
-  /* Place the header in the left-hand column. */
-  grid-column: 1;
+#container a:hover {
+  text-decoration-color: rgba(0, 0, 0, 0.9);
+}
 
-  /* Float the header. */
+/* Sidebar Header Layout (Desktop) */
+#header {
+  grid-column: 1;
   position: fixed;
   top: 0;
+  left: 0;
+  width: 240px;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 40px 20px;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  background-color: #fffff8;
+  z-index: 100;
 }
 
-#header>* {
-  /* Restore the margin that we took away from the body, above. This
-   * allows the header line to be flush with the page edge. */
-  margin-left: 8px;
-}
-
-#header>h1 {
-  margin-bottom: 0;
+#header > h1 {
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
 .site-title a {
-  font-size: 0.6em;
-  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  font-family: -apple-system, sans-serif;
+  letter-spacing: -0.5px;
 }
 
-#header nav>a {
-  /* Make the links in the header be vertically stacked. */
+#header nav > a {
   display: block;
   text-decoration: none;
-  margin-left: 0.5em;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  color: #555;
+  transition: color 0.2s ease;
+}
+
+#header nav > a:hover {
+  color: #111;
 }
 
 #content {
-  /* Restore the margin that we took away from the body, above. This
-   * allows the header line to be flush with the page edge. */
-  margin-left: 8px;
-  margin-right: 8px;
+  padding: 40px 20px;
+  box-sizing: border-box;
 }
 
-/* Responsive layout - when the screen is less than 730px wide, make the
- * columns stack on top of each other instead of next to each other
- *
- * I could probably do a better job of figuring out when exactly do do this with better CSS, but I'm a noob, so here we are.
- * 710px: width of div#content plus some padding
- * 113px: width of the .site-title plus some padding
- */
-@media (max-width: calc(710px + 113px)) {
-  #container {
-    /* Use a single grid column. */
-    grid-template-columns: 1fr;
-  }
-
-  #header {
-    /* Make it fixed at the top of the screen. */
-    background-color: white;
-    width: 100%;
-
-    /* Distinguish the header from the body text. */
-    border-bottom: 3px solid black;
-
-    /* Add some shadow at the bottom. */
-    box-shadow: 0 0 transparent, 0 0 transparent, 1px 3px 6px #00000026;
-  }
-
-  #header>h1 {
-    /* Move the header closer to the top. */
-    margin-top: 0px;
-    /* Place the title to the left of the nav bar. */
-    float: left;
-  }
-
-  #header>nav {
-    /* Position the links to be inline with the title. */
-    padding: 0.8em 0 0 0.5em;
-    margin-left: 9em;
-  }
-
-  #header nav>a {
-    /* Make the links in the header be horizontally stacked. */
-    display: inline;
-    margin-left: 0;
-    margin-right: 2em;
-  }
-
-  #content {
-    margin-top: 40px;
-  }
-}
-
+/* Paginator and Archive layouts */
 #paginator {
-  width: 582px;
-  text-align: center;
+  max-width: 55ch;
+  width: 100%;
+  margin: 40px 0;
+  text-align: left;
 }
 
 #footer {
+  max-width: 55ch;
   width: 100%;
-  text-align: center;
+  text-align: left;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding-top: 20px;
+  margin-top: 60px;
 }
 
-article {
-  font-size: 19px;
-  font-family: medium-content-serif-font, Georgia, Cambria, "Times New Roman", Times, serif;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-article a {
-  color: black;
-}
-
-article a:visited {
-  color: black;
-}
-
-article a:hover {
-  color: black;
-}
-
-article p {
-  line-height: 1.4;
-}
-
-article figure {
-  /* Align left edge of image to left edge of text. */
-  margin: 0;
-}
-
-article blockquote {
-  /* Add a border on the left and move the text away from it a bit. */
-  border-left: 5px solid lightgray;
-  padding-left: 5px;
-}
-
-article header {
-  margin-bottom: 1em;
-}
-
-article header time {
-  color: #666666;
-}
-
-article header a {
-  color: black;
-  text-decoration: none;
-  font-family: medium-content-sans-serif-font, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
-}
-
-article header h1 {
-  /* Squish date to just below the post title. */
-  margin-bottom: 0;
-}
-
-article ol {
-  /* Add some margin equivalent to article p to separate paragraphs from the
-   * list. */
-  margin-bottom: 1em;
-}
-
-.post-content h2 {
-  margin: 0;
-}
-
-.post-content p {
-  /* Increased from default for better vertical rhythm */
-  line-height: 1.7;
-}
-
-article img {
-  width: 100%;
-  margin-top: 5px;
-  /* Softens the sharp corners */
-  border-radius: 4px;
-  /* Adds a subtle "pop" */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-article figcaption {
-  /* 18px is the same as p.margin-bottom. */
-  margin: 0px 0px 18px 0px;
-  font-style: italic;
-  text-align: center;
-  font-family: -apple-system, sans-serif;
-  font-size: 14px;
+#credit {
   color: #666;
-  /* margin-top: 10px; */
-  font-style: italic;
-}
-
-article table {
-  border-collapse: collapse;
-  margin-block-end: 18px;
-}
-
-article td,
-article th {
-  border: 1px solid #999;
-  padding: 0.5rem;
-  text-align: center;
-  white-space: nowrap;
+  font-size: 0.8em;
 }
 
 #archive {
-  width: 582px;
+  max-width: 55ch;
+  width: 100%;
   margin-top: 0;
   list-style-type: none;
   padding-left: 0;
 }
 
-#archive>li {
-  list-style-type: none;
+#archive > li {
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
-#archive>li>time {
+#archive > li > time {
+  color: #666;
+  font-size: 0.9em;
+}
+
+/* Article Styling (Tufte style) */
+article {
+  font-size: 19px;
+  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
+  line-height: 1.6;
+  margin-bottom: 60px;
+  padding-right: 320px; /* Leave space for sidenotes on desktop */
+  position: relative;
+  box-sizing: border-box;
+  counter-reset: sidenote-counter;
+}
+
+article a {
+  color: #111;
+}
+
+/* Limit body elements to 55ch for standard readable Tufte line length */
+article p,
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6,
+article ul,
+article ol,
+article blockquote,
+article pre,
+article code,
+article div.post-toc,
+article .post-content > *:not(figure):not(table):not(.fullwidth):not(hr) {
+  max-width: 55ch;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+article p {
+  margin-top: 0;
+  margin-bottom: 1.4rem;
+}
+
+article header {
+  margin-bottom: 2em;
+}
+
+article header time {
+  color: #666;
+  font-size: 0.9em;
+  font-family: -apple-system, sans-serif;
+}
+
+article header a {
+  text-decoration: none;
+}
+
+article header h1 {
+  margin-bottom: 5px;
+  font-size: 2.2rem;
+  line-height: 1.2;
+  font-weight: normal;
+  letter-spacing: -0.5px;
+}
+
+article h2 {
+  font-weight: normal;
+  font-style: italic;
+  font-size: 1.5rem;
+  margin-top: 1.6rem;
+  margin-bottom: 0.8rem;
+}
+
+article blockquote {
+  border-left: 3px solid #ccc;
+  padding-left: 15px;
+  margin-left: 10px;
+  margin-right: 0;
+  font-style: italic;
+  color: #333;
+}
+
+article ol, article ul {
+  margin-bottom: 1.4rem;
+  padding-left: 20px;
+}
+
+article img {
+  width: 100%;
+  height: auto;
+  margin-top: 5px;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+article figcaption {
+  margin: 8px 0 20px 0;
+  font-style: italic;
+  text-align: center;
+  font-family: -apple-system, sans-serif;
+  font-size: 14px;
+  color: #666;
+}
+
+article table {
+  border-collapse: collapse;
+  margin: 20px 0;
+  max-width: 100%;
+  overflow-x: auto;
+  display: block;
+}
+
+article td,
+article th {
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+article th {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+/* Sidenote and Marginnote Desktop Styling */
+.sidenote, .marginnote {
   float: right;
+  clear: right;
+  margin-right: -300px;
+  width: 260px;
+  position: relative;
+  vertical-align: baseline;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #555;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin-top: 0;
+  margin-bottom: 1.5em;
+  font-style: normal;
+  font-weight: normal;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, padding 0.2s ease, margin 0.2s ease, color 0.2s ease, transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-#credit {
-  /* Make the copyright and license notice smaller and lighter. */
-  color: #666666;
-  font-size: 0.8em;
-  margin-top: 2em;
+/* Nested Sidenotes (Sidenote inside a Sidenote) */
+.sidenote .sidenote {
+  float: none;
+  display: block;
+  margin: 0.8em 0 0 12px;
+  width: auto;
+  margin-right: 0;
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
+  padding-left: 10px;
+  font-size: 0.95em;
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 0 4px 4px 0;
+}
+
+/* Hide checkbox toggles on desktop */
+input.margin-toggle {
+  display: none;
+}
+
+label.margin-toggle:not(.sidenote-number) {
+  display: none;
+}
+
+/* Styles for numbers in text & sidenotes */
+label.sidenote-number {
+  counter-increment: sidenote-counter;
+  vertical-align: super;
+  font-size: 0.75em;
+  line-height: 0;
+  font-weight: 600;
+  color: #111;
+  cursor: default;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.sidenote::before {
+  content: counter(sidenote-counter) ". ";
+  font-weight: 600;
+}
+
+/* Hover Highlights (Desktop Only) */
+@media (min-width: 961px) {
+  /* Hovering label highlights corresponding sidenote */
+  label.sidenote-number:hover + input + .sidenote,
+  .sidenote.active-highlight {
+    background-color: #fff9e6;
+    color: #111;
+    box-shadow: -4px 0 0 rgba(0, 0, 0, 0.3);
+    padding-left: 8px;
+    margin-left: -8px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  /* Hovering the sidenote highlights the number in the main body text */
+  label.sidenote-number:has(+ input + .sidenote:hover),
+  label.sidenote-number.active-label {
+    color: #111;
+    text-shadow: 0 0 1px #111;
+  }
+  
+  .sidenote:hover {
+    background-color: #fff9e6;
+    color: #111;
+    box-shadow: -4px 0 0 rgba(0, 0, 0, 0.3);
+    padding-left: 8px;
+    margin-left: -8px;
+    border-radius: 0 4px 4px 0;
+  }
+}
+
+/* Custom layout class for wide figures or tables to occupy full width */
+.fullwidth {
+  max-width: 100% !important;
+  width: 100% !important;
+  clear: both;
+}
+
+article table,
+article figure,
+article blockquote {
+  clear: both;
+}
+
+/* Responsive Layout (Mobile and Tablets) */
+@media (max-width: 960px) {
+  #container {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+  }
+
+  #container > * {
+    grid-column: 1;
+  }
+
+  #header {
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 20px 15px;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #header > h1 {
+    margin-bottom: 10px;
+  }
+
+  #header nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  #header nav > a {
+    margin-bottom: 0;
+    font-size: 0.9rem;
+  }
+
+  #content {
+    padding: 20px 15px;
+  }
+
+  article {
+    padding-right: 0; /* Remove side padding for sidenotes */
+    font-size: 18px;
+  }
+
+  /* Inline mobile sidenotes / marginnotes */
+  .sidenote, .marginnote {
+    display: none;
+    width: 100%;
+    float: none;
+    clear: both;
+    margin: 0.8em 0;
+    padding: 12px 16px;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-left: 3px solid #666;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 15px;
+    color: #444;
+  }
+
+  /* Checked states for mobile toggles */
+  input.margin-toggle:checked ~ .sidenote,
+  input.margin-toggle:checked ~ .marginnote {
+    display: block;
+  }
+
+  label.margin-toggle {
+    display: inline;
+  }
+
+  label.sidenote-number {
+    color: #111;
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 0, 0, 0.3);
+    text-underline-offset: 2px;
+  }
+
+  label.margin-toggle:not(.sidenote-number) {
+    display: inline;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0 4px;
+    border-radius: 3px;
+    font-size: 0.8em;
+  }
+}
+
+/* Print Layout Optimization */
+@media print {
+  body {
+    background-color: #fff;
+    color: #000;
+  }
+
+  #header {
+    position: relative;
+    height: auto;
+    width: 100%;
+    border-right: none;
+    padding: 20px 0;
+  }
+
+  #container {
+    display: block;
+  }
+
+  article {
+    padding-right: 0 !important;
+  }
+
+  .sidenote, .marginnote {
+    float: none !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    display: block !important;
+    background-color: #f7f7f7 !important;
+    border-left: 3px solid #666 !important;
+    padding: 10px 15px !important;
+    margin: 15px 0 !important;
+    page-break-inside: avoid;
+    font-size: 0.9em;
+  }
+
+  input.margin-toggle, 
+  label.margin-toggle {
+    display: none !important;
+  }
 }
