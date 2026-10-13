@@ -1,0 +1,1163 @@
+{{/*
+  Race Gap Analysis Chart Shortcode
+  Usage: {{< race-gap-chart csv="marathons.csv" >}}
+*/}}
+
+{{ $csvFile := .Get "csv" | default (.Get "src" | default "marathons.csv") }}
+{{ $defaultBaseline := .Get "defaultBaseline" | default "Chicago 2026" }}
+{{ $defaultUnit := .Get "unit" | default "mi" }}
+{{ $chartUid := printf "rgc-%x" (now.UnixNano) }}
+
+{{/* Try to obtain CSV content from page bundle resource or direct file read */}}
+{{ $csvRaw := "" }}
+{{ with .Page.Resources.Get $csvFile }}
+  {{ $csvRaw = .Content }}
+{{ else }}
+  {{ if fileExists $csvFile }}
+    {{ $csvRaw = readFile $csvFile }}
+  {{ else }}
+    {{ $tryPath := printf "content/post/%s/%s" $.Page.File.TranslationBaseName $csvFile }}
+    {{ if fileExists $tryPath }}
+      {{ $csvRaw = readFile $tryPath }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+
+<div class="race-gap-container" id="{{ $chartUid }}">
+  <div class="rgc-header">
+    <div class="rgc-title-group">
+      <h3 class="rgc-title">Marathon Race Gap Analysis</h3>
+      <div class="rgc-subtitle" id="{{ $chartUid }}-subtitle">Comparing marathon performance relative to a baseline.</div>
+    </div>
+    <div class="rgc-actions">
+      <button type="button" class="rgc-icon-btn" id="{{ $chartUid }}-expand-btn" title="Enlarge graph" aria-label="Enlarge graph">
+        <svg class="rgc-icon-expand" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <polyline points="9 21 3 21 3 15"></polyline>
+          <line x1="21" y1="3" x2="14" y2="10"></line>
+          <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
+        <svg class="rgc-icon-compress" style="display:none;" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 14 10 14 10 20"></polyline>
+          <polyline points="20 10 14 10 14 4"></polyline>
+          <line x1="14" y1="10" x2="21" y2="3"></line>
+          <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Interactive Legend -->
+  <div class="rgc-legend-wrapper">
+    <div class="rgc-legend-header">
+      <span class="rgc-legend-title">Click 🔘 to set baseline · Click chip to toggle:</span>
+      <div class="rgc-legend-actions">
+        <button type="button" class="rgc-link-btn" id="{{ $chartUid }}-legend-all">Select All</button>
+        <span class="rgc-sep">·</span>
+        <button type="button" class="rgc-link-btn" id="{{ $chartUid }}-legend-none">Clear</button>
+      </div>
+    </div>
+    <div class="rgc-legend" id="{{ $chartUid }}-legend">
+      <!-- Populated dynamically -->
+    </div>
+  </div>
+
+  <!-- Chart Canvas Area -->
+  <div class="rgc-canvas-container" id="{{ $chartUid }}-canvas-box">
+    <canvas id="{{ $chartUid }}-canvas"></canvas>
+  </div>
+
+  <!-- Raw CSV Data Storage -->
+  <script type="text/plain" id="{{ $chartUid }}-csv-data">{{ $csvRaw | safeJS }}</script>
+</div>
+
+<style>
+  .race-gap-container {
+    margin: 2.2rem 0;
+    padding: 1.25rem 1.4rem;
+    background: #fffffb;
+    border: 1px solid #e5e5dc;
+    border-radius: 10px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.04);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    box-sizing: border-box;
+  }
+  .race-gap-container *, .race-gap-container *::before, .race-gap-container *::after {
+    box-sizing: border-box;
+  }
+  .rgc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid #edece4;
+    margin-bottom: 1rem;
+  }
+  .rgc-title {
+    margin: 0 0 4px 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #111;
+  }
+  .rgc-subtitle {
+    font-size: 0.88rem;
+    color: #666;
+    font-style: italic;
+  }
+  .rgc-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .rgc-icon-btn {
+    background: #fff;
+    border: 1px solid #deddcf;
+    border-radius: 6px;
+    padding: 5px 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #444;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .rgc-icon-btn:hover {
+    background: #f4f3ec;
+    border-color: #999;
+    color: #111;
+  }
+  .race-gap-container.is-enlarged {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 1.5rem 2rem !important;
+    z-index: 999999 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .race-gap-container.is-enlarged .rgc-canvas-container {
+    flex: 1 1 auto !important;
+    min-height: 480px !important;
+    height: auto !important;
+  }
+  .race-gap-container.is-enlarged .rgc-canvas-container canvas {
+    height: 100% !important;
+  }
+  .rgc-legend-wrapper {
+    margin-bottom: 0.9rem;
+    padding: 0 4px;
+  }
+  .rgc-legend-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 0.78rem;
+    color: #666;
+  }
+  .rgc-legend-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .rgc-link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.78rem;
+    color: #0366d6;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .rgc-sep {
+    color: #aaa;
+  }
+  .rgc-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 7px 10px;
+  }
+  .rgc-chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: #fff;
+    border: 1px solid #deddcf;
+    border-radius: 20px;
+    padding: 4px 10px 4px 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .rgc-chip:hover, .rgc-chip.is-hovered {
+    border-color: #555;
+    background: #fdfdf8;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transform: translateY(-1px);
+  }
+  .rgc-chip.inactive {
+    opacity: 0.45;
+    background: #f0efea;
+    border-style: dashed;
+  }
+  .rgc-chip.is-baseline {
+    border-width: 2px;
+    border-color: #2b2d42;
+    background: #faf9f5;
+    font-weight: 600;
+  }
+  .rgc-chip-radio {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #888;
+    background: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.15s ease;
+    padding: 0;
+  }
+  .rgc-chip-radio:hover {
+    border-color: #111;
+    transform: scale(1.15);
+  }
+  .rgc-chip.is-baseline .rgc-chip-radio {
+    border-color: #2b2d42;
+  }
+  .rgc-chip-radio-inner {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: transparent;
+    transition: background 0.15s ease;
+  }
+  .rgc-chip.is-baseline .rgc-chip-radio-inner {
+    background: #2b2d42;
+  }
+  .rgc-chip-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .rgc-chip-name {
+    flex: 0 0 auto;
+    white-space: nowrap;
+  }
+  .rgc-chip-gap {
+    margin-left: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.74rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .rgc-chip-gap.ahead {
+    background: #ecfdf5;
+    color: #047857;
+  }
+  .rgc-chip-gap.behind {
+    background: #fef2f2;
+    color: #b91c1c;
+  }
+  .rgc-chip-gap.zero {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+  .rgc-chip-time {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.74rem;
+    color: #555;
+    background: #f0efe6;
+    padding: 1px 5px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .rgc-canvas-container {
+    position: relative;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid #e5e4d8;
+    border-radius: 8px;
+    overflow: hidden;
+    touch-action: pan-y;
+  }
+  .rgc-canvas-container canvas {
+    display: block;
+    width: 100%;
+    cursor: crosshair;
+  }
+  @media (max-width: 640px) {
+    .race-gap-container {
+      padding: 0.9rem;
+      margin: 1.5rem 0;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  const containerId = "{{ $chartUid }}";
+  const defaultBaselineName = "{{ $defaultBaseline }}";
+  let activeUnit = "{{ $defaultUnit }}"; // 'mi' or 'km'
+  let activeBaseline = defaultBaselineName;
+  let hoveredDistance = null; // null or number in active unit
+  let hoveredRace = null; // null or string raceName
+  let currentChartYLimits = { yMin: -60, yMax: 60 };
+
+  const COLOR_PALETTE = {
+    'Chicago 2026': '#d92626',   // Bold Primary Red
+    'Chicago 2023': '#059669',   // Emerald (PR 2:48:42)
+    'New York 2025': '#7c3aed',  // Vivid Purple
+    'New York 2024': '#2563eb',  // Royal Blue
+    'Boston 2024': '#d97706',    // Amber / Gold
+    'Boston 2023': '#0284c7',    // Cyan / Blue
+    'Colorado 2022': '#16a34a',  // Forest Green
+    'New York 2022': '#ea580c',  // Orange
+    'New York 2019': '#64748b'   // Slate Gray
+  };
+
+  const FALLBACK_COLORS = [
+    '#e11d48', '#0891b2', '#4f46e5', '#ca8a04', '#0d9488', '#9333ea', '#65a30d', '#db2777'
+  ];
+
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const canvas = document.getElementById(containerId + '-canvas');
+  const ctx = canvas.getContext('2d');
+  const subtitle = document.getElementById(containerId + '-subtitle');
+  const legendBox = document.getElementById(containerId + '-legend');
+
+  // Parse time helper
+  function parseTimeString(s) {
+    if (!s) return null;
+    s = s.trim();
+    if (!s) return null;
+    const parts = s.split(':').map(Number);
+    if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    if (parts.length === 2) return parts[0] * 60 + parts[1];
+    return null;
+  }
+
+  function formatTime(sec, showSign = false) {
+    if (sec === null || isNaN(sec)) return '--:--';
+    const isNeg = sec < 0;
+    const absSec = Math.round(Math.abs(sec));
+    const h = Math.floor(absSec / 3600);
+    const m = Math.floor((absSec % 3600) / 60);
+    const s = absSec % 60;
+    const signStr = showSign ? (isNeg ? '-' : '+') : (isNeg ? '-' : '');
+    const sStr = s < 10 ? '0' + s : '' + s;
+
+    if (h > 0) {
+      const mStr = m < 10 ? '0' + m : '' + m;
+      return `${signStr}${h}:${mStr}:${sStr}`;
+    }
+    return `${signStr}${m}:${sStr}`;
+  }
+
+  // Parse CSV
+  const csvScript = document.getElementById(containerId + '-csv-data');
+  const rawCsv = csvScript ? csvScript.textContent.trim() : '';
+
+  if (!rawCsv) {
+    container.innerHTML = '<div style="padding: 20px; color: #888;">No marathon timing data found.</div>';
+    return;
+  }
+
+  const lines = rawCsv.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+  if (lines.length < 2) return;
+
+  const header = lines[0].split(',').map(h => h.trim());
+  const raceNames = header.slice(2);
+
+  // Setup Race metadata & checkpoints
+  const racesData = {};
+  let colorIdx = 0;
+  raceNames.forEach(name => {
+    let color = COLOR_PALETTE[name];
+    if (!color) {
+      color = FALLBACK_COLORS[colorIdx % FALLBACK_COLORS.length];
+      colorIdx++;
+    }
+    racesData[name] = {
+      name: name,
+      color: color,
+      enabled: true,
+      points: [{ mi: 0, km: 0, t: 0, raw: '0:00:00' }],
+      finishTime: null
+    };
+  });
+
+  const fullMarathonMi = 26.21875;
+  const fullMarathonKm = 42.195;
+
+  for (let i = 1; i < lines.length; i++) {
+    const row = lines[i].split(',').map(s => s.trim());
+    let mi = row[0] ? parseFloat(row[0]) : null;
+    let km = row[1] ? parseFloat(row[1]) : null;
+
+    if (mi === null && km !== null) mi = km * 0.62137119;
+    if (km === null && mi !== null) km = mi * 1.609344;
+    if (mi === null && km === null) continue;
+
+    raceNames.forEach((name, rIdx) => {
+      const colIdx = 2 + rIdx;
+      if (colIdx < row.length && row[colIdx]) {
+        const t = parseTimeString(row[colIdx]);
+        if (t !== null && t > 0) {
+          racesData[name].points.push({
+            mi: mi,
+            km: km,
+            t: t,
+            raw: row[colIdx]
+          });
+        }
+      }
+    });
+  }
+
+  // Sort checkpoints & record finish times
+  raceNames.forEach(name => {
+    racesData[name].points.sort((a, b) => a.mi - b.mi);
+    const lastPt = racesData[name].points[racesData[name].points.length - 1];
+    if (lastPt) {
+      racesData[name].finishTime = lastPt.t;
+      racesData[name].finishStr = lastPt.raw;
+    }
+  });
+
+  // Time interpolation function
+  function getRaceTimeAtDistance(raceName, dist, unit) {
+    if (dist <= 0) return 0;
+
+    const r = racesData[raceName];
+    if (!r || !r.points || r.points.length === 0) return null;
+    const pts = r.points;
+
+    // Check bounds
+    const maxPt = pts[pts.length - 1];
+    const maxD = (unit === 'mi') ? maxPt.mi : maxPt.km;
+    if (dist >= maxD) return maxPt.t;
+
+    // Binary / linear search
+    for (let i = 0; i < pts.length - 1; i++) {
+      const d0 = (unit === 'mi') ? pts[i].mi : pts[i].km;
+      const d1 = (unit === 'mi') ? pts[i + 1].mi : pts[i + 1].km;
+      if (dist >= d0 && dist <= d1) {
+        if (d1 === d0) return pts[i].t;
+        const frac = (dist - d0) / (d1 - d0);
+        return pts[i].t + frac * (pts[i + 1].t - pts[i].t);
+      }
+    }
+    return null;
+  }
+
+  // Function to set baseline race
+  function setBaseline(newBaseline) {
+    if (activeBaseline === newBaseline) return;
+    activeBaseline = newBaseline;
+    // Ensure the new baseline race line is enabled
+    if (racesData[activeBaseline]) {
+      racesData[activeBaseline].enabled = true;
+    }
+    populateLegend();
+    renderChart();
+  }
+
+  const chipGaps = {};
+  const chipTimes = {};
+  const chipElements = {};
+
+  // Populate Legend
+  function populateLegend() {
+    legendBox.innerHTML = '';
+    raceNames.forEach(name => {
+      const r = racesData[name];
+      const isBase = (name === activeBaseline);
+      const chip = document.createElement('div');
+      chip.className = 'rgc-chip' + (r.enabled ? '' : ' inactive') + (isBase ? ' is-baseline' : '') + (name === hoveredRace ? ' is-hovered' : '');
+      chip.setAttribute('data-race', name);
+
+      // Baseline Radio Button
+      const radio = document.createElement('button');
+      radio.type = 'button';
+      radio.className = 'rgc-chip-radio';
+      radio.title = isBase ? 'Current baseline race' : `Set ${name} as baseline`;
+      const radioInner = document.createElement('span');
+      radioInner.className = 'rgc-chip-radio-inner';
+      radio.appendChild(radioInner);
+
+      radio.addEventListener('click', (e) => {
+        e.stopPropagation(); // Do not toggle visibility
+        setBaseline(name);
+      });
+
+      // Race color dot
+      const dot = document.createElement('span');
+      dot.className = 'rgc-chip-dot';
+      dot.style.backgroundColor = r.color;
+
+      const title = document.createElement('span');
+      title.className = 'rgc-chip-name';
+      title.textContent = name;
+
+      const gapBadge = document.createElement('span');
+      gapBadge.className = 'rgc-chip-gap';
+
+      const timeBadge = document.createElement('span');
+      timeBadge.className = 'rgc-chip-time';
+
+      chip.appendChild(radio);
+      chip.appendChild(dot);
+      chip.appendChild(title);
+      chip.appendChild(gapBadge);
+      chip.appendChild(timeBadge);
+
+      chipGaps[name] = gapBadge;
+      chipTimes[name] = timeBadge;
+      chipElements[name] = chip;
+
+      // Clicking chip body toggles visibility
+      chip.addEventListener('click', (e) => {
+        // If user clicks the baseline chip to disable it, keep it enabled or let them toggle
+        r.enabled = !r.enabled;
+        chip.classList.toggle('inactive', !r.enabled);
+        renderChart();
+      });
+
+      chip.addEventListener('mouseenter', () => {
+        hoveredRace = name;
+        updateChipHoverStyles();
+        renderChart();
+      });
+
+      chip.addEventListener('mouseleave', () => {
+        if (hoveredRace === name) {
+          hoveredRace = null;
+          updateChipHoverStyles();
+          renderChart();
+        }
+      });
+
+      legendBox.appendChild(chip);
+    });
+    updateChipReadouts(hoveredDistance);
+  }
+
+  function updateChipHoverStyles() {
+    raceNames.forEach(name => {
+      const el = chipElements[name];
+      if (el) {
+        el.classList.toggle('is-hovered', name === hoveredRace);
+      }
+    });
+  }
+
+  // Update readouts in legend chips
+  function updateChipReadouts(dist) {
+    if (dist === null || dist === undefined) {
+      const baseFin = racesData[activeBaseline] ? racesData[activeBaseline].finishTime : null;
+      raceNames.forEach(name => {
+        const r = racesData[name];
+        const gapEl = chipGaps[name];
+        const timeEl = chipTimes[name];
+        if (!gapEl || !timeEl) return;
+
+        timeEl.textContent = r.finishStr || '--:--';
+
+        if (name === activeBaseline) {
+          gapEl.className = 'rgc-chip-gap zero';
+          gapEl.textContent = '0:00';
+        } else if (baseFin !== null && r.finishTime !== null) {
+          const gap = baseFin - r.finishTime;
+          if (gap > 0) {
+            gapEl.className = 'rgc-chip-gap ahead';
+            gapEl.textContent = `+${formatTime(gap)}`;
+          } else if (gap < 0) {
+            gapEl.className = 'rgc-chip-gap behind';
+            gapEl.textContent = `-${formatTime(Math.abs(gap))}`;
+          } else {
+            gapEl.className = 'rgc-chip-gap zero';
+            gapEl.textContent = 'tied';
+          }
+        } else {
+          gapEl.textContent = '';
+        }
+      });
+    } else {
+      const baseTime = getRaceTimeAtDistance(activeBaseline, dist, activeUnit);
+
+      raceNames.forEach(name => {
+        const gapEl = chipGaps[name];
+        const timeEl = chipTimes[name];
+        if (!gapEl || !timeEl) return;
+
+        const t = getRaceTimeAtDistance(name, dist, activeUnit);
+        timeEl.textContent = (t !== null) ? formatTime(t) : '--:--';
+
+        if (name === activeBaseline) {
+          gapEl.className = 'rgc-chip-gap zero';
+          gapEl.textContent = '0:00';
+        } else if (baseTime !== null && t !== null) {
+          const gap = baseTime - t;
+          if (gap > 0) {
+            gapEl.className = 'rgc-chip-gap ahead';
+            gapEl.textContent = `+${formatTime(gap)}`;
+          } else if (gap < 0) {
+            gapEl.className = 'rgc-chip-gap behind';
+            gapEl.textContent = `-${formatTime(Math.abs(gap))}`;
+          } else {
+            gapEl.className = 'rgc-chip-gap zero';
+            gapEl.textContent = 'tied';
+          }
+        } else {
+          gapEl.textContent = '';
+        }
+      });
+    }
+  }
+
+  // Canvas layout and render
+  function renderChart() {
+
+    const maxDist = (activeUnit === 'mi') ? fullMarathonMi : fullMarathonKm;
+    const isEnlarged = container.classList.contains('is-enlarged');
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const width = rect.width || 760;
+    const height = isEnlarged
+      ? Math.max(rect.height || 560, 480)
+      : Math.min(Math.max(width * 0.52, 380), 520);
+
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.height = height + 'px';
+
+    ctx.save();
+    ctx.scale(dpr, dpr);
+
+    // Margins
+    const pad = { top: 32, right: 35, bottom: 56, left: 78 };
+    const plotW = width - pad.left - pad.right;
+    const plotH = height - pad.top - pad.bottom;
+
+    // Background
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, width, height);
+
+    // Compute Y limits for Gap
+    let minGap = 0;
+    let maxGap = 0;
+
+    const visibleRaces = raceNames.filter(n => racesData[n].enabled);
+
+    // Sampling points
+    const samplesCount = 180;
+    const sampleDistances = [];
+    for (let s = 0; s <= samplesCount; s++) {
+      sampleDistances.push((s / samplesCount) * maxDist);
+    }
+
+    visibleRaces.forEach(rName => {
+      sampleDistances.forEach(d => {
+        const tRace = getRaceTimeAtDistance(rName, d, activeUnit);
+        const tBase = getRaceTimeAtDistance(activeBaseline, d, activeUnit);
+        if (tRace !== null && tBase !== null && d > 0.05) {
+          // Gap: tBase - tRace -> positive = Ahead (faster), negative = Behind (slower)
+          const gap = tBase - tRace;
+          if (gap < minGap) minGap = gap;
+          if (gap > maxGap) maxGap = gap;
+        }
+      });
+    });
+
+    // Pad Y range nicely
+    const padSec = Math.max(Math.abs(minGap), Math.abs(maxGap)) * 0.12 || 120;
+    let yMin = Math.floor((minGap - padSec) / 60) * 60;
+    let yMax = Math.ceil((maxGap + padSec) / 60) * 60;
+    if (yMax <= 0) yMax = 60;
+    if (yMin >= 0) yMin = -60;
+    currentChartYLimits = { yMin, yMax };
+
+    // Coord mapping
+    function xToPx(x) {
+      return pad.left + (x / maxDist) * plotW;
+    }
+    function yToPx(y) {
+      return pad.top + plotH - ((y - yMin) / (yMax - yMin)) * plotH;
+    }
+
+    // Major Milestone Markers (Vertical grid lines & labels)
+    const milestones = (activeUnit === 'mi') ? (
+      (plotW < 520) ? [
+        { d: 4,  label: '4M' },
+        { d: 8,  label: '8M' },
+        { d: 13.109375, label: 'Half', bold: true },
+        { d: 16, label: '16M' },
+        { d: 20, label: '20M' },
+        { d: 24, label: '24M' },
+        { d: fullMarathonMi, label: 'Finish', bold: true }
+      ] : [
+        { d: 2,  label: '2M' },
+        { d: 4,  label: '4M' },
+        { d: 6,  label: '6M' },
+        { d: 8,  label: '8M' },
+        { d: 10, label: '10M' },
+        { d: 13.109375, label: 'Half', bold: true },
+        { d: 16, label: '16M' },
+        { d: 18, label: '18M' },
+        { d: 20, label: '20M' },
+        { d: 22, label: '22M' },
+        { d: 24, label: '24M' },
+        { d: fullMarathonMi, label: 'Finish', bold: true }
+      ]
+    ) : (
+      (plotW < 520) ? [
+        { d: 5,  label: '5K' },
+        { d: 10, label: '10K' },
+        { d: 15, label: '15K' },
+        { d: 21.0975, label: 'Half', bold: true },
+        { d: 25, label: '25K' },
+        { d: 30, label: '30K' },
+        { d: 35, label: '35K' },
+        { d: 40, label: '' },
+        { d: fullMarathonKm, label: 'Finish', bold: true }
+      ] : [
+        { d: 5,  label: '5K' },
+        { d: 10, label: '10K' },
+        { d: 15, label: '15K' },
+        { d: 20, label: '20K' },
+        { d: 21.0975, label: 'Half', bold: true },
+        { d: 25, label: '25K' },
+        { d: 30, label: '30K' },
+        { d: 35, label: '35K' },
+        { d: 40, label: '' },
+        { d: fullMarathonKm, label: 'Finish', bold: true }
+      ]
+    );
+
+    // Gridlines - X
+    milestones.forEach(m => {
+      const px = xToPx(m.d);
+      ctx.beginPath();
+      ctx.strokeStyle = m.bold ? '#d0cfc4' : '#ecebe0';
+      ctx.lineWidth = m.bold ? 1.5 : 1;
+      if (!m.bold) ctx.setLineDash([3, 4]);
+      else ctx.setLineDash([]);
+      ctx.moveTo(px, pad.top);
+      ctx.lineTo(px, pad.top + plotH);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // X Tick Label
+      if (m.label) {
+        ctx.fillStyle = m.bold ? '#222' : '#777';
+        ctx.font = m.bold ? '600 11px -apple-system, BlinkMacSystemFont, sans-serif' : '400 10.5px -apple-system, BlinkMacSystemFont, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'top';
+        ctx.fillText(m.label, px, pad.top + plotH + 7);
+      }
+    });
+
+    // X-Axis Title Label (Interactive click to switch distance unit)
+    ctx.save();
+    ctx.fillStyle = '#555';
+    ctx.font = '500 11.5px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    const xLabelText = (activeUnit === 'mi') ? 'Distance (mi)' : 'Distance (km)';
+    ctx.fillText(xLabelText, pad.left + plotW / 2, pad.top + plotH + 26);
+    ctx.restore();
+
+    // Horizontal Gridlines & Y-Axis Ticks
+    const yTickCount = 7;
+    const yStep = (yMax - yMin) / (yTickCount - 1);
+    for (let i = 0; i < yTickCount; i++) {
+      const yVal = yMin + i * yStep;
+      const py = yToPx(yVal);
+
+      ctx.beginPath();
+      const isZero = Math.abs(yVal) < 1;
+      ctx.strokeStyle = isZero ? '#888' : '#e6e5db';
+      ctx.lineWidth = isZero ? 1.8 : 1;
+      if (!isZero) ctx.setLineDash([2, 3]);
+      else ctx.setLineDash([]);
+      ctx.moveTo(pad.left, py);
+      ctx.lineTo(pad.left + plotW, py);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Label
+      ctx.fillStyle = isZero ? '#111' : '#666';
+      ctx.font = isZero ? '600 11px ui-monospace, monospace' : '400 11px ui-monospace, monospace';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      const labelText = isZero ? '0:00' : formatTime(yVal, true);
+      ctx.fillText(labelText, pad.left - 8, py);
+    }
+
+    // Axis Header Labels
+    ctx.font = '600 11px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'bottom';
+    ctx.fillStyle = '#059669';
+    ctx.fillText('▲ Ahead (+ faster)', pad.left, pad.top - 12);
+    ctx.textAlign = 'right';
+    ctx.fillStyle = '#dc2626';
+    ctx.fillText('▼ Behind (− slower)', pad.left + plotW, pad.top - 12);
+
+    // Y-Axis Title Label
+    ctx.save();
+    ctx.translate(16, pad.top + plotH / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillStyle = '#555';
+    ctx.font = '500 11.5px -apple-system, BlinkMacSystemFont, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillText(`Time difference to ${activeBaseline}`, 0, 0);
+    ctx.restore();
+
+    // DRAW RACE LINES
+    // Sort visible races so that hovered race renders on top
+    const sortedRaces = [...visibleRaces].sort((a, b) => {
+      if (a === hoveredRace) return 1;
+      if (b === hoveredRace) return -1;
+      return 0;
+    });
+
+    sortedRaces.forEach(rName => {
+      const r = racesData[rName];
+      const isTarget = (rName === 'Chicago 2026');
+      const isBaseline = (rName === activeBaseline);
+      const isHovered = (rName === hoveredRace);
+
+      ctx.beginPath();
+      ctx.strokeStyle = r.color;
+      let baseWidth = isTarget ? 3.4 : (isBaseline ? 2.8 : 2.0);
+      if (isHovered) {
+        ctx.lineWidth = baseWidth + 2.4;
+      } else if (hoveredRace) {
+        ctx.lineWidth = Math.max(1.2, baseWidth * 0.7);
+      } else {
+        ctx.lineWidth = baseWidth;
+      }
+
+      if (isBaseline) {
+        ctx.setLineDash(isHovered ? [6, 4] : [5, 4]);
+      } else {
+        ctx.setLineDash([]);
+      }
+
+      let first = true;
+      sampleDistances.forEach(d => {
+        const tRace = getRaceTimeAtDistance(rName, d, activeUnit);
+        const tBase = getRaceTimeAtDistance(activeBaseline, d, activeUnit);
+        if (tRace !== null && tBase !== null) {
+          const yVal = tBase - tRace;
+          const px = xToPx(d);
+          const py = yToPx(yVal);
+          if (first) {
+            ctx.moveTo(px, py);
+            first = false;
+          } else {
+            ctx.lineTo(px, py);
+          }
+        }
+      });
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Draw recorded timing mat points (dots)
+      if (r.points) {
+        r.points.forEach(pt => {
+          if (pt.mi === 0) return; // skip start line dot
+          const d = (activeUnit === 'mi') ? pt.mi : pt.km;
+          const tBase = getRaceTimeAtDistance(activeBaseline, d, activeUnit);
+          if (tBase !== null) {
+            const yVal = tBase - pt.t;
+            const px = xToPx(d);
+            const py = yToPx(yVal);
+            ctx.beginPath();
+            const dotRadius = isHovered ? 5.2 : (isTarget ? 3.8 : 2.8);
+            ctx.arc(px, py, dotRadius, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+            ctx.lineWidth = isHovered ? 3.0 : (isTarget ? 2.4 : 1.8);
+            ctx.strokeStyle = r.color;
+            ctx.stroke();
+          }
+        });
+      }
+    });
+
+    // DRAW HOVER SCRUBBER (Crosshair & Tooltip Dots)
+    if (hoveredDistance !== null && hoveredDistance >= 0 && hoveredDistance <= maxDist) {
+      const hpx = xToPx(hoveredDistance);
+
+      // Vertical guide line
+      ctx.beginPath();
+      ctx.strokeStyle = '#2b2d42';
+      ctx.lineWidth = 1.4;
+      ctx.setLineDash([4, 4]);
+      ctx.moveTo(hpx, pad.top);
+      ctx.lineTo(hpx, pad.top + plotH);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Intersection points on visible races
+      visibleRaces.forEach(rName => {
+        const tRace = getRaceTimeAtDistance(rName, hoveredDistance, activeUnit);
+        const tBase = getRaceTimeAtDistance(activeBaseline, hoveredDistance, activeUnit);
+        if (tRace !== null && tBase !== null) {
+          const yVal = tBase - tRace;
+          const py = yToPx(yVal);
+          const isHovered = (rName === hoveredRace);
+          ctx.beginPath();
+          ctx.arc(hpx, py, isHovered ? 7.5 : 5.5, 0, Math.PI * 2);
+          ctx.fillStyle = racesData[rName].color;
+          ctx.fill();
+          ctx.lineWidth = isHovered ? 3.0 : 2.2;
+          ctx.strokeStyle = '#ffffff';
+          ctx.stroke();
+        }
+      });
+
+      // Distance Badge anchored along vertical scrubber at bottom Y-tick level (e.g. -27:00 / yMin)
+      const distBadgeY = yToPx(yMin) - 12; // just above bottom y-axis tick level
+      let distStr = (activeUnit === 'mi')
+        ? `${hoveredDistance.toFixed(2)} mi`
+        : `${hoveredDistance.toFixed(2)} km`;
+
+      ctx.font = '600 11px ui-monospace, SFMono-Regular, monospace';
+      const textWidth = ctx.measureText(distStr).width;
+      const badgeW = textWidth + 14;
+      const badgeH = 20;
+
+      // Ensure badge stays within chart plot bounds
+      let badgeX = hpx - badgeW / 2;
+      if (badgeX < pad.left + 2) badgeX = pad.left + 2;
+      if (badgeX + badgeW > pad.left + plotW - 2) badgeX = pad.left + plotW - badgeW - 2;
+
+      // Badge background pill
+      ctx.beginPath();
+      const radius = 4;
+      ctx.roundRect
+        ? ctx.roundRect(badgeX, distBadgeY - badgeH / 2, badgeW, badgeH, radius)
+        : ctx.rect(badgeX, distBadgeY - badgeH / 2, badgeW, badgeH);
+      ctx.fillStyle = '#1e293b';
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.stroke();
+
+      // Badge text
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(distStr, badgeX + badgeW / 2, distBadgeY);
+    }
+
+    ctx.restore();
+  }
+
+  // Scrub & pointer handler
+  function handlePointer(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+    const pad = { top: 32, right: 35, bottom: 56, left: 78 };
+    const plotW = rect.width - pad.left - pad.right;
+    const plotH = rect.height - pad.top - pad.bottom;
+    const mouseX = clientX - rect.left;
+    const mouseY = clientY - rect.top;
+
+    if (mouseX < pad.left || mouseX > rect.left + rect.width - pad.right ||
+        mouseY < pad.top || mouseY > rect.height - pad.bottom) {
+      hoveredDistance = null;
+      hoveredRace = null;
+      updateChipHoverStyles();
+      updateChipReadouts(null);
+      renderChart();
+      return;
+    }
+
+    const maxDist = (activeUnit === 'mi') ? fullMarathonMi : fullMarathonKm;
+    const d = Math.max(0, Math.min(maxDist, ((mouseX - pad.left) / plotW) * maxDist));
+    hoveredDistance = d;
+
+    // Detect closest visible race line to cursor (within 18px)
+    const visibleRaces = raceNames.filter(n => racesData[n].enabled);
+    let closestRace = null;
+    let closestDistY = 18; // maximum pixel distance threshold for line snapping
+
+    visibleRaces.forEach(rName => {
+      const tRace = getRaceTimeAtDistance(rName, d, activeUnit);
+      const tBase = getRaceTimeAtDistance(activeBaseline, d, activeUnit);
+      if (tRace !== null && tBase !== null) {
+        const yVal = tBase - tRace;
+        const py = pad.top + plotH - ((yVal - currentChartYLimits.yMin) / (currentChartYLimits.yMax - currentChartYLimits.yMin)) * plotH;
+        const distY = Math.abs(mouseY - py);
+        if (distY < closestDistY) {
+          closestDistY = distY;
+          closestRace = rName;
+        }
+      }
+    });
+
+    hoveredRace = closestRace;
+    updateChipHoverStyles();
+    updateChipReadouts(d);
+    renderChart();
+  }
+
+  canvas.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const pad = { top: 32, right: 35, bottom: 56, left: 78 };
+
+    // If mouse is over the x-axis label area along the bottom
+    const isOverXAxis = (mouseY >= rect.height - pad.bottom && mouseY <= rect.height && mouseX >= pad.left - 20 && mouseX <= rect.width - pad.right + 20);
+
+    if (isOverXAxis) {
+      canvas.style.cursor = 'pointer';
+    } else {
+      canvas.style.cursor = 'crosshair';
+    }
+    handlePointer(e.clientX, e.clientY);
+  });
+  canvas.addEventListener('mouseleave', () => {
+    canvas.style.cursor = 'default';
+    hoveredDistance = null;
+    hoveredRace = null;
+    updateChipHoverStyles();
+    updateChipReadouts(null);
+    renderChart();
+  });
+
+  // Touch support
+  canvas.addEventListener('touchmove', (e) => {
+    if (e.touches && e.touches[0]) {
+      handlePointer(e.touches[0].clientX, e.touches[0].clientY);
+    }
+  }, { passive: true });
+  canvas.addEventListener('touchend', () => {
+    hoveredDistance = null;
+    hoveredRace = null;
+    updateChipHoverStyles();
+    updateChipReadouts(null);
+    renderChart();
+  });
+
+  // Function to toggle distance unit
+  function toggleDistanceUnit() {
+    activeUnit = (activeUnit === 'mi') ? 'km' : 'mi';
+    updateChipReadouts(hoveredDistance);
+    renderChart();
+  }
+
+  // Click on canvas: toggle unit if clicking along x-axis labels / title area (bottom of plot)
+  canvas.addEventListener('click', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const pad = { top: 32, right: 35, bottom: 56, left: 78 };
+
+    // If click is in the x-axis area along the bottom
+    if (mouseY >= rect.height - pad.bottom && mouseY <= rect.height && mouseX >= pad.left - 20 && mouseX <= rect.width - pad.right + 20) {
+      toggleDistanceUnit();
+    }
+  });
+
+  // Legend Select All / None
+  const legAll = document.getElementById(containerId + '-legend-all');
+  const legNone = document.getElementById(containerId + '-legend-none');
+  if (legAll) {
+    legAll.addEventListener('click', () => {
+      raceNames.forEach(n => racesData[n].enabled = true);
+      populateLegend();
+      renderChart();
+    });
+  }
+  if (legNone) {
+    legNone.addEventListener('click', () => {
+      raceNames.forEach(n => {
+        racesData[n].enabled = (n === activeBaseline);
+      });
+      populateLegend();
+      renderChart();
+    });
+  }
+
+  // Enlarge / Fullscreen Toggle
+  const expandBtn = document.getElementById(containerId + '-expand-btn');
+  const iconExpand = expandBtn ? expandBtn.querySelector('.rgc-icon-expand') : null;
+  const iconCompress = expandBtn ? expandBtn.querySelector('.rgc-icon-compress') : null;
+
+  function toggleEnlarge() {
+    const isNowEnlarged = container.classList.toggle('is-enlarged');
+    if (isNowEnlarged) {
+      document.body.style.overflow = 'hidden';
+      if (iconExpand) iconExpand.style.display = 'none';
+      if (iconCompress) iconCompress.style.display = 'block';
+      if (expandBtn) {
+        expandBtn.title = 'Compress / Exit enlarged view (Esc)';
+        expandBtn.setAttribute('aria-label', 'Compress / Exit enlarged view');
+      }
+    } else {
+      document.body.style.overflow = '';
+      if (iconExpand) iconExpand.style.display = 'block';
+      if (iconCompress) iconCompress.style.display = 'none';
+      if (expandBtn) {
+        expandBtn.title = 'Enlarge graph';
+        expandBtn.setAttribute('aria-label', 'Enlarge graph');
+      }
+    }
+    renderChart();
+  }
+
+  if (expandBtn) {
+    expandBtn.addEventListener('click', toggleEnlarge);
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && container.classList.contains('is-enlarged')) {
+      toggleEnlarge();
+    }
+  });
+
+  // ResizeObserver for responsiveness
+  const ro = new ResizeObserver(() => {
+    renderChart();
+  });
+  ro.observe(canvas.parentElement);
+
+  // Initialize
+  populateLegend();
+  renderChart();
+})();
+</script>
