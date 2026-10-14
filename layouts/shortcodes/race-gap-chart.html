@@ -48,6 +48,11 @@
     </div>
   </div>
 
+  <!-- Chart Canvas Area -->
+  <div class="rgc-canvas-container" id="{{ $chartUid }}-canvas-box">
+    <canvas id="{{ $chartUid }}-canvas"></canvas>
+  </div>
+
   <!-- Interactive Legend -->
   <div class="rgc-legend-wrapper">
     <div class="rgc-legend-header">
@@ -61,11 +66,6 @@
     <div class="rgc-legend" id="{{ $chartUid }}-legend">
       <!-- Populated dynamically -->
     </div>
-  </div>
-
-  <!-- Chart Canvas Area -->
-  <div class="rgc-canvas-container" id="{{ $chartUid }}-canvas-box">
-    <canvas id="{{ $chartUid }}-canvas"></canvas>
   </div>
 
   <!-- Raw CSV Data Storage -->
@@ -159,7 +159,7 @@
     height: 100% !important;
   }
   .rgc-legend-wrapper {
-    margin-bottom: 0.9rem;
+    margin-bottom: 0.2rem;
     padding: 0 4px;
   }
   .rgc-legend-header {
@@ -305,6 +305,7 @@
     border-radius: 8px;
     overflow: hidden;
     touch-action: pan-y;
+    margin-bottom: 1.1rem;
   }
   .rgc-canvas-container canvas {
     display: block;

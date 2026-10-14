@@ -1,0 +1,1781 @@
+{{/*
+  Ensemble Weather Forecast Progression Shortcode (ECMWF & GFS)
+  Usage: {{< weather-ensemble-chart ecmwf="ecmwf-ensemble-predictions.json" gfs="gfs-ensemble-predictions.json" >}}
+*/}}
+
+{{ $ecmwfFile := .Get "ecmwf" | default (.Get "data" | default "ecmwf-ensemble-predictions.json") }}
+{{ $gfsFile := .Get "gfs" | default "gfs-ensemble-predictions.json" }}
+{{ $chartUid := printf "wec-%x" (now.UnixNano) }}
+
+{{/* Try to obtain ECMWF JSON content from page bundle resource or direct file read */}}
+{{ $jsonEcmwf := "" }}
+{{ with .Page.Resources.Get $ecmwfFile }}
+  {{ $jsonEcmwf = .Content }}
+{{ else }}
+  {{ if fileExists $ecmwfFile }}
+    {{ $jsonEcmwf = readFile $ecmwfFile }}
+  {{ else }}
+    {{ $tryPath := printf "content/post/%s/%s" $.Page.File.TranslationBaseName $ecmwfFile }}
+    {{ if fileExists $tryPath }}
+      {{ $jsonEcmwf = readFile $tryPath }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{/* Try to obtain GFS JSON content from page bundle resource or direct file read */}}
+{{ $jsonGfs := "" }}
+{{ with .Page.Resources.Get $gfsFile }}
+  {{ $jsonGfs = .Content }}
+{{ else }}
+  {{ if fileExists $gfsFile }}
+    {{ $jsonGfs = readFile $gfsFile }}
+  {{ else }}
+    {{ $tryPath := printf "content/post/%s/%s" $.Page.File.TranslationBaseName $gfsFile }}
+    {{ if fileExists $tryPath }}
+      {{ $jsonGfs = readFile $tryPath }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+{{ $subtitle := .Get "subtitle" | default "How the weather prediction changed in the 10 days before the race." }}
+
+<div class="weather-ensemble-container" id="{{ $chartUid }}">
+  <div class="wec-header">
+    <div class="wec-title-group">
+      <h3 class="wec-title" id="{{ $chartUid }}-title">ECMWF Ensemble Forecast Evolution</h3>
+      <div class="wec-subtitle" id="{{ $chartUid }}-subtitle">{{ $subtitle }}</div>
+    </div>
+    <div class="wec-actions">
+      <button type="button" class="wec-icon-btn" id="{{ $chartUid }}-expand-btn" title="Enlarge graph" aria-label="Enlarge graph">
+        <svg class="wec-icon-expand" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <polyline points="9 21 3 21 3 15"></polyline>
+          <line x1="21" y1="3" x2="14" y2="10"></line>
+          <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
+        <svg class="wec-icon-compress" style="display:none;" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 14 10 14 10 20"></polyline>
+          <polyline points="20 10 14 10 14 4"></polyline>
+          <line x1="14" y1="10" x2="21" y2="3"></line>
+          <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Interactive Controls Bar -->
+  <div class="wec-controls">
+    <!-- Model Selection -->
+    <div class="wec-control-group">
+      <div class="wec-pill-nav" id="{{ $chartUid }}-model-pills">
+        <button type="button" class="wec-pill active" data-model="ecmwf" title="European Centre for Medium-Range Weather Forecasts (IFS - 50 members)">ECMWF</button>
+        <button type="button" class="wec-pill" data-model="gfs" title="Global Forecast System (NOAA / NCEP - 31 members)">GFS</button>
+      </div>
+    </div>
+
+    <!-- Metric Selection -->
+    <div class="wec-control-group">
+      <div class="wec-pill-nav" id="{{ $chartUid }}-metric-pills">
+        <button type="button" class="wec-pill active" data-metric="temperature">Temperature</button>
+        <button type="button" class="wec-pill" data-metric="dew_point">Dew Point</button>
+        <button type="button" class="wec-pill" data-metric="wind_speed">Wind Speed</button>
+        <button type="button" class="wec-pill" data-metric="precip">Rain Chance</button>
+      </div>
+    </div>
+
+    <!-- Race Hour Slider -->
+    <div class="wec-slider-control-group">
+      <div class="wec-play-btn-wrap">
+        <button type="button" class="wec-play-btn" id="{{ $chartUid }}-play-btn" title="Play hourly progression (1 hr/sec)" aria-label="Play hourly progression">
+          <svg class="wec-play-icon" viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+            <polygon points="6 4 20 12 6 20 6 4"></polygon>
+          </svg>
+          <svg class="wec-pause-icon" style="display:none;" viewBox="0 0 24 24" width="13" height="13" fill="currentColor">
+            <rect x="5" y="4" width="4" height="16" rx="1"></rect>
+            <rect x="15" y="4" width="4" height="16" rx="1"></rect>
+          </svg>
+        </button>
+      </div>
+      <div class="wec-slider-track-wrap">
+        <input type="range" class="wec-time-slider" id="{{ $chartUid }}-time-slider" min="0" max="8" step="1" value="0" aria-label="Race hour time slider">
+        <div class="wec-slider-ticks" id="{{ $chartUid }}-slider-ticks">
+          <button type="button" class="wec-slider-tick active" data-index="0" style="left: 0%;" title="7:00 AM">7 AM</button>
+          <button type="button" class="wec-slider-tick" data-index="1" style="left: 12.5%;" title="8:00 AM">8 AM</button>
+          <button type="button" class="wec-slider-tick" data-index="2" style="left: 25%;" title="9:00 AM">9 AM</button>
+          <button type="button" class="wec-slider-tick" data-index="3" style="left: 37.5%;" title="10:00 AM">10 AM</button>
+          <button type="button" class="wec-slider-tick" data-index="4" style="left: 50%;" title="11:00 AM">11 AM</button>
+          <button type="button" class="wec-slider-tick" data-index="5" style="left: 62.5%;" title="12:00 PM">12 PM</button>
+          <button type="button" class="wec-slider-tick" data-index="6" style="left: 75%;" title="1:00 PM">1 PM</button>
+          <button type="button" class="wec-slider-tick" data-index="7" style="left: 87.5%;" title="2:00 PM">2 PM</button>
+          <button type="button" class="wec-slider-tick" data-index="8" style="left: 100%;" title="3:00 PM">3 PM</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Legend explanation bar -->
+  <div class="wec-legend-bar">
+    <div class="wec-legend-item">
+      <span class="wec-leg-swatch wec-swatch-iqr"></span>
+      <span class="wec-leg-text">25th–75th Percentile (IQR)</span>
+    </div>
+    <div class="wec-legend-item">
+      <span class="wec-leg-line wec-line-median"></span>
+      <span class="wec-leg-text">Ensemble Median</span>
+    </div>
+    <div class="wec-legend-item" id="{{ $chartUid }}-det-legend-item">
+      <span class="wec-leg-line wec-line-det"></span>
+      <span class="wec-leg-text" id="{{ $chartUid }}-det-legend-text">Deterministic IFS</span>
+    </div>
+    <div class="wec-legend-item" id="{{ $chartUid }}-members-legend-item">
+      <span class="wec-leg-line wec-line-member"></span>
+      <span class="wec-leg-text" id="{{ $chartUid }}-members-legend-text">50 Members</span>
+    </div>
+    <div class="wec-legend-item" id="{{ $chartUid }}-obs-legend-item">
+      <span class="wec-leg-line wec-line-obs"></span>
+      <span class="wec-leg-text">Actual Observed</span>
+    </div>
+  </div>
+
+  <!-- Chart Canvas Area -->
+  <div class="wec-canvas-container" id="{{ $chartUid }}-canvas-box">
+    <canvas id="{{ $chartUid }}-canvas"></canvas>
+    <div class="wec-tooltip" id="{{ $chartUid }}-tooltip" style="display:none;"></div>
+    <button type="button" class="wec-lead-play-btn" id="{{ $chartUid }}-lead-play-btn" title="Step through prediction lead times (10 days out → Race Day)" aria-label="Step through prediction lead times">
+      <svg class="wec-play-icon" viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+        <polygon points="6 4 20 12 6 20 6 4"></polygon>
+      </svg>
+      <svg class="wec-pause-icon" style="display:none;" viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+        <rect x="5" y="4" width="4" height="16" rx="1"></rect>
+        <rect x="15" y="4" width="4" height="16" rx="1"></rect>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Lead Day Snapshot Cards -->
+  <div class="wec-snapshot-section" id="{{ $chartUid }}-snapshot-section">
+    <div class="wec-snapshot-header">
+      <span class="wec-snapshot-title" id="{{ $chartUid }}-snapshot-title">Prediction as of October 11, 2026</span>
+    </div>
+    <div class="wec-hourly-cards" id="{{ $chartUid }}-hourly-cards">
+      <!-- Populated dynamically -->
+    </div>
+  </div>
+
+  <!-- JSON Data payloads -->
+  <script type="application/json" id="{{ $chartUid }}-data-ecmwf">{{ $jsonEcmwf | safeJS }}</script>
+  <script type="application/json" id="{{ $chartUid }}-data-gfs">{{ $jsonGfs | safeJS }}</script>
+</div>
+
+<style>
+  .weather-ensemble-container {
+    margin: 2.2rem 0;
+    padding: 1.25rem 1.4rem;
+    background: #fffffb;
+    border: 1px solid #e5e5dc;
+    border-radius: 10px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.04);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    box-sizing: border-box;
+  }
+  .weather-ensemble-container *, .weather-ensemble-container *::before, .weather-ensemble-container *::after {
+    box-sizing: border-box;
+  }
+  .wec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #edece4;
+    margin-bottom: 0.9rem;
+  }
+  .wec-title {
+    margin: 0 0 4px 0;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: #1d1e2c;
+  }
+  .wec-subtitle {
+    font-size: 0.86rem;
+    color: #636674;
+    line-height: 1.35;
+  }
+  .wec-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .wec-icon-btn {
+    background: #f8f7f2;
+    border: 1px solid #d5d4c8;
+    border-radius: 6px;
+    padding: 5px 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #444;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .wec-icon-btn:hover {
+    background: #eae8dc;
+    border-color: #999;
+    color: #111;
+  }
+
+  /* Fullscreen Modal state */
+  .weather-ensemble-container.is-enlarged {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 1.5rem 2rem !important;
+    z-index: 999999 !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .weather-ensemble-container.is-enlarged .wec-canvas-container {
+    flex: 1 1 auto !important;
+    min-height: 460px !important;
+    height: auto !important;
+  }
+  .weather-ensemble-container.is-enlarged .wec-canvas-container canvas {
+    height: 100% !important;
+  }
+
+  /* Controls */
+  .wec-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    margin-bottom: 0.85rem;
+    padding: 8px 12px;
+    background: #f7f6f0;
+    border-radius: 8px;
+    border: 1px solid #ebeae0;
+  }
+  .wec-control-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .wec-pill-nav {
+    display: inline-flex;
+    background: #eae9e0;
+    padding: 2px;
+    border-radius: 6px;
+    gap: 2px;
+  }
+  .wec-pill {
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 9px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #494a50;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .wec-pill:hover {
+    color: #111;
+  }
+  .wec-pill.active {
+    background: #ffffff;
+    color: #1a1a1a;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+  .wec-pill-sub {
+    font-size: 0.7rem;
+    opacity: 0.75;
+  }
+
+  /* Time Slider Control */
+  .wec-slider-control-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1 1 360px;
+    max-width: 540px;
+  }
+  /* Play Button */
+  .wec-play-btn-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+  .wec-play-btn {
+    background: #ffffff;
+    border: 1px solid #d5d4c8;
+    border-radius: 6px;
+    width: 32px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #334155;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.15s ease;
+    padding: 0;
+  }
+  .wec-play-btn:hover {
+    background: #f1f0e8;
+    border-color: #a8a79d;
+    color: #0f172a;
+    transform: scale(1.05);
+  }
+  .wec-play-btn:active {
+    transform: scale(0.96);
+  }
+  .wec-play-btn.is-playing {
+    background: #0d6efd;
+    border-color: #0b5ed7;
+    color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+  }
+  .wec-play-btn.is-playing:hover {
+    background: #0b5ed7;
+  }
+  /* Lead Times Play Button near X-Axis */
+  .wec-lead-play-btn {
+    position: absolute;
+    bottom: 8px;
+    left: 12px;
+    z-index: 5;
+    background: #ffffff;
+    border: 1px solid #d5d4c8;
+    border-radius: 6px;
+    width: 32px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #334155;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: all 0.15s ease;
+    padding: 0;
+  }
+  .wec-lead-play-btn:hover {
+    background: #f1f0e8;
+    border-color: #a8a79d;
+    color: #0f172a;
+    transform: scale(1.05);
+  }
+  .wec-lead-play-btn:active {
+    transform: scale(0.96);
+  }
+  .wec-lead-play-btn.is-playing {
+    background: #0d6efd;
+    border-color: #0b5ed7;
+    color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+  }
+  .wec-lead-play-btn.is-playing:hover {
+    background: #0b5ed7;
+  }
+  .wec-slider-track-wrap {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    min-width: 170px;
+  }
+  .wec-time-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 18px;
+    background: transparent;
+    border: none;
+    outline: none;
+    margin: 2px 0 0 0;
+    padding: 0;
+    cursor: pointer;
+    display: block;
+  }
+  .wec-time-slider:focus-visible {
+    outline: 2px solid #0d6efd;
+    outline-offset: 2px;
+  }
+  .wec-time-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    background: #e2e1d7;
+    border-radius: 3px;
+    border: none;
+  }
+  .wec-time-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #0d6efd;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    margin-top: -6px;
+    transition: transform 0.1s ease, background 0.15s ease;
+  }
+  .wec-time-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+    background: #0b5ed7;
+  }
+  .wec-time-slider::-moz-range-track {
+    width: 100%;
+    height: 6px;
+    background: #e2e1d7;
+    border-radius: 3px;
+    border: none;
+  }
+  .wec-time-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #0d6efd;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    transition: transform 0.1s ease, background 0.15s ease;
+  }
+  .wec-time-slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
+    background: #0b5ed7;
+  }
+  .wec-slider-ticks {
+    position: relative;
+    width: calc(100% - 18px);
+    margin: 4px 9px 0 9px;
+    height: 18px;
+  }
+  .wec-slider-tick {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: #78776f;
+    cursor: pointer;
+    line-height: 1;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    transition: color 0.15s ease, font-weight 0.15s ease;
+  }
+  .wec-slider-tick:hover {
+    color: #111;
+  }
+  .wec-slider-tick.active {
+    color: #0d6efd;
+    font-weight: 700;
+  }
+
+  /* Legend Bar */
+  .wec-legend-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 14px 20px;
+    padding: 4px 6px 10px 6px;
+    font-size: 0.76rem;
+    color: #636674;
+  }
+  .wec-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .wec-leg-swatch {
+    width: 14px;
+    height: 10px;
+    border-radius: 2px;
+  }
+  .wec-swatch-p10-p90 {
+    background: rgba(13, 110, 253, 0.18);
+    border: 1px dashed rgba(13, 110, 253, 0.45);
+  }
+  .wec-swatch-iqr {
+    background: rgba(13, 110, 253, 0.38);
+    border: 1px solid rgba(13, 110, 253, 0.6);
+  }
+  .wec-leg-line {
+    width: 18px;
+    height: 3px;
+    border-radius: 1px;
+  }
+  .wec-line-median {
+    background: #0d6efd;
+  }
+  .wec-line-det {
+    background: repeating-linear-gradient(90deg, #d9534f 0, #d9534f 4px, transparent 4px, transparent 7px);
+    height: 2px;
+  }
+  .wec-line-member {
+    background: rgba(13, 110, 253, 0.45);
+    height: 1.5px;
+  }
+  .wec-line-obs {
+    background: repeating-linear-gradient(90deg, #0f172a 0, #0f172a 5px, transparent 5px, transparent 8px);
+    height: 2px;
+  }
+
+  /* Canvas Container */
+  .wec-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background: #ffffff;
+    border: 1px solid #e2e1d7;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .wec-canvas-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+
+  /* Tooltip */
+  .wec-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(28, 30, 39, 0.95);
+    color: #ffffff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+    z-index: 100;
+    transition: opacity 0.08s ease;
+    min-width: 190px;
+    line-height: 1.45;
+  }
+  .wec-tt-title {
+    font-weight: 700;
+    color: #60a5fa;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .wec-tt-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .wec-tt-label {
+    color: #a0aec0;
+  }
+  .wec-tt-val {
+    font-weight: 600;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+
+  /* Snapshot Cards */
+  .wec-snapshot-section {
+    background: #faf9f5;
+    border: 1px solid #eceae0;
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .wec-snapshot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .wec-snapshot-title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: -0.01em;
+  }
+  .wec-hourly-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+    gap: 8px;
+  }
+  .wec-hour-card {
+    background: #ffffff;
+    border: 1px solid #e3e2d6;
+    border-radius: 6px;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+  .wec-hour-card:hover {
+    border-color: #93c5fd;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  }
+  .wec-hour-card.is-active-hour {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 1px #0d6efd;
+    background: #f8fbff;
+  }
+  .wec-hc-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid #f0efe8;
+    padding-bottom: 3px;
+  }
+  .wec-hc-time {
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #1f2937;
+  }
+  .wec-hc-comfort {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  .wec-comfort-ideal {
+    background: #dcfce7;
+    color: #15803d;
+  }
+  .wec-comfort-good {
+    background: #fef9c3;
+    color: #854d0e;
+  }
+  .wec-comfort-warm {
+    background: #fee2e2;
+    color: #b91c1c;
+  }
+  .wec-hc-metric-main {
+    font-size: 1.15rem;
+    font-weight: 700;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    color: #0f172a;
+    margin: 2px 0;
+  }
+  .wec-hc-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 0.72rem;
+    color: #64748b;
+  }
+  .wec-hc-row {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+
+<script>
+(function() {
+  const uid = "{{ $chartUid }}";
+  const container = document.getElementById(uid);
+  if (!container) return;
+
+  const dataElemEcmwf = document.getElementById(uid + '-data-ecmwf');
+  const dataElemGfs = document.getElementById(uid + '-data-gfs');
+  const dataElemLegacy = document.getElementById(uid + '-data');
+
+  const modelsData = { ecmwf: null, gfs: null };
+  try {
+    if (dataElemEcmwf && dataElemEcmwf.textContent.trim()) {
+      modelsData.ecmwf = JSON.parse(dataElemEcmwf.textContent);
+    } else if (dataElemLegacy && dataElemLegacy.textContent.trim()) {
+      modelsData.ecmwf = JSON.parse(dataElemLegacy.textContent);
+    }
+  } catch (e) {
+    console.error("Failed to parse ECMWF ensemble JSON data", e);
+  }
+
+  try {
+    if (dataElemGfs && dataElemGfs.textContent.trim()) {
+      modelsData.gfs = JSON.parse(dataElemGfs.textContent);
+    }
+  } catch (e) {
+    console.error("Failed to parse GFS ensemble JSON data", e);
+  }
+
+  let currentModel = 'ecmwf';
+  let dataset = modelsData.ecmwf || modelsData.gfs;
+  if (!dataset) return;
+  let days = dataset.days;
+
+  // State
+  let currentMetric = 'temperature'; // 'temperature', 'dew_point', 'wind_speed', 'precip'
+  let currentHour = '7:00 AM';
+  let isImperial = true;              // true: °F/mph, false: °C/km/h
+  const showMembers = true;
+  const showDeterministic = true;
+  let focusedDayIndex = dataset.days.length - 1; // Default to Day 0 (Race Day)
+  let hoveredDayIndex = dataset.days.length - 1;
+  let isEnlarged = false;
+  let isOverYAxis = false;
+  let isOverXAxis = false;
+
+  const hourList = (dataset.hours && dataset.hours.length > 0) ? dataset.hours : [
+    '7:00 AM', '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM'
+  ];
+
+  function formatHourShort(hStr) {
+    return hStr.replace(':00', '');
+  }
+
+  function formatHourLabel(hStr) {
+    const s = formatHourShort(hStr);
+    return s === '7 AM' ? '7 AM (Start)' : s;
+  }
+
+  function formatPredictionDate(dateStr) {
+    if (!dateStr) return '';
+    const parts = dateStr.split('-');
+    const year = parts[0];
+    const month = parseInt(parts[1], 10);
+    const dayNum = parseInt(parts[2], 10);
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return `${monthNames[month - 1]} ${dayNum}, ${year}`;
+  }
+
+  const canvas = document.getElementById(uid + '-canvas');
+  const canvasBox = document.getElementById(uid + '-canvas-box');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById(uid + '-tooltip');
+  const snapshotTitle = document.getElementById(uid + '-snapshot-title');
+  const hourlyCards = document.getElementById(uid + '-hourly-cards');
+  const detLegendItem = document.getElementById(uid + '-det-legend-item');
+  const membersLegendItem = document.getElementById(uid + '-members-legend-item');
+  const timeSlider = document.getElementById(uid + '-time-slider');
+  const sliderTicks = document.getElementById(uid + '-slider-ticks');
+  const playBtn = document.getElementById(uid + '-play-btn');
+  const playIcon = playBtn ? playBtn.querySelector('.wec-play-icon') : null;
+  const pauseIcon = playBtn ? playBtn.querySelector('.wec-pause-icon') : null;
+  let playInterval = null;
+
+  const leadPlayBtn = document.getElementById(uid + '-lead-play-btn');
+  const leadPlayIcon = leadPlayBtn ? leadPlayBtn.querySelector('.wec-play-icon') : null;
+  const leadPauseIcon = leadPlayBtn ? leadPlayBtn.querySelector('.wec-pause-icon') : null;
+  let leadPlayInterval = null;
+
+  // Metric color schemes
+  const colorThemes = {
+    temperature: {
+      primary: '#0d6efd',
+      iqr: 'rgba(13, 110, 253, 0.35)',
+      p10p90: 'rgba(13, 110, 253, 0.16)',
+      line: '#0b5ed7',
+      dot: '#0d6efd',
+      member: 'rgba(13, 110, 253, 0.18)',
+      det: '#dc3545',
+      name: 'Temperature',
+      unitImp: '°F',
+      unitMet: '°C'
+    },
+    dew_point: {
+      primary: '#059669',
+      iqr: 'rgba(5, 150, 105, 0.35)',
+      p10p90: 'rgba(5, 150, 105, 0.16)',
+      line: '#047857',
+      dot: '#059669',
+      member: 'rgba(5, 150, 105, 0.18)',
+      det: '#b91c1c',
+      name: 'Dew Point',
+      unitImp: '°F',
+      unitMet: '°C'
+    },
+    wind_speed: {
+      primary: '#0891b2',
+      iqr: 'rgba(8, 145, 178, 0.35)',
+      p10p90: 'rgba(8, 145, 178, 0.16)',
+      line: '#0e7490',
+      dot: '#0891b2',
+      member: 'rgba(8, 145, 178, 0.18)',
+      det: '#c2410c',
+      name: 'Wind Speed',
+      unitImp: 'mph',
+      unitMet: 'km/h'
+    },
+    precip: {
+      primary: '#4f46e5',
+      iqr: 'rgba(79, 70, 229, 0.35)',
+      p10p90: 'rgba(79, 70, 229, 0.16)',
+      line: '#4338ca',
+      dot: '#4f46e5',
+      member: 'rgba(79, 70, 229, 0.18)',
+      det: '#ea580c',
+      name: 'Rain Probability',
+      unitImp: '%',
+      unitMet: '%'
+    }
+  };
+
+  // Days order: days[0] is Oct 1 (10d out), days[10] is Oct 11 (Race day)
+  // (days is managed as mutable reference to dataset.days)
+
+  // Helper to extract series data based on current metric, hour, and unit
+  function getDaySeries() {
+    const theme = colorThemes[currentMetric];
+    const unitKey = isImperial ? 'f' : 'c';
+    const speedUnitKey = isImperial ? 'mph' : 'kmh';
+
+    return days.map((d, idx) => {
+      const hData = d.hourly[currentHour];
+      if (currentMetric === 'precip') {
+        const prob = hData.precip_probability;
+        return {
+          dayIndex: idx,
+          leadDays: d.lead_days,
+          date: d.date,
+          label: d.label,
+          median: prob,
+          mean: prob,
+          q1: Math.max(0, prob - 5),
+          q3: Math.min(100, prob + 5),
+          p10: Math.max(0, prob - 10),
+          p90: Math.min(100, prob + 12),
+          min: Math.max(0, prob - 12),
+          max: Math.min(100, prob + 15),
+          deterministic: prob,
+          members: []
+        };
+      }
+
+      let metricKey = '';
+      if (currentMetric === 'temperature') metricKey = 'temperature_' + unitKey;
+      else if (currentMetric === 'dew_point') metricKey = 'dew_point_' + unitKey;
+      else if (currentMetric === 'wind_speed') metricKey = 'wind_speed_' + speedUnitKey;
+
+      let detKey = '';
+      if (currentMetric === 'temperature') detKey = 'deterministic_temp_f';
+      else if (currentMetric === 'dew_point') detKey = 'deterministic_dew_f';
+      else if (currentMetric === 'wind_speed') detKey = 'deterministic_wind_mph';
+
+      const s = hData[metricKey];
+      let detVal = hData[detKey];
+      if (!isImperial) {
+        if (currentMetric === 'temperature' || currentMetric === 'dew_point') detVal = (detVal - 32) * 5 / 9;
+        else if (currentMetric === 'wind_speed') detVal = detVal * 1.60934;
+      }
+
+      return {
+        dayIndex: idx,
+        leadDays: d.lead_days,
+        date: d.date,
+        label: d.label,
+        median: s.median,
+        mean: s.mean,
+        q1: s.q1,
+        q3: s.q3,
+        p10: s.p10,
+        p90: s.p90,
+        min: s.min,
+        max: s.max,
+        deterministic: Math.round(detVal * 10) / 10,
+        members: s.members
+      };
+    });
+  }
+
+  // Layout Margins
+  const chartMargin = {
+    top: 25,
+    right: 30,
+    bottom: 50,
+    left: 64
+  };
+
+  // Render Canvas
+  function drawChart() {
+    const rect = canvasBox.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const w = rect.width;
+    const h = rect.height;
+
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    ctx.resetTransform();
+    ctx.scale(dpr, dpr);
+
+    const theme = colorThemes[currentMetric];
+    const series = getDaySeries();
+
+    const margin = chartMargin;
+    const plotW = w - margin.left - margin.right;
+    const plotH = h - margin.top - margin.bottom;
+
+    // Determine static Y range across ALL race hours for currentMetric
+    let yMin = Infinity;
+    let yMax = -Infinity;
+
+    if (currentMetric === 'precip') {
+      yMin = 0;
+      yMax = 60;
+    } else {
+      const unitKey = isImperial ? 'f' : 'c';
+      const speedUnitKey = isImperial ? 'mph' : 'kmh';
+      let metricKey = '';
+      if (currentMetric === 'temperature') metricKey = 'temperature_' + unitKey;
+      else if (currentMetric === 'dew_point') metricKey = 'dew_point_' + unitKey;
+      else if (currentMetric === 'wind_speed') metricKey = 'wind_speed_' + speedUnitKey;
+
+      let detKey = '';
+      if (currentMetric === 'temperature') detKey = 'deterministic_temp_f';
+      else if (currentMetric === 'dew_point') detKey = 'deterministic_dew_f';
+      else if (currentMetric === 'wind_speed') detKey = 'deterministic_wind_mph';
+
+      days.forEach(d => {
+        Object.values(d.hourly).forEach(hData => {
+          const s = hData[metricKey];
+          let detVal = hData[detKey];
+          if (!isImperial) {
+            if (currentMetric === 'temperature' || currentMetric === 'dew_point') detVal = (detVal - 32) * 5 / 9;
+            else if (currentMetric === 'wind_speed') detVal = detVal * 1.60934;
+          }
+          yMin = Math.min(yMin, s.min, detVal);
+          yMax = Math.max(yMax, s.max, detVal);
+        });
+      });
+
+      if (dataset.observed) {
+        Object.values(dataset.observed).forEach(obs => {
+          let oVal = null;
+          if (currentMetric === 'temperature') oVal = isImperial ? obs.temperature_f : obs.temperature_c;
+          else if (currentMetric === 'dew_point') oVal = isImperial ? obs.dew_point_f : obs.dew_point_c;
+          else if (currentMetric === 'wind_speed') oVal = isImperial ? obs.wind_speed_mph : obs.wind_speed_kmh;
+          if (oVal !== null && oVal !== undefined) {
+            yMin = Math.min(yMin, oVal);
+            yMax = Math.max(yMax, oVal);
+          }
+        });
+      }
+
+      const padding = (yMax - yMin) * 0.08 || 2;
+      yMin = Math.floor((yMin - padding) / 2) * 2;
+      yMax = Math.ceil((yMax + padding) / 2) * 2;
+    }
+
+    const getX = (idx) => margin.left + (idx / (series.length - 1)) * plotW;
+    const getY = (val) => margin.top + (1 - (val - yMin) / (yMax - yMin)) * plotH;
+
+    // Background & Gridlines
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, w, h);
+
+    // Horizontal Y Gridlines & Labels
+    const yTickCount = 6;
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.font = (isOverYAxis && currentMetric !== 'precip') ? '600 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' : '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+
+    const unitStr = isImperial ? theme.unitImp : theme.unitMet;
+
+    for (let i = 0; i <= yTickCount; i++) {
+      const val = yMin + (i / yTickCount) * (yMax - yMin);
+      const yPos = getY(val);
+
+      ctx.strokeStyle = i === 0 ? '#d1d0c5' : '#ecebe2';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(margin.left, yPos);
+      ctx.lineTo(margin.left + plotW, yPos);
+      ctx.stroke();
+
+      ctx.fillStyle = (isOverYAxis && currentMetric !== 'precip') ? '#0d6efd' : '#7a7a72';
+      ctx.fillText(Math.round(val) + ' ' + unitStr, margin.left - 8, yPos);
+    }
+
+    // Y-Axis Unit Header / Click Hint
+    if (currentMetric !== 'precip') {
+      ctx.font = '600 10.5px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.fillStyle = isOverYAxis ? '#0d6efd' : '#88877f';
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'bottom';
+      ctx.fillText(`${unitStr} ⇄`, margin.left - 8, margin.top - 6);
+    }
+
+    // Vertical X Gridlines & Labels
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+
+    series.forEach((d, idx) => {
+      const xPos = getX(idx);
+      const isRaceDay = (idx === series.length - 1);
+      const isFocused = (idx === focusedDayIndex);
+      const isHovered = (idx === hoveredDayIndex);
+
+      // Grid vertical line: focused date gets a distinct dashed blue line
+      if (isFocused) {
+        ctx.strokeStyle = '#0d6efd';
+        ctx.lineWidth = 1.8;
+        ctx.setLineDash([4, 3]);
+      } else if (isRaceDay) {
+        ctx.strokeStyle = '#93c5fd';
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([3, 3]);
+      } else {
+        ctx.strokeStyle = '#f0efe6';
+        ctx.lineWidth = 1;
+        ctx.setLineDash([]);
+      }
+      ctx.beginPath();
+      ctx.moveTo(xPos, margin.top);
+      ctx.lineTo(xPos, margin.top + plotH);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Focus pill background on x-axis
+      if (isFocused) {
+        ctx.save();
+        ctx.fillStyle = '#0d6efd';
+        const pillW = isRaceDay ? 58 : 42;
+        const pillH = 32;
+        const pillX = xPos - pillW / 2;
+        const pillY = margin.top + plotH + 5;
+        ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(pillX, pillY, pillW, pillH, 5);
+        else ctx.rect(pillX, pillY, pillW, pillH);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      ctx.font = isFocused ? 'bold 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' : ((isHovered || isRaceDay) ? '600 11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' : '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif');
+      ctx.fillStyle = isFocused ? '#ffffff' : (isRaceDay ? '#0d6efd' : (isHovered ? '#111' : '#6b6a62'));
+
+      const dayStr = d.date.split('-').slice(1).join('/'); // '10/01'
+      const leadStr = d.leadDays === 0 ? 'Race Day' : `-${d.leadDays}d`;
+
+      ctx.fillText(dayStr, xPos, margin.top + plotH + 8);
+      ctx.font = isFocused ? 'bold 10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' : '10px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+      ctx.fillStyle = isFocused ? '#e0f2fe' : (isRaceDay ? '#0d6efd' : (isHovered ? '#333' : '#999890'));
+      ctx.fillText(leadStr, xPos, margin.top + plotH + 22);
+    });
+
+    // Axis label
+    ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillStyle = '#6b6a62';
+    ctx.textAlign = 'center';
+    ctx.fillText('Forecast Model Initialization Date (Lead Time in Days)', margin.left + plotW / 2, h - 12);
+
+    // 1. Shaded Band: 25th to 75th percentile (Interquartile Range)
+    ctx.beginPath();
+    series.forEach((d, idx) => {
+      const x = getX(idx);
+      const y = getY(d.q3);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    for (let idx = series.length - 1; idx >= 0; idx--) {
+      const d = series[idx];
+      const x = getX(idx);
+      const y = getY(d.q1);
+      ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = theme.iqr;
+    ctx.fill();
+
+    // 3. Optional: Individual 50 Ensemble Member Spaghetti Curves
+    if (showMembers && currentMetric !== 'precip') {
+      const numMembers = series[0].members.length;
+      ctx.strokeStyle = theme.member;
+      ctx.lineWidth = 1;
+      for (let m = 0; m < numMembers; m++) {
+        ctx.beginPath();
+        series.forEach((d, idx) => {
+          const x = getX(idx);
+          const y = getY(d.members[m]);
+          if (idx === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      }
+    }
+
+    // 4. Deterministic Operational Run Line (Dashed)
+    if (showDeterministic && currentMetric !== 'precip') {
+      ctx.strokeStyle = theme.det;
+      ctx.lineWidth = 2.2;
+      ctx.setLineDash([5, 4]);
+      ctx.beginPath();
+      series.forEach((d, idx) => {
+        const x = getX(idx);
+        const y = getY(d.deterministic);
+        if (idx === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Point dots for deterministic
+      series.forEach((d, idx) => {
+        const x = getX(idx);
+        const y = getY(d.deterministic);
+        ctx.fillStyle = '#ffffff';
+        ctx.strokeStyle = theme.det;
+        ctx.lineWidth = 1.8;
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+      });
+    }
+
+    // 5. Ensemble Median Line (Bold Solid)
+    ctx.strokeStyle = theme.line;
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    series.forEach((d, idx) => {
+      const x = getX(idx);
+      const y = getY(d.median);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Median markers
+    series.forEach((d, idx) => {
+      const x = getX(idx);
+      const y = getY(d.median);
+      const isHovered = idx === hoveredDayIndex;
+
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = theme.line;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(x, y, isHovered ? 6 : 4, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      if (isHovered) {
+        ctx.fillStyle = theme.line;
+        ctx.beginPath();
+        ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+
+    // 6. Actually Observed Value Horizontal Line (Ground Truth on Oct 11)
+    if (dataset.observed && dataset.observed[currentHour]) {
+      const obs = dataset.observed[currentHour];
+      let obsVal = null;
+      if (currentMetric === 'temperature') obsVal = isImperial ? obs.temperature_f : obs.temperature_c;
+      else if (currentMetric === 'dew_point') obsVal = isImperial ? obs.dew_point_f : obs.dew_point_c;
+      else if (currentMetric === 'wind_speed') obsVal = isImperial ? obs.wind_speed_mph : obs.wind_speed_kmh;
+      else if (currentMetric === 'precip') obsVal = obs.precip_probability;
+
+      if (obsVal !== null && obsVal !== undefined) {
+        const obsY = getY(obsVal);
+
+        ctx.save();
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 2.0;
+        ctx.setLineDash([6, 4]);
+        ctx.beginPath();
+        ctx.moveTo(margin.left, obsY);
+        ctx.lineTo(margin.left + plotW, obsY);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Label badge anchored near left axis
+        const labelText = `Observed: ${obsVal} ${unitStr}`;
+        ctx.font = 'bold 10px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+        const txtWidth = ctx.measureText(labelText).width;
+        const badgeW = txtWidth + 12;
+        const badgeH = 18;
+        const badgeX = margin.left + 8;
+        const badgeY = obsY - badgeH / 2;
+
+        ctx.fillStyle = '#0f172a';
+        ctx.beginPath();
+        if (ctx.roundRect) {
+          ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 4);
+        } else {
+          ctx.rect(badgeX, badgeY, badgeW, badgeH);
+        }
+        ctx.fill();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(labelText, badgeX + badgeW / 2, obsY);
+        ctx.restore();
+      }
+    }
+
+    // 7. Hover Crosshair & Highlights
+    if (hoveredDayIndex >= 0 && hoveredDayIndex < series.length) {
+      const hX = getX(hoveredDayIndex);
+      ctx.strokeStyle = 'rgba(29, 30, 44, 0.4)';
+      ctx.lineWidth = 1.2;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(hX, margin.top);
+      ctx.lineTo(hX, margin.top + plotH);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+
+  // Update Snapshot Card section for currently focused day
+  function updateSnapshotCard() {
+    const day = days[focusedDayIndex];
+    if (!day) return;
+
+    snapshotTitle.textContent = `Prediction as of ${formatPredictionDate(day.date)}`;
+    const isRaceDay = day.lead_days === 0;
+
+    let html = '';
+    const hourKeys = hourList;
+
+    hourKeys.forEach(hKey => {
+      const hData = day.hourly[hKey];
+      if (!hData) return;
+      const isSelectedHour = currentHour === hKey;
+
+      const tempVal = isImperial ? `${hData.temperature_f.median}°F` : `${hData.temperature_c.median}°C`;
+      const dewVal = isImperial ? `${hData.dew_point_f.median}°F` : `${hData.dew_point_c.median}°C`;
+      const windVal = isImperial ? `${hData.wind_speed_mph.median} mph` : `${hData.wind_speed_kmh.median} km/h`;
+      const rainVal = `${hData.precip_probability}%`;
+
+      // Comfort category based on temp
+      const tF = hData.temperature_f.median;
+      let comfortClass = 'wec-comfort-ideal';
+      let comfortLabel = 'Ideal';
+      if (tF > 64) {
+        comfortClass = 'wec-comfort-warm';
+        comfortLabel = 'Warm';
+      } else if (tF > 58) {
+        comfortClass = 'wec-comfort-good';
+        comfortLabel = 'Good';
+      }
+
+      let obsHtml = '';
+      if (dataset.observed && dataset.observed[hKey]) {
+        const o = dataset.observed[hKey];
+        const oT = isImperial ? `${o.temperature_f}°F` : `${o.temperature_c}°C`;
+        const predT = isImperial ? hData.temperature_f.median : hData.temperature_c.median;
+        const actT = isImperial ? o.temperature_f : o.temperature_c;
+        let diff = Math.round((predT - actT) * 10) / 10;
+        if (Math.abs(diff) < 0.001) diff = 0;
+        const diffStr = diff > 0 ? `+${diff.toFixed(1)}` : `${diff.toFixed(1)}`;
+        const unitSymbol = isImperial ? '°F' : '°C';
+        let errColor = '#475569';
+        if (Math.abs(diff) <= 1.0) errColor = '#15803d';
+        else if (diff > 1.0) errColor = '#b91c1c';
+        else if (diff < -1.0) errColor = '#0369a1';
+
+        obsHtml = `
+          <div class="wec-hc-row" style="color:#0f172a; font-weight:600; border-top:1px dashed #e2e8f0; padding-top:2px; margin-top:1px;"><span>Actual:</span> <b>${oT}</b></div>
+          <div class="wec-hc-row" style="color:#475569; font-weight:600; margin-top:1px;"><span>Error:</span> <b style="color:${errColor}; font-family:ui-monospace,SFMono-Regular,monospace;">${diffStr}${unitSymbol}</b></div>
+        `;
+      }
+
+      html += `
+        <div class="wec-hour-card ${isSelectedHour ? 'is-active-hour' : ''}" data-hour="${hKey}" title="Click to view ${formatHourShort(hKey)} forecast">
+          <div class="wec-hc-top">
+            <span class="wec-hc-time">${formatHourShort(hKey)}</span>
+            <span class="wec-hc-comfort ${comfortClass}">${comfortLabel}</span>
+          </div>
+          <div class="wec-hc-metric-main">${tempVal}</div>
+          <div class="wec-hc-details">
+            <div class="wec-hc-row"><span>Dew Point:</span> <b>${dewVal}</b></div>
+            <div class="wec-hc-row"><span>Wind:</span> <b>${windVal}</b></div>
+            <div class="wec-hc-row"><span>Rain Prob:</span> <b>${rainVal}</b></div>
+            ${obsHtml}
+          </div>
+        </div>
+      `;
+    });
+
+    hourlyCards.innerHTML = html;
+  }
+
+  // Allow clicking an hour card to select that hour
+  hourlyCards.addEventListener('click', function(e) {
+    const card = e.target.closest('.wec-hour-card');
+    if (!card) return;
+    const h = card.dataset.hour;
+    if (h) {
+      stopPlay();
+      const idx = hourList.indexOf(h);
+      if (idx !== -1) {
+        updateSliderDisplay(idx);
+      } else {
+        currentHour = h;
+      }
+      drawChart();
+      updateSnapshotCard();
+    }
+  });
+
+  // Tooltip positioning & content
+  function showTooltip(x, y, dayIndex) {
+    const series = getDaySeries();
+    const d = series[dayIndex];
+    if (!d) return;
+
+    const theme = colorThemes[currentMetric];
+    const unitStr = isImperial ? theme.unitImp : theme.unitMet;
+
+    let rowsHtml = '';
+    if (currentMetric === 'precip') {
+      rowsHtml = `
+        <div class="wec-tt-row"><span class="wec-tt-label">Rain Chance:</span> <span class="wec-tt-val">${d.median}%</span></div>
+      `;
+    } else {
+      rowsHtml = `
+        <div class="wec-tt-row"><span class="wec-tt-label">Ensemble Median:</span> <span class="wec-tt-val">${d.median} ${unitStr}</span></div>
+        <div class="wec-tt-row"><span class="wec-tt-label">Ensemble Mean:</span> <span class="wec-tt-val">${d.mean} ${unitStr}</span></div>
+        <div class="wec-tt-row"><span class="wec-tt-label">IQR (25%–75%):</span> <span class="wec-tt-val">${d.q1} – ${d.q3} ${unitStr}</span></div>
+        ${showDeterministic ? `<div class="wec-tt-row" style="color:#f87171;"><span class="wec-tt-label" style="color:#fca5a5;">${currentModel === 'gfs' ? 'Deterministic GFS:' : 'Deterministic IFS:'}</span> <span class="wec-tt-val">${d.deterministic} ${unitStr}</span></div>` : ''}
+      `;
+    }
+
+    if (dataset.observed && dataset.observed[currentHour]) {
+      const obs = dataset.observed[currentHour];
+      let obsVal = null;
+      if (currentMetric === 'temperature') obsVal = isImperial ? obs.temperature_f : obs.temperature_c;
+      else if (currentMetric === 'dew_point') obsVal = isImperial ? obs.dew_point_f : obs.dew_point_c;
+      else if (currentMetric === 'wind_speed') obsVal = isImperial ? obs.wind_speed_mph : obs.wind_speed_kmh;
+      else if (currentMetric === 'precip') obsVal = obs.precip_probability;
+
+      if (obsVal !== null && obsVal !== undefined) {
+        rowsHtml += `
+          <div class="wec-tt-row" style="color:#cbd5e1; border-top:1px solid rgba(255,255,255,0.18); margin-top:4px; padding-top:4px;">
+            <span class="wec-tt-label" style="color:#94a3b8;">Actual Observed:</span>
+            <span class="wec-tt-val" style="color:#f8fafc; font-weight:700;">${obsVal} ${unitStr}</span>
+          </div>
+        `;
+      }
+    }
+
+    tooltip.innerHTML = `
+      <div class="wec-tt-title">
+        <span>${d.label}</span>
+        <span style="font-weight:normal;opacity:0.8;">Target: Oct 11 ${currentHour}</span>
+      </div>
+      ${rowsHtml}
+    `;
+
+    tooltip.style.display = 'block';
+
+    const boxRect = canvasBox.getBoundingClientRect();
+    const ttRect = tooltip.getBoundingClientRect();
+
+    let left = x + 15;
+    if (left + ttRect.width > boxRect.width - 10) {
+      left = x - ttRect.width - 15;
+    }
+    let top = y - ttRect.height / 2;
+    if (top < 10) top = 10;
+    if (top + ttRect.height > boxRect.height - 10) {
+      top = boxRect.height - ttRect.height - 10;
+    }
+
+    tooltip.style.left = left + 'px';
+    tooltip.style.top = top + 'px';
+  }
+
+  function hideTooltip() {
+    tooltip.style.display = 'none';
+  }
+
+  function checkYAxisHit(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    const plotH = rect.height - chartMargin.top - chartMargin.bottom;
+    return (x <= chartMargin.left + 5 && y >= chartMargin.top - 20 && y <= chartMargin.top + plotH + 10);
+  }
+
+  function checkXAxisHit(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    const plotH = rect.height - chartMargin.top - chartMargin.bottom;
+    return (x >= chartMargin.left - 15 && x <= rect.width - chartMargin.right + 15 && y >= chartMargin.top + plotH - 5 && y <= rect.height);
+  }
+
+  function toggleUnits() {
+    if (currentMetric === 'precip') return;
+    isImperial = !isImperial;
+    drawChart();
+    updateSnapshotCard();
+  }
+
+  // Pointer & Touch interactions
+  function handlePointerPos(clientX, clientY, isHover) {
+    const rect = canvas.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    const plotW = rect.width - chartMargin.left - chartMargin.right;
+    const frac = (x - chartMargin.left) / plotW;
+    const clampedFrac = Math.max(0, Math.min(1, frac));
+
+    const dayIdx = Math.round(clampedFrac * (days.length - 1));
+    if (dayIdx >= 0 && dayIdx < days.length) {
+      hoveredDayIndex = dayIdx;
+      if (!isHover) {
+        stopLeadPlay();
+        focusedDayIndex = dayIdx;
+        updateSnapshotCard();
+      }
+      drawChart();
+      if (isHover) showTooltip(x, y, dayIdx);
+    }
+  }
+
+  canvas.addEventListener('mousemove', function(e) {
+    const overY = checkYAxisHit(e.clientX, e.clientY) && currentMetric !== 'precip';
+    const overX = checkXAxisHit(e.clientX, e.clientY);
+
+    if (overY !== isOverYAxis || overX !== isOverXAxis) {
+      isOverYAxis = overY;
+      isOverXAxis = overX;
+      drawChart();
+    }
+
+    if (overY) {
+      canvas.style.cursor = 'pointer';
+      canvas.title = `Click to toggle unit (${isImperial ? 'switch to Metric' : 'switch to Imperial'})`;
+      hideTooltip();
+    } else if (overX) {
+      canvas.style.cursor = 'pointer';
+      canvas.title = 'Click date to focus prediction snapshot';
+      handlePointerPos(e.clientX, e.clientY, true);
+    } else {
+      canvas.style.cursor = 'crosshair';
+      canvas.title = '';
+      handlePointerPos(e.clientX, e.clientY, true);
+    }
+  });
+
+  canvas.addEventListener('mouseleave', function() {
+    isOverYAxis = false;
+    isOverXAxis = false;
+    hoveredDayIndex = focusedDayIndex;
+    canvas.style.cursor = 'default';
+    canvas.title = '';
+    hideTooltip();
+    drawChart();
+  });
+
+  canvas.addEventListener('click', function(e) {
+    if (checkYAxisHit(e.clientX, e.clientY) && currentMetric !== 'precip') {
+      toggleUnits();
+      return;
+    }
+    const isXClick = checkXAxisHit(e.clientX, e.clientY);
+    handlePointerPos(e.clientX, e.clientY, false);
+
+    if (isXClick) {
+      const snap = document.getElementById(uid + '-snapshot-section');
+      if (snap) {
+        snap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+  });
+
+  canvas.addEventListener('touchstart', function(e) {
+    if (!e.touches || e.touches.length === 0) return;
+    const t = e.touches[0];
+    if (checkYAxisHit(t.clientX, t.clientY) && currentMetric !== 'precip') {
+      toggleUnits();
+      return;
+    }
+    const isXTouch = checkXAxisHit(t.clientX, t.clientY);
+    handlePointerPos(t.clientX, t.clientY, false);
+    if (isXTouch) {
+      const snap = document.getElementById(uid + '-snapshot-section');
+      if (snap) {
+        snap.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+  }, { passive: true });
+
+  canvas.addEventListener('touchmove', function(e) {
+    if (!e.touches || e.touches.length === 0) return;
+    handlePointerPos(e.touches[0].clientX, e.touches[0].clientY, true);
+  }, { passive: true });
+
+  canvas.addEventListener('touchend', function() {
+    hoveredDayIndex = focusedDayIndex;
+    hideTooltip();
+    drawChart();
+  });
+
+  // Model pills (ECMWF vs GFS)
+  const modelPills = document.getElementById(uid + '-model-pills');
+  if (modelPills) {
+    modelPills.addEventListener('click', function(e) {
+      const btn = e.target.closest('.wec-pill');
+      if (!btn) return;
+      const targetModel = btn.dataset.model;
+      if (targetModel === currentModel) return;
+
+      modelPills.querySelectorAll('.wec-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentModel = targetModel;
+
+      dataset = (currentModel === 'gfs' && modelsData.gfs) ? modelsData.gfs : modelsData.ecmwf;
+      days = dataset.days;
+
+      // Update title
+      const titleElem = document.getElementById(uid + '-title');
+      if (titleElem) {
+        titleElem.textContent = currentModel === 'gfs' ? 'GFS (GEFS) Ensemble Forecast Evolution' : 'ECMWF Ensemble Forecast Evolution';
+      }
+
+      // Update deterministic and members legend text
+      const detText = document.getElementById(uid + '-det-legend-text');
+      if (detText) {
+        detText.textContent = currentModel === 'gfs' ? 'Deterministic GFS' : 'Deterministic IFS';
+      }
+      const memText = document.getElementById(uid + '-members-legend-text');
+      if (memText) {
+        memText.textContent = currentModel === 'gfs' ? '31 Members' : '50 Members';
+      }
+
+      drawChart();
+      updateSnapshotCard();
+    });
+  }
+
+  // Metric pills
+  const metricPills = document.getElementById(uid + '-metric-pills');
+  metricPills.addEventListener('click', function(e) {
+    const btn = e.target.closest('.wec-pill');
+    if (!btn) return;
+    metricPills.querySelectorAll('.wec-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMetric = btn.dataset.metric;
+
+    // Update legend for precip
+    if (currentMetric === 'precip') {
+      detLegendItem.style.display = 'none';
+      if (membersLegendItem) membersLegendItem.style.display = 'none';
+    } else {
+      detLegendItem.style.display = 'inline-flex';
+      if (membersLegendItem) membersLegendItem.style.display = 'inline-flex';
+    }
+
+    drawChart();
+    updateSnapshotCard();
+  });
+
+  // Hour slider, play button & tick listeners
+  function stopPlay() {
+    if (playInterval) {
+      clearInterval(playInterval);
+      playInterval = null;
+    }
+    if (playBtn) {
+      playBtn.classList.remove('is-playing');
+      playBtn.title = 'Play hourly progression (1 hr/sec)';
+      playBtn.setAttribute('aria-label', 'Play hourly progression');
+    }
+    if (playIcon) playIcon.style.display = 'block';
+    if (pauseIcon) pauseIcon.style.display = 'none';
+  }
+
+  function startPlay() {
+    stopLeadPlay();
+    if (playInterval) clearInterval(playInterval);
+
+    // If currently at the last hour, loop back to the first hour before starting
+    let currentIdx = parseInt(timeSlider ? timeSlider.value : 0, 10);
+    if (currentIdx >= hourList.length - 1) {
+      updateSliderDisplay(0);
+      drawChart();
+      updateSnapshotCard();
+    }
+
+    if (playBtn) {
+      playBtn.classList.add('is-playing');
+      playBtn.title = 'Pause hourly progression';
+      playBtn.setAttribute('aria-label', 'Pause hourly progression');
+    }
+    if (playIcon) playIcon.style.display = 'none';
+    if (pauseIcon) pauseIcon.style.display = 'block';
+
+    playInterval = setInterval(function() {
+      let idx = parseInt(timeSlider ? timeSlider.value : 0, 10);
+      idx = (idx + 1) % hourList.length;
+      updateSliderDisplay(idx);
+      drawChart();
+      updateSnapshotCard();
+    }, 1000);
+  }
+
+  function togglePlay() {
+    if (playInterval) {
+      stopPlay();
+    } else {
+      startPlay();
+    }
+  }
+
+  if (playBtn) {
+    playBtn.addEventListener('click', togglePlay);
+  }
+
+  // Lead times play button & interval (stepping through 10d out to Race Day)
+  function stopLeadPlay() {
+    if (leadPlayInterval) {
+      clearInterval(leadPlayInterval);
+      leadPlayInterval = null;
+    }
+    if (leadPlayBtn) {
+      leadPlayBtn.classList.remove('is-playing');
+      leadPlayBtn.title = 'Step through prediction lead times (10 days out → Race Day)';
+      leadPlayBtn.setAttribute('aria-label', 'Step through prediction lead times');
+    }
+    if (leadPlayIcon) leadPlayIcon.style.display = 'block';
+    if (leadPauseIcon) leadPauseIcon.style.display = 'none';
+  }
+
+  function startLeadPlay() {
+    stopPlay();
+    if (leadPlayInterval) clearInterval(leadPlayInterval);
+
+    // If currently at Race Day (day 10), start from Day 0 (10 days out)
+    if (focusedDayIndex >= days.length - 1) {
+      focusedDayIndex = 0;
+      hoveredDayIndex = 0;
+      drawChart();
+      updateSnapshotCard();
+    }
+
+    if (leadPlayBtn) {
+      leadPlayBtn.classList.add('is-playing');
+      leadPlayBtn.title = 'Pause prediction progression';
+      leadPlayBtn.setAttribute('aria-label', 'Pause prediction progression');
+    }
+    if (leadPlayIcon) leadPlayIcon.style.display = 'none';
+    if (leadPauseIcon) leadPauseIcon.style.display = 'block';
+
+    leadPlayInterval = setInterval(function() {
+      focusedDayIndex = (focusedDayIndex + 1) % days.length;
+      hoveredDayIndex = focusedDayIndex;
+      drawChart();
+      updateSnapshotCard();
+    }, 1000);
+  }
+
+  function toggleLeadPlay() {
+    if (leadPlayInterval) {
+      stopLeadPlay();
+    } else {
+      startLeadPlay();
+    }
+  }
+
+  if (leadPlayBtn) {
+    leadPlayBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      toggleLeadPlay();
+    });
+    leadPlayBtn.addEventListener('mousedown', function(e) {
+      e.stopPropagation();
+    });
+    leadPlayBtn.addEventListener('touchstart', function(e) {
+      e.stopPropagation();
+    }, { passive: true });
+  }
+
+  function updateSliderDisplay(idx) {
+    if (idx < 0 || idx >= hourList.length) return;
+    currentHour = hourList[idx];
+    if (timeSlider) timeSlider.value = idx;
+    if (sliderTicks) {
+      sliderTicks.querySelectorAll('.wec-slider-tick').forEach((tick, i) => {
+        tick.classList.toggle('active', i === idx);
+      });
+    }
+  }
+
+  if (timeSlider) {
+    timeSlider.addEventListener('input', function() {
+      stopPlay();
+      const idx = parseInt(this.value, 10);
+      updateSliderDisplay(idx);
+      drawChart();
+      updateSnapshotCard();
+    });
+  }
+
+  if (sliderTicks) {
+    sliderTicks.addEventListener('click', function(e) {
+      stopPlay();
+      const btn = e.target.closest('.wec-slider-tick');
+      if (!btn) return;
+      const idx = parseInt(btn.dataset.index, 10);
+      updateSliderDisplay(idx);
+      drawChart();
+      updateSnapshotCard();
+    });
+  }
+
+  // Enlarge modal toggle
+  const expandBtn = document.getElementById(uid + '-expand-btn');
+  const iconExpand = expandBtn.querySelector('.wec-icon-expand');
+  const iconCompress = expandBtn.querySelector('.wec-icon-compress');
+
+  function toggleEnlarge(force) {
+    isEnlarged = typeof force === 'boolean' ? force : !isEnlarged;
+    container.classList.toggle('is-enlarged', isEnlarged);
+    document.body.style.overflow = isEnlarged ? 'hidden' : '';
+    iconExpand.style.display = isEnlarged ? 'none' : 'block';
+    iconCompress.style.display = isEnlarged ? 'block' : 'none';
+    expandBtn.title = isEnlarged ? 'Minimize graph' : 'Enlarge graph';
+    setTimeout(drawChart, 30);
+  }
+
+  expandBtn.addEventListener('click', toggleEnlarge);
+
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isEnlarged) {
+      toggleEnlarge(false);
+    }
+  });
+
+  // Responsive redraw
+  if (window.ResizeObserver) {
+    const ro = new ResizeObserver(() => drawChart());
+    ro.observe(canvasBox);
+  } else {
+    window.addEventListener('resize', drawChart);
+  }
+
+  // Initial draw
+  drawChart();
+  updateSnapshotCard();
+})();
+</script>

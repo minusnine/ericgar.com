@@ -1,0 +1,221 @@
+{
+  "date": "2026-10-11",
+  "event": "Chicago Marathon 2026",
+  "hours": [
+    "7:00 AM",
+    "8:00 AM",
+    "9:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "12:00 PM",
+    "1:00 PM",
+    "2:00 PM",
+    "3:00 PM"
+  ],
+  "stations": {
+    "KMDW": {
+      "id": "KMDW",
+      "name": "Chicago Midway International Airport",
+      "short_name": "Midway (KMDW)",
+      "description": "Inland urban ASOS station (13 km southwest of Grant Park)",
+      "latitude": 41.7868,
+      "longitude": -87.7522,
+      "elevation_ft": 620,
+      "color": "#059669",
+      "observations": [
+        {
+          "time": "7:00 AM",
+          "temp_f": 60.0,
+          "temp_c": 15.6,
+          "dew_f": 53.0,
+          "dew_c": 11.7,
+          "wind_mph": 0.0,
+          "wind_kmh": 0.0,
+          "relh": 77.7
+        },
+        {
+          "time": "8:00 AM",
+          "temp_f": 60.0,
+          "temp_c": 15.6,
+          "dew_f": 53.0,
+          "dew_c": 11.7,
+          "wind_mph": 3.5,
+          "wind_kmh": 5.6,
+          "relh": 77.7
+        },
+        {
+          "time": "9:00 AM",
+          "temp_f": 63.0,
+          "temp_c": 17.2,
+          "dew_f": 54.0,
+          "dew_c": 12.2,
+          "wind_mph": 6.9,
+          "wind_kmh": 11.1,
+          "relh": 72.4
+        },
+        {
+          "time": "10:00 AM",
+          "temp_f": 65.0,
+          "temp_c": 18.3,
+          "dew_f": 55.0,
+          "dew_c": 12.8,
+          "wind_mph": 3.5,
+          "wind_kmh": 5.6,
+          "relh": 70.1
+        },
+        {
+          "time": "11:00 AM",
+          "temp_f": 67.0,
+          "temp_c": 19.4,
+          "dew_f": 55.0,
+          "dew_c": 12.8,
+          "wind_mph": 0.0,
+          "wind_kmh": 0.0,
+          "relh": 65.4
+        },
+        {
+          "time": "12:00 PM",
+          "temp_f": 70.0,
+          "temp_c": 21.1,
+          "dew_f": 56.0,
+          "dew_c": 13.3,
+          "wind_mph": 0.0,
+          "wind_kmh": 0.0,
+          "relh": 61.2
+        },
+        {
+          "time": "1:00 PM",
+          "temp_f": 73.0,
+          "temp_c": 22.8,
+          "dew_f": 57.0,
+          "dew_c": 13.9,
+          "wind_mph": 4.6,
+          "wind_kmh": 7.4,
+          "relh": 57.3
+        },
+        {
+          "time": "2:00 PM",
+          "temp_f": 75.0,
+          "temp_c": 23.9,
+          "dew_f": 57.0,
+          "dew_c": 13.9,
+          "wind_mph": 0.0,
+          "wind_kmh": 0.0,
+          "relh": 53.6
+        },
+        {
+          "time": "3:00 PM",
+          "temp_f": 77.0,
+          "temp_c": 25.0,
+          "dew_f": 58.0,
+          "dew_c": 14.4,
+          "wind_mph": 5.8,
+          "wind_kmh": 9.3,
+          "relh": 52.0
+        }
+      ]
+    },
+    "KORD": {
+      "id": "KORD",
+      "name": "Chicago O'Hare International Airport",
+      "short_name": "O'Hare (KORD)",
+      "description": "Official NWS Chicago climate station (26 km northwest of Grant Park)",
+      "latitude": 41.9742,
+      "longitude": -87.9073,
+      "elevation_ft": 672,
+      "color": "#2563eb",
+      "observations": [
+        {
+          "time": "7:00 AM",
+          "temp_f": 56.0,
+          "temp_c": 13.3,
+          "dew_f": 51.0,
+          "dew_c": 10.6,
+          "wind_mph": 0.0,
+          "wind_kmh": 0.0,
+          "relh": 83.3
+        },
+        {
+          "time": "8:00 AM",
+          "temp_f": 56.0,
+          "temp_c": 13.3,
+          "dew_f": 51.0,
+          "dew_c": 10.6,
+          "wind_mph": 0.0,
+          "wind_kmh": 0.0,
+          "relh": 83.3
+        },
+        {
+          "time": "9:00 AM",
+          "temp_f": 62.0,
+          "temp_c": 16.7,
+          "dew_f": 54.0,
+          "dew_c": 12.2,
+          "wind_mph": 5.8,
+          "wind_kmh": 9.3,
+          "relh": 75.0
+        },
+        {
+          "time": "10:00 AM",
+          "temp_f": 65.0,
+          "temp_c": 18.3,
+          "dew_f": 55.0,
+          "dew_c": 12.8,
+          "wind_mph": 5.8,
+          "wind_kmh": 9.3,
+          "relh": 70.1
+        },
+        {
+          "time": "11:00 AM",
+          "temp_f": 68.0,
+          "temp_c": 20.0,
+          "dew_f": 56.0,
+          "dew_c": 13.3,
+          "wind_mph": 3.5,
+          "wind_kmh": 5.6,
+          "relh": 65.5
+        },
+        {
+          "time": "12:00 PM",
+          "temp_f": 71.0,
+          "temp_c": 21.7,
+          "dew_f": 57.0,
+          "dew_c": 13.9,
+          "wind_mph": 4.6,
+          "wind_kmh": 7.4,
+          "relh": 61.3
+        },
+        {
+          "time": "1:00 PM",
+          "temp_f": 73.0,
+          "temp_c": 22.8,
+          "dew_f": 57.0,
+          "dew_c": 13.9,
+          "wind_mph": 4.6,
+          "wind_kmh": 7.4,
+          "relh": 57.3
+        },
+        {
+          "time": "2:00 PM",
+          "temp_f": 76.0,
+          "temp_c": 24.4,
+          "dew_f": 58.0,
+          "dew_c": 14.4,
+          "wind_mph": 4.6,
+          "wind_kmh": 7.4,
+          "relh": 53.7
+        },
+        {
+          "time": "3:00 PM",
+          "temp_f": 78.0,
+          "temp_c": 25.6,
+          "dew_f": 57.0,
+          "dew_c": 13.9,
+          "wind_mph": 6.9,
+          "wind_kmh": 11.1,
+          "relh": 48.5
+        }
+      ]
+    }
+  }
+}

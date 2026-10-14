@@ -1,0 +1,644 @@
+{{/*
+  Airport Weather Observations Comparison Shortcode (KORD vs KMDW)
+  Usage: {{< airport-obs-chart data="airport-observations.json" >}}
+*/}}
+
+{{ $dataFile := .Get "data" | default "airport-observations.json" }}
+{{ $chartUid := printf "aoc-%x" (now.UnixNano) }}
+
+{{ $jsonRaw := "" }}
+{{ with .Page.Resources.Get $dataFile }}
+  {{ $jsonRaw = .Content }}
+{{ else }}
+  {{ if fileExists $dataFile }}
+    {{ $jsonRaw = readFile $dataFile }}
+  {{ else }}
+    {{ $tryPath := printf "content/post/%s/%s" $.Page.File.TranslationBaseName $dataFile }}
+    {{ if fileExists $tryPath }}
+      {{ $jsonRaw = readFile $tryPath }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+<div class="airport-obs-container" id="{{ $chartUid }}">
+  <div class="aoc-header">
+    <div class="aoc-title-group">
+      <h3 class="aoc-title">Race Day Observations: Midway (KMDW) vs. O'Hare (KORD)</h3>
+      <div class="aoc-subtitle">Official ASOS hourly weather records during the Chicago Marathon (October 11, 2026, 7:00 AM – 3:00 PM CDT)</div>
+    </div>
+    <div class="aoc-unit-wrap">
+      <button type="button" class="aoc-unit-btn" id="{{ $chartUid }}-unit-btn" title="Toggle Imperial / Metric units">Units: °F / mph</button>
+    </div>
+  </div>
+
+  <!-- Metric selection pills -->
+  <div class="aoc-controls">
+    <div class="aoc-pill-nav" id="{{ $chartUid }}-metric-pills">
+      <button type="button" class="aoc-pill active" data-metric="temperature">Temperature</button>
+      <button type="button" class="aoc-pill" data-metric="dew_point">Dew Point</button>
+      <button type="button" class="aoc-pill" data-metric="wind_speed">Wind Speed</button>
+      <button type="button" class="aoc-pill" data-metric="relh">Relative Humidity</button>
+    </div>
+
+    <!-- Legend -->
+    <div class="aoc-legend">
+      <div class="aoc-leg-item">
+        <span class="aoc-leg-dot aoc-dot-mdw"></span>
+        <span class="aoc-leg-label">Midway (KMDW) — Urban Inland</span>
+      </div>
+      <div class="aoc-leg-item">
+        <span class="aoc-leg-dot aoc-dot-ord"></span>
+        <span class="aoc-leg-label">O'Hare (KORD) — Climate Station</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Canvas Box -->
+  <div class="aoc-canvas-container" id="{{ $chartUid }}-canvas-box">
+    <canvas id="{{ $chartUid }}-canvas"></canvas>
+    <div class="aoc-tooltip" id="{{ $chartUid }}-tooltip" style="display:none;"></div>
+  </div>
+
+  <!-- Hourly Breakdown Table -->
+  <div class="aoc-table-wrapper">
+    <table class="aoc-table" id="{{ $chartUid }}-table">
+      <thead>
+        <tr>
+          <th>Hour</th>
+          <th style="color: #059669;">Midway (KMDW)</th>
+          <th style="color: #2563eb;">O'Hare (KORD)</th>
+          <th>Difference (MDW − ORD)</th>
+          <th>Condition Summary</th>
+        </tr>
+      </thead>
+      <tbody id="{{ $chartUid }}-table-body">
+        <!-- Dynamically rendered -->
+      </tbody>
+    </table>
+  </div>
+
+  <script type="application/json" id="{{ $chartUid }}-data">{{ $jsonRaw | safeJS }}</script>
+</div>
+
+<style>
+  .airport-obs-container {
+    margin: 2.2rem 0;
+    padding: 1.25rem 1.4rem;
+    background: #fffffb;
+    border: 1px solid #e5e5dc;
+    border-radius: 10px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.04);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1a1a1a;
+    box-sizing: border-box;
+  }
+  .airport-obs-container *, .airport-obs-container *::before, .airport-obs-container *::after {
+    box-sizing: border-box;
+  }
+  .aoc-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #edece4;
+    margin-bottom: 0.85rem;
+  }
+  .aoc-title {
+    margin: 0 0 4px 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: #1d1e2c;
+  }
+  .aoc-subtitle {
+    font-size: 0.86rem;
+    color: #636674;
+    line-height: 1.35;
+  }
+  .aoc-unit-btn {
+    background: #f7f6f0;
+    border: 1px solid #d5d4c8;
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .aoc-unit-btn:hover {
+    background: #eae8dc;
+    border-color: #999;
+    color: #111;
+  }
+
+  .aoc-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 0.85rem;
+    padding: 8px 12px;
+    background: #f7f6f0;
+    border-radius: 8px;
+    border: 1px solid #ebeae0;
+  }
+  .aoc-pill-nav {
+    display: inline-flex;
+    background: #eae9e0;
+    padding: 2px;
+    border-radius: 6px;
+    gap: 2px;
+  }
+  .aoc-pill {
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #494a50;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .aoc-pill:hover {
+    color: #111;
+  }
+  .aoc-pill.active {
+    background: #ffffff;
+    color: #1a1a1a;
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  .aoc-legend {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 0.8rem;
+    color: #374151;
+  }
+  .aoc-leg-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .aoc-leg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .aoc-dot-mdw {
+    background: #059669;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1.5px #059669;
+  }
+  .aoc-dot-ord {
+    background: #2563eb;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1.5px #2563eb;
+  }
+
+  .aoc-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 380px;
+    background: #ffffff;
+    border: 1px solid #e7e6dc;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1.1rem;
+  }
+  .aoc-canvas-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+
+  .aoc-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(17, 24, 39, 0.94);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 7px 11px;
+    font-size: 0.78rem;
+    line-height: 1.45;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transform: translate(-50%, -115%);
+    white-space: nowrap;
+  }
+
+  .aoc-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #ebeae0;
+    border-radius: 8px;
+    background: #ffffff;
+  }
+  .aoc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    text-align: left;
+  }
+  .aoc-table th, .aoc-table td {
+    padding: 7px 12px;
+    border-bottom: 1px solid #f1f0e8;
+  }
+  .aoc-table th {
+    background: #faf9f5;
+    font-weight: 600;
+    color: #374151;
+  }
+  .aoc-table tr:last-child td {
+    border-bottom: none;
+  }
+  .aoc-table tr:hover {
+    background: #fdfdf9;
+  }
+  .aoc-diff-pos {
+    color: #059669;
+    font-weight: 600;
+  }
+  .aoc-diff-neg {
+    color: #2563eb;
+    font-weight: 600;
+  }
+  .aoc-diff-zero {
+    color: #64748b;
+  }
+</style>
+
+<script>
+(function() {
+  const uid = "{{ $chartUid }}";
+  const container = document.getElementById(uid);
+  if (!container) return;
+
+  const dataElem = document.getElementById(uid + '-data');
+  if (!dataElem) return;
+
+  let dataset = null;
+  try {
+    dataset = JSON.parse(dataElem.textContent);
+  } catch (e) {
+    console.error("Failed to parse airport observations JSON", e);
+    return;
+  }
+
+  let currentMetric = 'temperature'; // 'temperature', 'dew_point', 'wind_speed', 'relh'
+  let isImperial = true;
+  let hoveredIndex = -1;
+
+  const canvas = document.getElementById(uid + '-canvas');
+  const canvasBox = document.getElementById(uid + '-canvas-box');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById(uid + '-tooltip');
+  const tableBody = document.getElementById(uid + '-table-body');
+  const unitBtn = document.getElementById(uid + '-unit-btn');
+
+  const hours = dataset.hours;
+  const mdwObs = dataset.stations.KMDW.observations;
+  const ordObs = dataset.stations.KORD.observations;
+
+  const metricConfig = {
+    temperature: {
+      name: 'Air Temperature',
+      unitImp: '°F',
+      unitMet: '°C',
+      mdwKey: (isImp) => isImp ? 'temp_f' : 'temp_c',
+      ordKey: (isImp) => isImp ? 'temp_f' : 'temp_c',
+      round: 1
+    },
+    dew_point: {
+      name: 'Dew Point',
+      unitImp: '°F',
+      unitMet: '°C',
+      mdwKey: (isImp) => isImp ? 'dew_f' : 'dew_c',
+      ordKey: (isImp) => isImp ? 'dew_f' : 'dew_c',
+      round: 1
+    },
+    wind_speed: {
+      name: 'Wind Speed',
+      unitImp: 'mph',
+      unitMet: 'km/h',
+      mdwKey: (isImp) => isImp ? 'wind_mph' : 'wind_kmh',
+      ordKey: (isImp) => isImp ? 'wind_mph' : 'wind_kmh',
+      round: 1
+    },
+    relh: {
+      name: 'Relative Humidity',
+      unitImp: '%',
+      unitMet: '%',
+      mdwKey: () => 'relh',
+      ordKey: () => 'relh',
+      round: 1
+    }
+  };
+
+  function getStationData(stationObs) {
+    const cfg = metricConfig[currentMetric];
+    const key = cfg.mdwKey(isImperial);
+    return stationObs.map(o => o[key]);
+  }
+
+  function resizeCanvas() {
+    const rect = canvasBox.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+  }
+
+  function drawChart() {
+    resizeCanvas();
+    const rect = canvasBox.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+
+    ctx.clearRect(0, 0, w, h);
+
+    const cfg = metricConfig[currentMetric];
+    const unitStr = isImperial ? cfg.unitImp : cfg.unitMet;
+
+    const mdwVals = getStationData(mdwObs);
+    const ordVals = getStationData(ordObs);
+
+    const allVals = mdwVals.concat(ordVals);
+    let minVal = Math.min(...allVals);
+    let maxVal = Math.max(...allVals);
+
+    const pad = (maxVal - minVal) * 0.15 || 2;
+    minVal = Math.floor((minVal - pad) / 2) * 2;
+    maxVal = Math.ceil((maxVal + pad) / 2) * 2;
+
+    if (currentMetric === 'relh') {
+      minVal = Math.max(0, minVal);
+      maxVal = Math.min(100, maxVal);
+    } else if (currentMetric === 'wind_speed') {
+      minVal = 0;
+    }
+
+    const margin = { top: 32, right: 35, bottom: 42, left: 52 };
+    const plotW = w - margin.left - margin.right;
+    const plotH = h - margin.top - margin.bottom;
+
+    const getX = (idx) => margin.left + (idx / (hours.length - 1)) * plotW;
+    const getY = (val) => margin.top + (1 - (val - minVal) / (maxVal - minVal)) * plotH;
+
+    // Horizontal Y Gridlines & labels
+    const yTickCount = 5;
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.font = '11px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+
+    for (let i = 0; i <= yTickCount; i++) {
+      const frac = i / yTickCount;
+      const val = minVal + frac * (maxVal - minVal);
+      const yPos = getY(val);
+
+      ctx.beginPath();
+      ctx.strokeStyle = '#f1f0e8';
+      ctx.lineWidth = 1;
+      ctx.moveTo(margin.left, yPos);
+      ctx.lineTo(margin.left + plotW, yPos);
+      ctx.stroke();
+
+      ctx.fillStyle = '#64748b';
+      ctx.fillText(`${val.toFixed(cfg.round === 0 ? 0 : 0)}${unitStr}`, margin.left - 8, yPos);
+    }
+
+    // Vertical X Gridlines & labels
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+
+    hours.forEach((hStr, idx) => {
+      const xPos = getX(idx);
+
+      ctx.beginPath();
+      ctx.strokeStyle = idx === hoveredIndex ? '#cbd5e1' : '#f8f7f0';
+      ctx.lineWidth = idx === hoveredIndex ? 1.5 : 1;
+      ctx.moveTo(xPos, margin.top);
+      ctx.lineTo(xPos, margin.top + plotH);
+      ctx.stroke();
+
+      const shortH = hStr.replace(':00', '');
+      ctx.fillStyle = idx === hoveredIndex ? '#0f172a' : '#64748b';
+      ctx.font = idx === hoveredIndex ? 'bold 11px sans-serif' : '11px sans-serif';
+      ctx.fillText(shortH, xPos, margin.top + plotH + 8);
+    });
+
+    // Shaded difference between curves
+    ctx.beginPath();
+    hours.forEach((_, idx) => {
+      const x = getX(idx);
+      const yM = getY(mdwVals[idx]);
+      if (idx === 0) ctx.moveTo(x, yM);
+      else ctx.lineTo(x, yM);
+    });
+    for (let idx = hours.length - 1; idx >= 0; idx--) {
+      const x = getX(idx);
+      const yO = getY(ordVals[idx]);
+      ctx.lineTo(x, yO);
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(5, 150, 105, 0.08)';
+    ctx.fill();
+
+    // Draw O'Hare (KORD) line
+    ctx.beginPath();
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 2.4;
+    ctx.lineJoin = 'round';
+    hours.forEach((_, idx) => {
+      const x = getX(idx);
+      const y = getY(ordVals[idx]);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Draw Midway (KMDW) line
+    ctx.beginPath();
+    ctx.strokeStyle = '#059669';
+    ctx.lineWidth = 2.4;
+    ctx.lineJoin = 'round';
+    hours.forEach((_, idx) => {
+      const x = getX(idx);
+      const y = getY(mdwVals[idx]);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Draw data points
+    hours.forEach((_, idx) => {
+      const x = getX(idx);
+      const yM = getY(mdwVals[idx]);
+      const yO = getY(ordVals[idx]);
+      const isHov = idx === hoveredIndex;
+
+      // O'Hare point (square/circle)
+      ctx.beginPath();
+      ctx.arc(x, yO, isHov ? 6 : 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#2563eb';
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#ffffff';
+      ctx.stroke();
+
+      // Midway point
+      ctx.beginPath();
+      ctx.arc(x, yM, isHov ? 6 : 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#059669';
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#ffffff';
+      ctx.stroke();
+    });
+  }
+
+  function updateTable() {
+    const cfg = metricConfig[currentMetric];
+    const unitStr = isImperial ? cfg.unitImp : cfg.unitMet;
+    const mdwVals = getStationData(mdwObs);
+    const ordVals = getStationData(ordObs);
+
+    let html = '';
+    hours.forEach((hStr, idx) => {
+      const mVal = mdwVals[idx];
+      const oVal = ordVals[idx];
+      const diff = Math.round((mVal - oVal) * 10) / 10;
+      let diffHtml = '';
+      if (diff > 0) {
+        diffHtml = `<span class="aoc-diff-pos">+${diff.toFixed(1)}${unitStr} (MDW warmer)</span>`;
+      } else if (diff < 0) {
+        diffHtml = `<span class="aoc-diff-neg">${diff.toFixed(1)}${unitStr} (ORD warmer)</span>`;
+      } else {
+        diffHtml = `<span class="aoc-diff-zero">0.0${unitStr} (Identical)</span>`;
+      }
+
+      let summary = '';
+      if (idx === 0 || idx === 1) {
+        summary = 'Race start: Urban heat keeps Midway +4°F milder';
+      } else if (idx === 2 || idx === 3) {
+        summary = 'Morning warmup: Both stations synchronize (~63°F–65°F)';
+      } else if (idx === 4 || idx === 5) {
+        summary = 'Midday: Warm sunshine across the metro (~67°F–71°F)';
+      } else {
+        summary = 'Afternoon peak: Mild autumn warmth (~75°F–78°F)';
+      }
+
+      const isRowHover = idx === hoveredIndex;
+      html += `
+        <tr style="${isRowHover ? 'background:#f8fafc;' : ''}">
+          <td style="font-weight:600;">${hStr}</td>
+          <td style="font-family:ui-monospace,monospace; font-weight:700; color:#059669;">${mVal.toFixed(1)}${unitStr}</td>
+          <td style="font-family:ui-monospace,monospace; font-weight:700; color:#2563eb;">${oVal.toFixed(1)}${unitStr}</td>
+          <td>${diffHtml}</td>
+          <td style="color:#64748b; font-size:0.75rem;">${summary}</td>
+        </tr>
+      `;
+    });
+    tableBody.innerHTML = html;
+  }
+
+  function showTooltipAt(idx, clientX, clientY) {
+    if (idx < 0 || idx >= hours.length) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const hStr = hours[idx];
+    const cfg = metricConfig[currentMetric];
+    const unitStr = isImperial ? cfg.unitImp : cfg.unitMet;
+
+    const mVal = getStationData(mdwObs)[idx];
+    const oVal = getStationData(ordObs)[idx];
+    const diff = Math.round((mVal - oVal) * 10) / 10;
+    const diffStr = diff > 0 ? `+${diff.toFixed(1)}` : `${diff.toFixed(1)}`;
+
+    const rect = canvasBox.getBoundingClientRect();
+    const relX = clientX - rect.left;
+    const relY = clientY - rect.top;
+
+    tooltip.innerHTML = `
+      <div style="font-weight:700; margin-bottom:3px; border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:2px;">
+        ${hStr} — ${cfg.name}
+      </div>
+      <div style="color:#34d399; display:flex; justify-content:space-between; gap:12px;">
+        <span>Midway (KMDW):</span> <b style="font-family:ui-monospace,monospace;">${mVal.toFixed(1)}${unitStr}</b>
+      </div>
+      <div style="color:#60a5fa; display:flex; justify-content:space-between; gap:12px;">
+        <span>O'Hare (KORD):</span> <b style="font-family:ui-monospace,monospace;">${oVal.toFixed(1)}${unitStr}</b>
+      </div>
+      <div style="color:#f8fafc; font-size:0.72rem; border-top:1px dashed rgba(255,255,255,0.2); margin-top:3px; padding-top:2px;">
+        Difference: <b>${diffStr}${unitStr}</b>
+      </div>
+    `;
+
+    tooltip.style.left = `${relX}px`;
+    tooltip.style.top = `${relY}px`;
+    tooltip.style.display = 'block';
+  }
+
+  function handlePointer(clientX, clientY) {
+    const rect = canvasBox.getBoundingClientRect();
+    const margin = { top: 32, right: 35, bottom: 42, left: 52 };
+    const plotW = rect.width - margin.left - margin.right;
+    const relX = clientX - rect.left - margin.left;
+    const frac = Math.max(0, Math.min(1, relX / plotW));
+    const idx = Math.round(frac * (hours.length - 1));
+
+    if (idx !== hoveredIndex) {
+      hoveredIndex = idx;
+      drawChart();
+      updateTable();
+    }
+    showTooltipAt(idx, clientX, clientY);
+  }
+
+  canvas.addEventListener('mousemove', function(e) {
+    handlePointer(e.clientX, e.clientY);
+  });
+  canvas.addEventListener('mouseleave', function() {
+    hoveredIndex = -1;
+    tooltip.style.display = 'none';
+    drawChart();
+    updateTable();
+  });
+
+  // Metric pills listener
+  const pills = document.getElementById(uid + '-metric-pills');
+  pills.addEventListener('click', function(e) {
+    const btn = e.target.closest('.aoc-pill');
+    if (!btn) return;
+    pills.querySelectorAll('.aoc-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentMetric = btn.dataset.metric;
+    drawChart();
+    updateTable();
+  });
+
+  // Unit button toggle
+  unitBtn.addEventListener('click', function() {
+    isImperial = !isImperial;
+    unitBtn.textContent = isImperial ? 'Units: °F / mph' : 'Units: °C / km/h';
+    drawChart();
+    updateTable();
+  });
+
+  window.addEventListener('resize', drawChart);
+
+  // Initial draw
+  drawChart();
+  updateTable();
+})();
+</script>
