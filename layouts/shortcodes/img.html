@@ -29,7 +29,7 @@
 <figure>
   <a href="{{ $src.RelPermalink }}">
 <img 
-  {{ with .Get "sizes" }}sizes='{{.}}'{{ else }}sizes="(min-width: 35em) 600px, 100vw"{{ end }}
+  {{ with .Get "sizes" }}sizes='{{.}}'{{ else }}sizes="(min-width: 35em) 720px, 100vw"{{ end }}
   srcset='
   {{ if ge $src.Width "600" }}
     {{ with $tiny.RelPermalink }}{{.}} 500w{{ end }}
