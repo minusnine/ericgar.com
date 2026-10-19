@@ -3,20 +3,13 @@
     <h1><a href="{{ .RelPermalink }}" title="[Permalink] {{ .Title }}">{{ .Title }}</a></h1>
     <time>{{ .Date.Format "2 January 2006" }}</time>
   </header>
-  {{ if .Params.toc }}
-    <div class="post-toc">
-      {{ .TableOfContents }}
-    </div>
-  {{ end }}
+  {{- $toc := partial "toc.html" . -}}
+  {{- if ne $toc "" }}
+    <nav class="post-toc" aria-label="Table of Contents">
+      {{ $toc }}
+    </nav>
+  {{- end }}
   <div class="post-content">
   {{ .Content }}
   </div>
-  {{ if and (gt .WordCount 400 ) (.Params.toc) }}
-  <aside>
-      <header>
-      <h2>{{.Title}}</h2>
-      </header>
-      {{.TableOfContents}}
-  </aside>
-  {{ end }}
 </article>

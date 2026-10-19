@@ -17,8 +17,8 @@
         
         do {
           processedAny = false;
-          // Find all unprocessed footnote links
-          var footnoteLinks = root.querySelectorAll('a[href^="#fn:"]:not([data-sidenote-processed])');
+          // Find all unprocessed footnote links inside post content
+          var footnoteLinks = root.querySelectorAll('.post-content a[href^="#fn:"]:not([data-sidenote-processed])');
           
           if (footnoteLinks.length === 0) break;
           
@@ -116,9 +116,96 @@
           el.style.display = 'none';
         });
       }
+
+      var currentTocArticle = null;
+
+      function updateSidebarToc() {
+        var sidebarToc = document.getElementById('sidebar-toc');
+        if (!sidebarToc) return;
+
+        var articles = Array.prototype.slice.call(document.querySelectorAll('#content article'));
+        if (articles.length === 0) {
+          sidebarToc.hidden = true;
+          return;
+        }
+
+        // Determine which article is currently in view
+        var activeArticle = articles[0];
+        var threshold = 160;
+        for (var i = 0; i < articles.length; i++) {
+          var rect = articles[i].getBoundingClientRect();
+          if (rect.top <= threshold && rect.bottom > threshold) {
+            activeArticle = articles[i];
+            break;
+          } else if (rect.top > threshold && i === 0) {
+            activeArticle = articles[0];
+            break;
+          } else if (rect.top <= threshold) {
+            activeArticle = articles[i];
+          }
+        }
+
+        var postToc = activeArticle ? activeArticle.querySelector('.post-toc') : null;
+        if (!postToc) {
+          sidebarToc.hidden = true;
+          currentTocArticle = null;
+          return;
+        }
+
+        // Sync sidebar TOC HTML when switching between articles
+        if (currentTocArticle !== activeArticle) {
+          currentTocArticle = activeArticle;
+          sidebarToc.innerHTML = postToc.innerHTML;
+          sidebarToc.hidden = false;
+
+          // Scope anchor clicks to headings inside the active article
+          sidebarToc.querySelectorAll('a[href^="#"]').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+              var hash = link.getAttribute('href');
+              if (!hash || hash.length < 2) return;
+              var id = decodeURIComponent(hash.substring(1));
+              var target = currentTocArticle.querySelector('[id="' + CSS.escape(id) + '"]');
+              if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.replaceState(null, '', hash);
+              }
+            });
+          });
+        }
+
+        // Highlight active heading in sidebar TOC
+        var tocLinks = Array.prototype.slice.call(sidebarToc.querySelectorAll('a[href^="#"]'));
+        var activeLink = null;
+        var headingOffset = 100;
+
+        for (var j = 0; j < tocLinks.length; j++) {
+          var href = tocLinks[j].getAttribute('href');
+          if (!href || href.length < 2) continue;
+          var targetId = decodeURIComponent(href.substring(1));
+          var headingEl = activeArticle.querySelector('[id="' + CSS.escape(targetId) + '"]');
+          if (headingEl) {
+            var hRect = headingEl.getBoundingClientRect();
+            if (hRect.top <= headingOffset) {
+              activeLink = tocLinks[j];
+            } else {
+              break;
+            }
+          }
+        }
+
+        tocLinks.forEach(function(link) {
+          if (link === activeLink) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
  
       window.addEventListener('DOMContentLoaded', function() {
         initSidenotes();
+        updateSidebarToc();
         
         var postsContainer = document.querySelector('#posts');
         if (postsContainer) {
@@ -134,10 +221,22 @@
                 initSidenotes(items[i]);
               }
             }
+            updateSidebarToc();
           });
         }
 
-        // Realign active sidenote on window resize
+        var scrollTicking = false;
+        window.addEventListener('scroll', function() {
+          if (!scrollTicking) {
+            window.requestAnimationFrame(function() {
+              updateSidebarToc();
+              scrollTicking = false;
+            });
+            scrollTicking = true;
+          }
+        }, { passive: true });
+
+        // Realign active sidenote and update TOC on window resize
         window.addEventListener('resize', function() {
           if (window.innerWidth > 960) {
             var activeLabel = document.querySelector('.sidenote-number.active-label');
@@ -154,6 +253,7 @@
               el.style.transform = '';
             });
           }
+          updateSidebarToc();
         });
       });
     </script>

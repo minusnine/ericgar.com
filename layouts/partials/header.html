@@ -34,4 +34,11 @@
           <a href="/post">Posts</a>
           <a href="/index.xml">Feed</a>
         </nav>
+        {{- $toc := "" -}}
+        {{- if .IsPage -}}
+          {{- $toc = partial "toc.html" . -}}
+        {{- end -}}
+        <aside id="sidebar-toc" aria-label="Table of Contents"{{ if eq $toc "" }} hidden{{ end }}>
+          {{ $toc }}
+        </aside>
       </div>

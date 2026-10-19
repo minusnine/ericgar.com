@@ -65,6 +65,8 @@ body {
   border-right: 1px solid var(--border-color);
   background-color: var(--bg-color);
   z-index: 100;
+  display: flex;
+  flex-direction: column;
 }
 
 #header > h1 {
@@ -99,6 +101,83 @@ body {
 
 #header nav > a:hover {
   color: var(--heading-color) !important;
+}
+
+/* Table of Contents (Left Sidebar on Desktop, Inline on Mobile) */
+#sidebar-toc {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+#sidebar-toc[hidden] {
+  display: none !important;
+}
+
+#sidebar-toc .toc-title {
+  font-size: 0.85rem;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--heading-color);
+  margin-bottom: 10px;
+}
+
+.post-toc .toc-title {
+  display: none;
+}
+
+#sidebar-toc ul,
+.post-toc ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+#sidebar-toc li,
+.post-toc li {
+  margin-bottom: 2px;
+}
+
+#sidebar-toc li.toc-level-2,
+.post-toc li.toc-level-2 {
+  padding-left: 12px;
+  border-left: 1px solid var(--border-color);
+}
+
+#sidebar-toc li.toc-level-3,
+.post-toc li.toc-level-3 {
+  padding-left: 22px;
+  border-left: 1px solid var(--border-color);
+}
+
+#sidebar-toc a,
+.post-toc a {
+  display: block;
+  padding: 3px 0;
+  font-size: 0.825rem;
+  line-height: 1.35;
+  color: var(--muted-color) !important;
+  text-decoration: none !important;
+  transition: color 0.15s ease;
+}
+
+#sidebar-toc a:hover,
+#sidebar-toc a.active,
+.post-toc a:hover {
+  color: var(--heading-color) !important;
+}
+
+#sidebar-toc a.active {
+  font-weight: 600;
+}
+
+/* Inline article TOC is hidden on desktop (shown in #sidebar-toc instead) */
+.post-toc {
+  display: none;
 }
 
 #content {
@@ -210,6 +289,7 @@ article a {
 
 /* Constrain readable text column to ~70-72ch (720px) */
 article > header,
+article > .post-toc,
 article > p,
 article .post-content > *:not(table):not(hr) {
   max-width: var(--text-width);
@@ -251,6 +331,13 @@ article header h1 {
   font-weight: 700;
   letter-spacing: -0.025em;
   color: var(--heading-color);
+}
+
+article h1,
+article h2,
+article h3,
+article h4 {
+  scroll-margin-top: 24px;
 }
 
 article h2 {
@@ -534,6 +621,19 @@ label.sidenote-number {
     font-size: 0.9rem;
   }
 
+  #sidebar-toc {
+    display: none !important;
+  }
+
+  .post-toc {
+    display: block;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 12px 16px;
+    margin-bottom: 1.5rem;
+  }
+
   #content {
     padding: 28px 20px 40px 20px;
   }
@@ -599,6 +699,10 @@ label.sidenote-number {
     width: 100%;
     border-right: none;
     padding: 20px 0;
+  }
+
+  #sidebar-toc {
+    display: none !important;
   }
 
   #container {
