@@ -1,0 +1,619 @@
+{{/*
+  Boulder Daily High & Low Temperatures Chart Shortcode (Jul 20 – Oct 9, 2026)
+  Usage: {{< boulder-temp-chart data="boulder-temperatures.json" >}}
+*/}}
+
+{{ $dataFile := .Get "data" | default "boulder-temperatures.json" }}
+{{ $chartUid := printf "btc-%x" (now.UnixNano) }}
+
+{{ $jsonRaw := "" }}
+{{ with .Page.Resources.Get $dataFile }}
+  {{ $jsonRaw = .Content }}
+{{ else }}
+  {{ if fileExists $dataFile }}
+    {{ $jsonRaw = readFile $dataFile }}
+  {{ else }}
+    {{ $tryPath := printf "content/post/%s/%s" $.Page.File.TranslationBaseName $dataFile }}
+    {{ if fileExists $tryPath }}
+      {{ $jsonRaw = readFile $tryPath }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+
+<div class="boulder-temp-container" id="{{ $chartUid }}">
+  <div class="btc-header">
+    <div class="btc-title-group">
+      <h3 class="btc-title">Boulder Daily Temperatures (July 20 – October 9, 2026)</h3>
+      <div class="btc-subtitle">Official NOAA/NWS daily high and low records across the 12-week training block (Station USC00050848 · 5,484 ft)</div>
+    </div>
+  </div>
+
+  <!-- Summary Stats Strip -->
+  <div class="btc-stats-strip" id="{{ $chartUid }}-stats"></div>
+
+  <!-- Legend -->
+  <div class="btc-legend">
+    <div class="btc-leg-item">
+      <span class="btc-leg-dot btc-dot-high"></span>
+      <span>Daily High</span>
+    </div>
+    <div class="btc-leg-item">
+      <span class="btc-leg-dot btc-dot-low"></span>
+      <span>Daily Low</span>
+    </div>
+    <div class="btc-leg-item">
+      <span class="btc-leg-swatch btc-swatch-range"></span>
+      <span>Diurnal Range (High–Low)</span>
+    </div>
+    <div class="btc-leg-item">
+      <span class="btc-leg-line"></span>
+      <span>1991–2020 Normal High / Low</span>
+    </div>
+  </div>
+
+  <!-- Canvas Box -->
+  <div class="btc-canvas-container" id="{{ $chartUid }}-canvas-box">
+    <canvas id="{{ $chartUid }}-canvas"></canvas>
+    <div class="btc-tooltip" id="{{ $chartUid }}-tooltip" style="display:none;"></div>
+  </div>
+
+  <script type="application/json" id="{{ $chartUid }}-data">{{ $jsonRaw | safeJS }}</script>
+</div>
+
+<style>
+  .boulder-temp-container {
+    margin: 2.2rem 0;
+    padding: 1.25rem 1.4rem;
+    background: #fffffb;
+    border: 1px solid #e5e5dc;
+    border-radius: 10px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.04);
+    font-family: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+    color: #1a1a1a;
+    box-sizing: border-box;
+  }
+  .boulder-temp-container *, .boulder-temp-container *::before, .boulder-temp-container *::after {
+    box-sizing: border-box;
+  }
+  .btc-header {
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #edece4;
+    margin-bottom: 0.85rem;
+  }
+  .btc-title {
+    margin: 0 0 4px 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: #1d1e2c;
+  }
+  .btc-subtitle {
+    font-size: 0.84rem;
+    color: #636674;
+    line-height: 1.35;
+  }
+  .btc-stats-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 8px;
+    margin-bottom: 0.85rem;
+  }
+  .btc-stat-card {
+    background: #f7f6f0;
+    border: 1px solid #ebeae0;
+    border-radius: 7px;
+    padding: 7px 10px;
+  }
+  .btc-stat-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #64748b;
+    margin-bottom: 2px;
+  }
+  .btc-stat-value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #111827;
+  }
+  .btc-stat-sub {
+    font-size: 0.72rem;
+    color: #64748b;
+  }
+  .btc-legend {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.78rem;
+    color: #374151;
+    margin-bottom: 0.7rem;
+    padding: 6px 10px;
+    background: #f7f6f0;
+    border-radius: 6px;
+    border: 1px solid #ebeae0;
+  }
+  .btc-leg-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btc-leg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .btc-dot-high {
+    background: #dc2626;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1.5px #dc2626;
+  }
+  .btc-dot-low {
+    background: #2563eb;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 0 1.5px #2563eb;
+  }
+  .btc-leg-swatch {
+    width: 14px;
+    height: 10px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .btc-swatch-range {
+    background: linear-gradient(180deg, rgba(220, 38, 38, 0.18), rgba(37, 99, 235, 0.18));
+    border: 1px solid rgba(100, 116, 139, 0.3);
+  }
+  .btc-leg-line {
+    width: 16px;
+    height: 0;
+    border-top: 2px dashed #64748b;
+    display: inline-block;
+  }
+  .btc-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    background: #ffffff;
+    border: 1px solid #e7e6dc;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .btc-canvas-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+  .btc-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(17, 24, 39, 0.94);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    padding: 8px 11px;
+    font-size: 0.76rem;
+    line-height: 1.45;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+(function() {
+  const uid = "{{ $chartUid }}";
+  const container = document.getElementById(uid);
+  if (!container) return;
+
+  const dataElem = document.getElementById(uid + '-data');
+  if (!dataElem) return;
+
+  let dataset = null;
+  try {
+    dataset = JSON.parse(dataElem.textContent);
+  } catch (e) {
+    console.error("Failed to parse Boulder temperature JSON", e);
+    return;
+  }
+
+  const days = dataset.days || [];
+  if (!days.length) return;
+
+  let isImperial = true;
+  let hoveredIndex = -1;
+  let isOverYAxis = false;
+
+  const chartMargin = { top: 28, right: 24, bottom: 38, left: 52 };
+
+  const canvas = document.getElementById(uid + '-canvas');
+  const canvasBox = document.getElementById(uid + '-canvas-box');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById(uid + '-tooltip');
+  const statsContainer = document.getElementById(uid + '-stats');
+
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  function formatDateShort(iso) {
+    const parts = iso.split('-');
+    const m = parseInt(parts[1], 10) - 1;
+    const d = parseInt(parts[2], 10);
+    return monthNames[m] + ' ' + d;
+  }
+
+  function renderStats() {
+    const unit = isImperial ? '°F' : '°C';
+    const highs = days.map(d => isImperial ? d.high_f : d.high_c);
+    const lows = days.map(d => isImperial ? d.low_f : d.low_c);
+    const normHighs = days.map(d => isImperial ? d.normal_high_f : d.normal_high_c);
+
+    let maxHi = -Infinity, maxHiDate = '';
+    let minLo = Infinity, minLoDate = '';
+    let sumHi = 0, sumLo = 0, sumNormHi = 0;
+    let hotDays90 = 0;
+
+    days.forEach((d, i) => {
+      if (highs[i] > maxHi) { maxHi = highs[i]; maxHiDate = formatDateShort(d.date); }
+      if (lows[i] < minLo) { minLo = lows[i]; minLoDate = formatDateShort(d.date); }
+      sumHi += highs[i];
+      sumLo += lows[i];
+      sumNormHi += normHighs[i];
+      if (d.high_f >= 90) hotDays90++;
+    });
+
+    const avgHi = sumHi / days.length;
+    const avgLo = sumLo / days.length;
+    const avgHiAnom = avgHi - (sumNormHi / days.length);
+    const anomSign = avgHiAnom >= 0 ? '+' : '';
+
+    statsContainer.innerHTML = `
+      <div class="btc-stat-card">
+        <div class="btc-stat-label">Avg Daily High</div>
+        <div class="btc-stat-value" style="color:#dc2626;">${avgHi.toFixed(1)}${unit}</div>
+        <div class="btc-stat-sub">${anomSign}${avgHiAnom.toFixed(1)}${unit} vs normal</div>
+      </div>
+      <div class="btc-stat-card">
+        <div class="btc-stat-label">Avg Daily Low</div>
+        <div class="btc-stat-value" style="color:#2563eb;">${avgLo.toFixed(1)}${unit}</div>
+        <div class="btc-stat-sub">${days.length} days total</div>
+      </div>
+      <div class="btc-stat-card">
+        <div class="btc-stat-label">Peak High</div>
+        <div class="btc-stat-value" style="color:#b91c1c;">${maxHi.toFixed(0)}${unit}</div>
+        <div class="btc-stat-sub">on ${maxHiDate}</div>
+      </div>
+      <div class="btc-stat-card">
+        <div class="btc-stat-label">Coolest Low</div>
+        <div class="btc-stat-value" style="color:#1d4ed8;">${minLo.toFixed(0)}${unit}</div>
+        <div class="btc-stat-sub">on ${minLoDate}</div>
+      </div>
+      <div class="btc-stat-card">
+        <div class="btc-stat-label">Days ≥ ${isImperial ? '90°F' : '32.2°C'}</div>
+        <div class="btc-stat-value">${hotDays90} days</div>
+        <div class="btc-stat-sub">${Math.round((hotDays90 / days.length) * 100)}% of training block</div>
+      </div>
+    `;
+  }
+
+  function resizeCanvas() {
+    const rect = canvasBox.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function checkYAxisHit(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+    return (x >= 0 && x <= chartMargin.left && y >= 0 && y <= rect.height - chartMargin.bottom + 10);
+  }
+
+  function toggleUnits() {
+    isImperial = !isImperial;
+    renderStats();
+    drawChart();
+  }
+
+  function drawChart() {
+    resizeCanvas();
+    const rect = canvasBox.getBoundingClientRect();
+    const w = rect.width;
+    const h = rect.height;
+    ctx.clearRect(0, 0, w, h);
+
+    const unitStr = isImperial ? '°F' : '°C';
+    const highs = days.map(d => isImperial ? d.high_f : d.high_c);
+    const lows = days.map(d => isImperial ? d.low_f : d.low_c);
+    const normHighs = days.map(d => isImperial ? d.normal_high_f : d.normal_high_c);
+    const normLows = days.map(d => isImperial ? d.normal_low_f : d.normal_low_c);
+
+    const minVal = isImperial ? 35 : 0;
+    const maxVal = isImperial ? 110 : 45;
+    const stepVal = isImperial ? 15 : 10;
+
+    const margin = chartMargin;
+    const plotW = w - margin.left - margin.right;
+    const plotH = h - margin.top - margin.bottom;
+
+    const getX = (idx) => margin.left + (idx / (days.length - 1)) * plotW;
+    const getY = (val) => margin.top + (1 - (val - minVal) / (maxVal - minVal)) * plotH;
+
+    // Horizontal Y gridlines & labels
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'middle';
+    ctx.font = '11px ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+
+    for (let v = minVal; v <= maxVal; v += stepVal) {
+      const yPos = getY(v);
+      ctx.beginPath();
+      ctx.strokeStyle = '#f1f0e8';
+      ctx.lineWidth = 1;
+      ctx.moveTo(margin.left, yPos);
+      ctx.lineTo(margin.left + plotW, yPos);
+      ctx.stroke();
+
+      ctx.fillStyle = isOverYAxis ? '#0d6efd' : '#64748b';
+      ctx.fillText(`${v} ${unitStr}`, margin.left - 8, yPos);
+    }
+
+    // Y-Axis Unit Header / Click Hint
+    ctx.font = '600 10.5px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+    ctx.fillStyle = isOverYAxis ? '#0d6efd' : '#88877f';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(`${unitStr} ⇄`, margin.left - 8, margin.top - 8);
+
+    // 90°F (32.2°C) reference line
+    const hotThreshold = isImperial ? 90 : 32.2;
+    const yHot = getY(hotThreshold);
+    ctx.save();
+    ctx.beginPath();
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(220, 38, 38, 0.28)';
+    ctx.lineWidth = 1;
+    ctx.moveTo(margin.left, yHot);
+    ctx.lineTo(margin.left + plotW, yHot);
+    ctx.stroke();
+    ctx.fillStyle = 'rgba(185, 28, 28, 0.65)';
+    ctx.textAlign = 'right';
+    ctx.textBaseline = 'bottom';
+    ctx.font = '10px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.fillText(isImperial ? '90°F' : '32.2°C', margin.left + plotW - 4, yHot - 3);
+    ctx.restore();
+
+    // Vertical X ticks (start, end, 1st & 15th of each month)
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.font = '11px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+
+    days.forEach((d, idx) => {
+      const dayNum = parseInt(d.date.split('-')[2], 10);
+      const isTick = idx === 0 || idx === days.length - 1 || dayNum === 1 || dayNum === 15;
+      if (!isTick) return;
+      const xPos = getX(idx);
+      ctx.beginPath();
+      ctx.strokeStyle = dayNum === 1 ? '#e2e8f0' : '#f8f7f0';
+      ctx.lineWidth = 1;
+      ctx.moveTo(xPos, margin.top);
+      ctx.lineTo(xPos, margin.top + plotH);
+      ctx.stroke();
+
+      ctx.fillStyle = '#64748b';
+      ctx.fillText(formatDateShort(d.date), xPos, margin.top + plotH + 8);
+    });
+
+    // Shaded diurnal range between High and Low
+    const grad = ctx.createLinearGradient(0, margin.top, 0, margin.top + plotH);
+    grad.addColorStop(0, 'rgba(220, 38, 38, 0.16)');
+    grad.addColorStop(0.55, 'rgba(245, 158, 11, 0.10)');
+    grad.addColorStop(1, 'rgba(37, 99, 235, 0.16)');
+
+    ctx.beginPath();
+    days.forEach((_, idx) => {
+      const x = getX(idx);
+      const yH = getY(highs[idx]);
+      if (idx === 0) ctx.moveTo(x, yH);
+      else ctx.lineTo(x, yH);
+    });
+    for (let idx = days.length - 1; idx >= 0; idx--) {
+      ctx.lineTo(getX(idx), getY(lows[idx]));
+    }
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // 1991-2020 Normal High & Low dashed curves
+    ctx.save();
+    ctx.setLineDash([5, 4]);
+    ctx.lineWidth = 1.5;
+
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(185, 28, 28, 0.45)';
+    normHighs.forEach((val, idx) => {
+      const x = getX(idx), y = getY(val);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(29, 78, 216, 0.45)';
+    normLows.forEach((val, idx) => {
+      const x = getX(idx), y = getY(val);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+    ctx.restore();
+
+    // Daily High line
+    ctx.beginPath();
+    ctx.strokeStyle = '#dc2626';
+    ctx.lineWidth = 2.2;
+    ctx.lineJoin = 'round';
+    highs.forEach((val, idx) => {
+      const x = getX(idx), y = getY(val);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Daily Low line
+    ctx.beginPath();
+    ctx.strokeStyle = '#2563eb';
+    ctx.lineWidth = 2.2;
+    ctx.lineJoin = 'round';
+    lows.forEach((val, idx) => {
+      const x = getX(idx), y = getY(val);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+
+    // Hover crosshair & highlighted points
+    if (hoveredIndex >= 0 && hoveredIndex < days.length) {
+      const x = getX(hoveredIndex);
+      const yH = getY(highs[hoveredIndex]);
+      const yL = getY(lows[hoveredIndex]);
+
+      ctx.beginPath();
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1.2;
+      ctx.moveTo(x, margin.top);
+      ctx.lineTo(x, margin.top + plotH);
+      ctx.stroke();
+
+      // High dot
+      ctx.beginPath();
+      ctx.fillStyle = '#dc2626';
+      ctx.arc(x, yH, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#ffffff';
+      ctx.stroke();
+
+      // Low dot
+      ctx.beginPath();
+      ctx.fillStyle = '#2563eb';
+      ctx.arc(x, yL, 4.5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#ffffff';
+      ctx.stroke();
+    }
+  }
+
+  function updateTooltip(clientX) {
+    if (hoveredIndex < 0 || hoveredIndex >= days.length) {
+      tooltip.style.display = 'none';
+      return;
+    }
+    const d = days[hoveredIndex];
+    const unitStr = isImperial ? '°F' : '°C';
+    const hi = isImperial ? d.high_f : d.high_c;
+    const lo = isImperial ? d.low_f : d.low_c;
+    const normHi = isImperial ? d.normal_high_f : d.normal_high_c;
+    const normLo = isImperial ? d.normal_low_f : d.normal_low_c;
+    const range = (hi - lo).toFixed(1);
+    const anomHi = hi - normHi;
+    const anomStr = (anomHi >= 0 ? '+' : '') + anomHi.toFixed(1) + unitStr;
+
+    tooltip.innerHTML = `
+      <div style="font-weight:700; margin-bottom:3px; border-bottom:1px solid rgba(255,255,255,0.2); padding-bottom:2px;">
+        ${formatDateShort(d.date)}, 2026
+      </div>
+      <div style="color:#fca5a5; display:flex; justify-content:space-between; gap:14px;">
+        <span>Daily High:</span>
+        <b style="font-family:ui-monospace,monospace;">${hi.toFixed(1)}${unitStr} <span style="opacity:0.8;font-weight:500;">(${anomStr} vs norm)</span></b>
+      </div>
+      <div style="color:#93c5fd; display:flex; justify-content:space-between; gap:14px;">
+        <span>Daily Low:</span>
+        <b style="font-family:ui-monospace,monospace;">${lo.toFixed(1)}${unitStr} <span style="opacity:0.8;font-weight:500;">(norm ${normLo.toFixed(1)}${unitStr})</span></b>
+      </div>
+      <div style="color:#e2e8f0; font-size:0.71rem; border-top:1px dashed rgba(255,255,255,0.2); margin-top:3px; padding-top:2px;">
+        Diurnal swing: ${range}${unitStr}
+      </div>
+    `;
+
+    tooltip.style.display = 'block';
+    const boxRect = canvasBox.getBoundingClientRect();
+    const ttRect = tooltip.getBoundingClientRect();
+    const relX = clientX - boxRect.left;
+    let leftPx = relX + 14;
+    if (leftPx + ttRect.width > boxRect.width - 8) {
+      leftPx = relX - ttRect.width - 14;
+    }
+    leftPx = Math.max(8, leftPx);
+    tooltip.style.left = leftPx + 'px';
+    tooltip.style.top = '18px';
+  }
+
+  function handlePointer(e) {
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+
+    const overY = checkYAxisHit(clientX, clientY);
+    if (overY !== isOverYAxis) {
+      isOverYAxis = overY;
+      drawChart();
+    }
+
+    if (overY) {
+      canvas.style.cursor = 'pointer';
+      canvas.title = `Click to toggle unit (${isImperial ? 'switch to °C' : 'switch to °F'})`;
+      hoveredIndex = -1;
+      tooltip.style.display = 'none';
+      drawChart();
+      return;
+    }
+
+    canvas.style.cursor = 'crosshair';
+    canvas.title = '';
+
+    const rect = canvasBox.getBoundingClientRect();
+    const plotW = rect.width - chartMargin.left - chartMargin.right;
+    const relX = clientX - rect.left - chartMargin.left;
+
+    if (relX < -10 || relX > plotW + 10) {
+      hoveredIndex = -1;
+      tooltip.style.display = 'none';
+      drawChart();
+      return;
+    }
+    const frac = Math.max(0, Math.min(1, relX / plotW));
+    const idx = Math.round(frac * (days.length - 1));
+    if (idx !== hoveredIndex) {
+      hoveredIndex = idx;
+      drawChart();
+    }
+    updateTooltip(clientX);
+  }
+
+  canvas.addEventListener('mousemove', handlePointer);
+  canvas.addEventListener('touchstart', handlePointer, { passive: true });
+  canvas.addEventListener('touchmove', handlePointer, { passive: true });
+  canvas.addEventListener('mouseleave', () => {
+    isOverYAxis = false;
+    hoveredIndex = -1;
+    canvas.style.cursor = 'crosshair';
+    canvas.title = '';
+    tooltip.style.display = 'none';
+    drawChart();
+  });
+
+  canvas.addEventListener('click', (e) => {
+    if (checkYAxisHit(e.clientX, e.clientY)) {
+      toggleUnits();
+    }
+  });
+
+  window.addEventListener('resize', drawChart);
+
+  renderStats();
+  drawChart();
+})();
+</script>

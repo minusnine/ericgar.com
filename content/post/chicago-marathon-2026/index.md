@@ -1,6 +1,7 @@
 ---
 title: "Chicago Marathon 2026"
 date: 2026-10-12
+draft: true
 ---
 
 I ran the Chicago Marathon on October 11, 2026. These are my notes on race
@@ -20,6 +21,12 @@ experience in decades to come).
 * ❌ Stretch goal: 2:45 for Berlin
 * ❌ Goal B: sub-2:48:42 for a new PB
 * ❌ Goal C: sub-2:52 to beat NYC 2025
+
+## Training Block Weather (Boulder, CO)
+
+Daily high and low temperatures in Boulder, Colorado from July 20 through October 9, 2026 across the 12-week training cycle:
+
+{{< boulder-temp-chart >}}
 
 ## Race Gap Analysis
 

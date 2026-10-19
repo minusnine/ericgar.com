@@ -941,35 +941,45 @@
       else if (currentMetric === 'dew_point') detKey = 'deterministic_dew_f';
       else if (currentMetric === 'wind_speed') detKey = 'deterministic_wind_mph';
 
-      days.forEach(d => {
-        Object.values(d.hourly).forEach(hData => {
-          const s = hData[metricKey];
-          let detVal = hData[detKey];
-          if (!isImperial) {
-            if (currentMetric === 'temperature' || currentMetric === 'dew_point') detVal = (detVal - 32) * 5 / 9;
-            else if (currentMetric === 'wind_speed') detVal = detVal * 1.60934;
-          }
-          yMin = Math.min(yMin, s.min, detVal);
-          yMax = Math.max(yMax, s.max, detVal);
+      Object.values(modelsData).filter(Boolean).forEach(mDataset => {
+        (mDataset.days || []).forEach(d => {
+          Object.values(d.hourly).forEach(hData => {
+            const s = hData[metricKey];
+            let detVal = hData[detKey];
+            if (!isImperial) {
+              if (currentMetric === 'temperature' || currentMetric === 'dew_point') detVal = (detVal - 32) * 5 / 9;
+              else if (currentMetric === 'wind_speed') detVal = detVal * 1.60934;
+            }
+            yMin = Math.min(yMin, s.min, detVal);
+            yMax = Math.max(yMax, s.max, detVal);
+          });
         });
+
+        if (mDataset.observed) {
+          Object.values(mDataset.observed).forEach(obs => {
+            let oVal = null;
+            if (currentMetric === 'temperature') oVal = isImperial ? obs.temperature_f : obs.temperature_c;
+            else if (currentMetric === 'dew_point') oVal = isImperial ? obs.dew_point_f : obs.dew_point_c;
+            else if (currentMetric === 'wind_speed') oVal = isImperial ? obs.wind_speed_mph : obs.wind_speed_kmh;
+            if (oVal !== null && oVal !== undefined) {
+              yMin = Math.min(yMin, oVal);
+              yMax = Math.max(yMax, oVal);
+            }
+          });
+        }
       });
 
-      if (dataset.observed) {
-        Object.values(dataset.observed).forEach(obs => {
-          let oVal = null;
-          if (currentMetric === 'temperature') oVal = isImperial ? obs.temperature_f : obs.temperature_c;
-          else if (currentMetric === 'dew_point') oVal = isImperial ? obs.dew_point_f : obs.dew_point_c;
-          else if (currentMetric === 'wind_speed') oVal = isImperial ? obs.wind_speed_mph : obs.wind_speed_kmh;
-          if (oVal !== null && oVal !== undefined) {
-            yMin = Math.min(yMin, oVal);
-            yMax = Math.max(yMax, oVal);
-          }
-        });
-      }
-
       const padding = (yMax - yMin) * 0.08 || 2;
-      yMin = Math.floor((yMin - padding) / 2) * 2;
-      yMax = Math.ceil((yMax + padding) / 2) * 2;
+      if (currentMetric === 'temperature') {
+        yMin = isImperial ? 38 : 3;
+        yMax = isImperial ? 86 : 30;
+      } else if (currentMetric === 'wind_speed') {
+        yMin = 0;
+        yMax = Math.ceil((yMax + padding) / 2) * 2;
+      } else {
+        yMin = Math.floor((yMin - padding) / 2) * 2;
+        yMax = Math.ceil((yMax + padding) / 2) * 2;
+      }
     }
 
     const getX = (idx) => margin.left + (idx / (series.length - 1)) * plotW;
